@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textViewLength"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/length" />
+
+    <EditText
+        android:id="@+id/editTextLength"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:lines="1" />
+
+    <TextView
+        android:id="@+id/textViewWidth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/width" />
+
+    <EditText
+        android:id="@+id/editTextWidth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:lines="1" />
+
+    <TextView
+        android:id="@+id/textViewHeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/height" />
+
+    <EditText
+        android:id="@+id/editTextHeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:lines="1" />
+
+    <Button
+        android:id="@+id/buttonCalculate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/calculate" />
+
+    <TextView
+        android:id="@+id/textViewResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/result"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>
