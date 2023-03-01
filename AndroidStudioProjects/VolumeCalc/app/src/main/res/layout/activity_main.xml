@@ -14,7 +14,7 @@
         android:text="@string/length" />
 
     <EditText
-        android:id="@+id/editTextLength"
+        android:id="@+id/edit_length"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -29,7 +29,7 @@
         android:text="@string/width" />
 
     <EditText
-        android:id="@+id/editTextWidth"
+        android:id="@+id/edit_width"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -44,7 +44,7 @@
         android:text="@string/height" />
 
     <EditText
-        android:id="@+id/editTextHeight"
+        android:id="@+id/edit_height"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -53,13 +53,13 @@
         android:lines="1" />
 
     <Button
-        android:id="@+id/buttonCalculate"
+        android:id="@+id/button_calculate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/calculate" />
 
     <TextView
-        android:id="@+id/textViewResult"
+        android:id="@+id/text_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
