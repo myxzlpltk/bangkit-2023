@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Favorite Movies</string>
+    <string name="poster_description">Movie\'s poster</string>
+    <string name="movie_title">Call Me By Your Name</string>
+    <string name="rating_bar_description">Rating bar</string>
+    <string name="about_me">About Me</string>
+    <string name="profile_name">Saddam Sinatrya Jalu Mukti</string>
+    <string name="profile_email">myxzlpltk@gmail.com</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="share_movie">Share this movie</string>
+    <string name="movie_genre">Family, Fantasy, Sci-Fi</string>
+    <string name="year">Year</string>
+    <string name="language">Language</string>
+    <string name="length">Length</string>
+    <string name="runtime">%d min</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam cursus tempus est non placerat. Aliquam hendrerit nunc at libero molestie scelerisque. Morbi sollicitudin mattis.</string>
+    <string name="rated">Rated</string>
+    <string name="director">Director</string>
+    <string name="starring">Starring</string>
+    <string name="share">Share</string>
+    <string name="logo_description">Logo Netflix Syariah</string>
+</resources>
