@@ -29,11 +29,10 @@ class CategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnCategoryLifestyle.setOnClickListener {
-            val mBundle = Bundle()
-            mBundle.putString(EXTRA_NAME, "LifeStyle")
-            mBundle.putLong(EXTRA_STOCK, 7)
-            it.findNavController()
-                .navigate(R.id.action_categoryFragment_to_detailCategoryFragment, mBundle)
+            val toDetailCategoryFragment = CategoryFragmentDirections.actionCategoryFragmentToDetailCategoryFragment()
+            toDetailCategoryFragment.name = "LifeStyle"
+            toDetailCategoryFragment.stock = 7
+            view.findNavController().navigate(toDetailCategoryFragment)
         }
     }
 
