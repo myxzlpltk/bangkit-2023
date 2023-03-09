@@ -50,6 +50,9 @@
             android:name="stock"
             android:defaultValue="0L"
             app:argType="long" />
+        <deepLink
+            android:id="@+id/deepLink2"
+            app:uri="https://www.dicoding.com/detail/{name}" />
     </fragment>
 
 </navigation>
