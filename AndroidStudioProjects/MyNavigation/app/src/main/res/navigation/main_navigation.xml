@@ -22,12 +22,21 @@
         android:id="@+id/categoryFragment"
         android:name="com.example.mynavigation.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_detailCategoryFragment"
+            app:destination="@id/detailCategoryFragment" />
+    </fragment>
 
     <activity
         android:id="@+id/profileActivity"
         android:name="com.example.mynavigation.ProfileActivity"
         android:label="activity_profile"
         tools:layout="@layout/activity_profile" />
+    <fragment
+        android:id="@+id/detailCategoryFragment"
+        android:name="com.example.mynavigation.DetailCategoryFragment"
+        android:label="fragment_detail_category"
+        tools:layout="@layout/fragment_detail_category" />
 
 </navigation>
