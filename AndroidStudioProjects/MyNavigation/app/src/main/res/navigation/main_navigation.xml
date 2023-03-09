@@ -22,7 +22,7 @@
         android:id="@+id/categoryFragment"
         android:name="com.example.mynavigation.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" >
+        tools:layout="@layout/fragment_category">
         <action
             android:id="@+id/action_categoryFragment_to_detailCategoryFragment"
             app:destination="@id/detailCategoryFragment" />
@@ -32,20 +32,24 @@
         android:id="@+id/profileActivity"
         android:name="com.example.mynavigation.ProfileActivity"
         android:label="activity_profile"
-        tools:layout="@layout/activity_profile" />
+        tools:layout="@layout/activity_profile">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="https://www.dicoding.com/profile" />
+    </activity>
     <fragment
         android:id="@+id/detailCategoryFragment"
         android:name="com.example.mynavigation.DetailCategoryFragment"
         android:label="fragment_detail_category"
-        tools:layout="@layout/fragment_detail_category" >
+        tools:layout="@layout/fragment_detail_category">
         <argument
             android:name="name"
-            app:argType="string"
-            android:defaultValue="default name" />
+            android:defaultValue="default name"
+            app:argType="string" />
         <argument
             android:name="stock"
-            app:argType="long"
-            android:defaultValue="0L" />
+            android:defaultValue="0L"
+            app:argType="long" />
     </fragment>
 
 </navigation>
