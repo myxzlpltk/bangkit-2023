@@ -1,6 +1,7 @@
 package com.example.mytablayout
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ class HomeFragment : Fragment() {
 
     companion object {
         const val ARG_SECTION_NUMBER = "section_number"
+        const val ARG_NAME = "app_name"
     }
 
     override fun onCreateView(
@@ -24,6 +26,8 @@ class HomeFragment : Fragment() {
 
         val tvLabel: TextView = view.findViewById(R.id.section_label)
         val index = arguments?.getInt(ARG_SECTION_NUMBER, 0)
+        val name = arguments?.getString(ARG_NAME)
+        Log.d("HomeFragment", "App name: $name")
 
         tvLabel.text = getString(R.string.content_tab_text, index)
     }

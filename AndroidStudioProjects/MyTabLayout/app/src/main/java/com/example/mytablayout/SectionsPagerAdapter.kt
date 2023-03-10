@@ -6,12 +6,16 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class SectionsPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
+
+    var appName: String = ""
+
     override fun getItemCount(): Int = 3
 
     override fun createFragment(position: Int): Fragment {
         return HomeFragment().apply {
             arguments = Bundle().apply {
                 putInt(HomeFragment.ARG_SECTION_NUMBER, position + 1)
+                putString(HomeFragment.ARG_NAME, appName)
             }
         }
     }
