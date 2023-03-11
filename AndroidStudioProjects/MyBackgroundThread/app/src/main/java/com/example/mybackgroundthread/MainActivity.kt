@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                         if (percentage == 100) tvStatus.setText(R.string.task_completed)
                         else tvStatus.text =
                             String.format(getString(R.string.compressing), percentage)
-                    }
+                    } 
                 }
 
                 withContext(Dispatchers.Main) {
