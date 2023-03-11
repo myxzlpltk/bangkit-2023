@@ -11,7 +11,7 @@ data class RestaurantResponse(
 	val error: Boolean,
 
 	@field:SerializedName("message")
-	val message: String
+	val message: String,
 )
 
 data class Restaurant(
@@ -32,7 +32,7 @@ data class Restaurant(
 	val description: String,
 
 	@field:SerializedName("id")
-	val id: String
+	val id: String,
 )
 
 data class CustomerReviewsItem(
@@ -44,5 +44,17 @@ data class CustomerReviewsItem(
 	val review: String,
 
 	@field:SerializedName("name")
-	val name: String
+	val name: String,
+)
+
+data class PostReviewResponse(
+
+	@field:SerializedName("customerReviews")
+	val customerReviews: List<CustomerReviewsItem>,
+
+	@field:SerializedName("error")
+	val error: Boolean,
+
+	@field:SerializedName("message")
+	val message: String,
 )
