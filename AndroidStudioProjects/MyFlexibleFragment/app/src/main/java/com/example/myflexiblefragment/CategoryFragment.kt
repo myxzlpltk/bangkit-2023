@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 
 class CategoryFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_category, container, false)
     }
@@ -32,16 +33,14 @@ class CategoryFragment : Fragment(), View.OnClickListener {
             mDetailCategoryFragment.arguments = mBundle
             mDetailCategoryFragment.description = description
 
-            val mFragmentManager = parentFragmentManager
-            mFragmentManager
-                .beginTransaction()
-                .replace(
+            parentFragmentManager.commit {
+                addToBackStack(null)
+                replace(
                     R.id.frame_container,
                     mDetailCategoryFragment,
                     DetailCategoryFragment::class.java.simpleName
                 )
-                .addToBackStack(null)
-                .commit()
+            }
         }
     }
 }

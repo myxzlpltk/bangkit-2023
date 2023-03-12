@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -24,12 +25,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         if (v.id == R.id.btn_category) {
             val mCategoryFragment = CategoryFragment()
-            val mFragmentManager = parentFragmentManager
-            mFragmentManager
-                .beginTransaction()
-                .replace(R.id.frame_container, mCategoryFragment, CategoryFragment::class.java.simpleName)
-                .addToBackStack(null)
-                .commit()
+            parentFragmentManager.commit {
+                addToBackStack(null)
+                replace(
+                    R.id.frame_container, mCategoryFragment, CategoryFragment::class.java.simpleName
+                )
+            }
         }
     }
 }
