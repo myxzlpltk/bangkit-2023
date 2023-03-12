@@ -27,7 +27,8 @@ class MainViewModel : ViewModel() {
 
     private var total = 0
     private var query = DEFAULT_QUERY
-    private var page = DEFAULT_PAGE
+    var page = DEFAULT_PAGE
+        private set
 
     init {
         loadUsers()

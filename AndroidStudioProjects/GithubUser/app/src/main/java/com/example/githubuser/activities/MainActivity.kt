@@ -83,9 +83,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAllUsersData(users: List<UserResponse>) {
-        val recyclerViewState = binding.rvUsers.layoutManager?.onSaveInstanceState()
-        binding.rvUsers.adapter = ListUserAdapter(users)
-        binding.rvUsers.layoutManager?.onRestoreInstanceState(recyclerViewState)
+        if (mainViewModel.page == MainViewModel.DEFAULT_PAGE) {
+            /* Reset position */
+            binding.rvUsers.adapter = ListUserAdapter(users)
+        } else {
+            /* Maintain position */
+            val recyclerViewState = binding.rvUsers.layoutManager?.onSaveInstanceState()
+            binding.rvUsers.adapter = ListUserAdapter(users)
+            binding.rvUsers.layoutManager?.onRestoreInstanceState(recyclerViewState)
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
