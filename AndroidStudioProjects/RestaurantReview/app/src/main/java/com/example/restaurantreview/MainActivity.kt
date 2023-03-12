@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.restaurantreview.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +35,11 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.restaurant.observe(this) { setRestaurantData(it) }
         mainViewModel.listReview.observe(this) { setReviewData(it) }
         mainViewModel.isLoading.observe(this) { showLoading(it) }
+        mainViewModel.snackbarText.observe(this) {
+            it.getContentIfNotHandled()?.let { text ->
+                Snackbar.make(window.decorView.rootView, text, Snackbar.LENGTH_SHORT).show()
+            }
+        }
 
         binding.btnSend.setOnClickListener {
             mainViewModel.postReview(binding.edReview.text.toString())
