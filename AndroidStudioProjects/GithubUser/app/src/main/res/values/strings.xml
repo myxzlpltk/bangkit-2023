@@ -13,4 +13,6 @@
     <string name="following">Following</string>
     <string name="john_doe">John Doe</string>
     <string name="john_doe_description">Degree in computer science or computer programming. End user-oriented. Expert IT skills. Strong aptitude for math. Advanced knowledge of operating systems.</string>
+    <string name="no_name">No Name</string>
+    <string name="no_bio">No Bio</string>
 </resources>

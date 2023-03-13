@@ -78,13 +78,13 @@ class UserDetailsActivity : AppCompatActivity() {
         /* Setup view pager */
         binding.viewPager.adapter = SectionsPagerAdapter(this, user)
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
-            tab.text = resources.getString(TAB_TITLES[position])
+            tab.text = getString(TAB_TITLES[position])
         }.attach()
 
         /* Update UI */
         Glide.with(this).load(user.avatarUrl).into(binding.userAvatar)
-        binding.userName.text = if (user.name.isNullOrEmpty()) "No Name" else user.name
-        binding.userBio.text = if (user.bio.isNullOrEmpty()) "No Bio" else user.bio
+        binding.userName.text = if (user.name.isNullOrEmpty()) getString(R.string.no_name) else user.name
+        binding.userBio.text = if (user.bio.isNullOrEmpty()) getString(R.string.no_bio) else user.bio
         binding.repoCount.text = user.publicRepos.toString()
         binding.followersCount.text = user.followers.toString()
         binding.followingCount.text = user.following.toString()

@@ -123,7 +123,7 @@
             android:contentDescription="@string/tab_description"
             android:fillViewport="true"
             app:tabSelectedTextColor="?attr/colorPrimary"
-            app:tabTextColor="@color/black" />
+            app:tabTextColor="?attr/colorOnSecondary" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
