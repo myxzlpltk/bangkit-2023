@@ -120,10 +120,10 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
             android:contentDescription="@string/tab_description"
-            app:tabBackground="@drawable/tab_color_selector"
-            app:tabTextColor="@android:color/white" />
+            android:fillViewport="true"
+            app:tabSelectedTextColor="?attr/colorPrimary"
+            app:tabTextColor="@color/black" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
@@ -133,7 +133,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progress_bar_2"
+        android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

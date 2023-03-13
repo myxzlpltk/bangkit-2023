@@ -41,12 +41,6 @@ class UserDetailsActivity : AppCompatActivity() {
         supportActionBar?.title = username.lowercase()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        /* Setup view pager */
-        binding.viewPager.adapter = SectionsPagerAdapter(this)
-        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
-            tab.text = resources.getString(TAB_TITLES[position])
-        }.attach()
-
         /* Observe data */
         viewModel.isLoading.observe(this) { showLoading(it) }
         viewModel.user.observe(this) { setUserData(it) }
@@ -70,14 +64,21 @@ class UserDetailsActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {
             binding.userDetailsContainer.visibility = View.GONE
-            binding.progressBar2.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
         } else {
             binding.userDetailsContainer.visibility = View.VISIBLE
-            binding.progressBar2.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
         }
     }
 
     private fun setUserData(user: UserDetailsResponse) {
+        /* Setup view pager */
+        binding.viewPager.adapter = SectionsPagerAdapter(this, user)
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
+
+        /* Update UI */
         Glide.with(this).load(user.avatarUrl).into(binding.userAvatar)
         binding.userName.text = if (user.name.isNullOrEmpty()) "No Name" else user.name
         binding.userBio.text = if (user.bio.isNullOrEmpty()) "No Bio" else user.bio
