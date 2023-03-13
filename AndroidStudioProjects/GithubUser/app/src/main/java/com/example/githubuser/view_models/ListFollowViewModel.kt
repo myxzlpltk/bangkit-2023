@@ -10,7 +10,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ListFollowViewModel : ViewModel() {
+class ListFollowViewModel(
+    private val type: String,
+    private val username: String,
+    private val total: Int,
+) : ViewModel() {
 
     companion object {
         const val DEFAULT_PAGE = 1
@@ -27,25 +31,22 @@ class ListFollowViewModel : ViewModel() {
     val toastText: LiveData<Event<String>> = _toastText
 
     private var page = DEFAULT_PAGE
+    private val totalLoaded get() = _users.value?.size ?: 0
     val isFirstPage get() = page == MainViewModel.DEFAULT_PAGE
 
-    fun findFollow(type: String, username: String, total: Int) {
+    init {
         if (total == 0) {
             _isLoading.value = false
-            return
+        } else {
+            loadFollow()
         }
-
-        page = DEFAULT_PAGE
-        _users.value = emptyList()
-
-        loadFollow(type, username, total)
     }
 
-    fun loadFollow(type: String, username: String, total: Int) {
+    fun loadFollow() {
         /* Cancel if still loading */
         if (_isLoading.value == true) return
         /* Cancel if all data already loaded */
-        if ((_users.value?.size ?: 0) >= total) {
+        if (totalLoaded >= total) {
             _isLoading.value = false
             return
         }

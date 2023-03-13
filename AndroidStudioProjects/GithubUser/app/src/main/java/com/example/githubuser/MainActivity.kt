@@ -40,7 +40,9 @@ class MainActivity : AppCompatActivity() {
         binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) viewModel.loadUsers(true)
+                if (!recyclerView.canScrollVertically(1)) {
+                    viewModel.loadUsers()
+                }
             }
         })
 

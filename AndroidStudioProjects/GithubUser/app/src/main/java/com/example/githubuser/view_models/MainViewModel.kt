@@ -17,6 +17,7 @@ class MainViewModel : ViewModel() {
         const val DEFAULT_QUERY = "saddam"
         const val DEFAULT_PAGE = 1
         const val DEFAULT_PER_PAGE = 30
+        const val DEFAULT_TOTAL = Int.MAX_VALUE
     }
 
     private val _users = MutableLiveData<List<UserResponse>>(emptyList())
@@ -28,7 +29,7 @@ class MainViewModel : ViewModel() {
     private val _toastText = MutableLiveData<Event<String>>()
     val toastText: LiveData<Event<String>> = _toastText
 
-    private var total = 0
+    private var total = DEFAULT_TOTAL
     private var query = DEFAULT_QUERY
     private var page = DEFAULT_PAGE
 
@@ -37,6 +38,7 @@ class MainViewModel : ViewModel() {
     }
 
     val isFirstPage get() = page == DEFAULT_PAGE
+    private val totalLoaded get() = _users.value?.size ?: 0
 
     fun findUsers(newQuery: String) {
         if (query == newQuery) return
@@ -44,16 +46,17 @@ class MainViewModel : ViewModel() {
         /* Reset all query */
         query = newQuery.ifEmpty { DEFAULT_QUERY }
         page = DEFAULT_PAGE
+        total = DEFAULT_TOTAL
         _users.value = emptyList()
 
         loadUsers()
     }
 
-    fun loadUsers(isLoadMore: Boolean = false) {
+    fun loadUsers() {
         /* Cancel if still loading */
         if (_isLoading.value == true) return
         /* Cancel if in load more mode and all data already loaded */
-        if (isLoadMore && (_users.value?.size ?: 0) >= total) return
+        if (totalLoaded >= total) return
         /* Start loading */
         _isLoading.value = true
 

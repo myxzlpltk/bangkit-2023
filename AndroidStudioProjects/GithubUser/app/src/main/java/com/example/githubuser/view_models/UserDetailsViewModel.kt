@@ -9,9 +9,8 @@ import com.example.githubuser.utils.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import timber.log.Timber
 
-class UserDetailsViewModel : ViewModel() {
+class UserDetailsViewModel(private val username: String) : ViewModel() {
 
     private val _user = MutableLiveData<UserDetailsResponse>()
     val user: LiveData<UserDetailsResponse> = _user
@@ -23,13 +22,10 @@ class UserDetailsViewModel : ViewModel() {
     val toastText: LiveData<Event<String>> = _toastText
 
     init {
-        Timber.d("UserDetailsViewModel initialize")
+        getUser()
     }
 
-    fun getUser(username: String) {
-        /* Cancel if still loading */
-        if (_isLoading.value == true) return
-        if (_user.value is UserDetailsResponse) return
+    private fun getUser() {
         /* Start loading */
         _isLoading.value = true
 

@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.githubuser.adapters.SectionsPagerAdapter
 import com.example.githubuser.databinding.ActivityUserDetailsBinding
 import com.example.githubuser.networks.UserDetailsResponse
 import com.example.githubuser.view_models.UserDetailsViewModel
+import com.example.githubuser.view_models.UserDetailsViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
 
 class UserDetailsActivity : AppCompatActivity() {
@@ -24,7 +25,7 @@ class UserDetailsActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityUserDetailsBinding
-    private val viewModel by viewModels<UserDetailsViewModel>()
+    private lateinit var viewModel: UserDetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +34,14 @@ class UserDetailsActivity : AppCompatActivity() {
         binding = ActivityUserDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /* Get extra data */
-        val username = intent.getStringExtra(EXTRA_USER) as String
-        viewModel.getUser(username)
+        /* Setup view model */
+        val username = (intent.getStringExtra(EXTRA_USER) as String).lowercase()
+        viewModel = ViewModelProvider(
+            this, UserDetailsViewModelFactory(username)
+        )[UserDetailsViewModel::class.java]
 
         /* Setup android header */
-        supportActionBar?.title = username.lowercase()
+        supportActionBar?.title = username
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         /* Observe data */

@@ -1,29 +1,31 @@
 package com.example.githubuser.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.adapters.ListUserAdapter
 import com.example.githubuser.databinding.FragmentFollowListBinding
+import com.example.githubuser.networks.UserDetailsResponse
 import com.example.githubuser.networks.UserResponse
 import com.example.githubuser.view_models.ListFollowViewModel
+import com.example.githubuser.view_models.ListFollowViewModelFactory
 
 class FollowListFragment : Fragment() {
 
     companion object {
         const val ARG_TYPE = "type"
-        const val ARG_USERNAME = "username"
-        const val ARG_TOTAL = "total"
+        const val ARG_USER = "user"
     }
 
     private lateinit var binding: FragmentFollowListBinding
-    private val viewModel: ListFollowViewModel by viewModels()
+    private lateinit var viewModel: ListFollowViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +38,23 @@ class FollowListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val type = (arguments as Bundle).getString(ARG_TYPE, "")
-        val username = (arguments as Bundle).getString(ARG_USERNAME, "")
-        val total = (arguments as Bundle).getInt(ARG_TOTAL, 0)
-        viewModel.findFollow(type, username, total)
+        /* Get Bundle */
+        val mBundle = arguments as Bundle
+        val type = mBundle.getString(ARG_TYPE, "")
+        val user = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mBundle.getParcelable(ARG_USER, UserDetailsResponse::class.java)
+        } else {
+            @Suppress("DEPRECATION") mBundle.getParcelable(ARG_USER)
+        } as UserDetailsResponse
+
+        /* Get user */
+        val username = user.login.lowercase()
+        val total = if (type == "following") user.following else user.followers
+
+        /* Setup viewModel */
+        viewModel = ViewModelProvider(
+            this, ListFollowViewModelFactory(type, username, total)
+        )[ListFollowViewModel::class.java]
 
         /* Setup user */
         binding.rvListFollow.setHasFixedSize(true)
@@ -48,7 +63,7 @@ class FollowListFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)) {
-                    viewModel.loadFollow(type, username, total)
+                    viewModel.loadFollow()
                 }
             }
         })

@@ -16,15 +16,13 @@ class SectionsPagerAdapter(activity: AppCompatActivity, private val user: UserDe
             0 -> FollowListFragment().apply {
                 arguments = Bundle().apply {
                     putString(FollowListFragment.ARG_TYPE, "followers")
-                    putString(FollowListFragment.ARG_USERNAME, user.login.lowercase())
-                    putInt(FollowListFragment.ARG_TOTAL, user.followers)
+                    putParcelable(FollowListFragment.ARG_USER, user)
                 }
             }
             else -> FollowListFragment().apply {
                 arguments = Bundle().apply {
                     putString(FollowListFragment.ARG_TYPE, "following")
-                    putString(FollowListFragment.ARG_USERNAME, user.login.lowercase())
-                    putInt(FollowListFragment.ARG_TOTAL, user.following)
+                    putParcelable(FollowListFragment.ARG_USER, user)
                 }
             }
         }
