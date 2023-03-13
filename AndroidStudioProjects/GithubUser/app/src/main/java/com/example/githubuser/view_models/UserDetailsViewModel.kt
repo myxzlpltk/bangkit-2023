@@ -9,6 +9,7 @@ import com.example.githubuser.utils.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 class UserDetailsViewModel : ViewModel() {
 
@@ -20,6 +21,10 @@ class UserDetailsViewModel : ViewModel() {
 
     private val _toastText = MutableLiveData<Event<String>>()
     val toastText: LiveData<Event<String>> = _toastText
+
+    init {
+        Timber.d("UserDetailsViewModel initialize")
+    }
 
     fun getUser(username: String) {
         /* Cancel if still loading */

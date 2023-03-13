@@ -5,16 +5,22 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.githubuser.adapters.SectionsPagerAdapter
 import com.example.githubuser.databinding.ActivityUserDetailsBinding
 import com.example.githubuser.networks.UserDetailsResponse
 import com.example.githubuser.view_models.UserDetailsViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 
 class UserDetailsActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_USER = "extra_user"
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(R.string.tab_text_1, R.string.tab_text_2)
     }
 
     private lateinit var binding: ActivityUserDetailsBinding
@@ -34,6 +40,12 @@ class UserDetailsActivity : AppCompatActivity() {
         /* Setup android header */
         supportActionBar?.title = username.lowercase()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        /* Setup view pager */
+        binding.viewPager.adapter = SectionsPagerAdapter(this)
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
 
         /* Observe data */
         viewModel.isLoading.observe(this) { showLoading(it) }

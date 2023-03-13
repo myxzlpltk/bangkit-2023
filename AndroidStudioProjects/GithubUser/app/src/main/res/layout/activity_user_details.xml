@@ -122,6 +122,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:contentDescription="@string/tab_description"
+            app:tabBackground="@drawable/tab_color_selector"
             app:tabTextColor="@android:color/white" />
 
         <androidx.viewpager2.widget.ViewPager2

@@ -5,8 +5,8 @@
     <string name="username">username</string>
     <string name="user_avatar_description">Image of Github\'s user</string>
     <string name="tab_description">Followers and following tab</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_1">Followers</string>
+    <string name="tab_text_2">Following</string>
     <string name="number_99">99</string>
     <string name="repositories">Repositories</string>
     <string name="followers">Followers</string>

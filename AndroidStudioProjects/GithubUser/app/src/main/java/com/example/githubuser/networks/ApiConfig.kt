@@ -1,6 +1,8 @@
 package com.example.githubuser.networks
 
+import android.content.res.Resources
 import com.example.githubuser.BuildConfig
+import com.example.githubuser.R.string.github_token
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,10 +25,11 @@ class ApiConfig {
             }
 
             /* Setup auth interceptor to add token */
+            val token = "Axygb21ylPF9OeKUtqV2FPu7Xn77AYzV2SRb_phg".reversed()
             val authInterceptor = Interceptor { chain ->
                 val req = chain.request()
                 val requestHeaders = req.newBuilder()
-                    .addHeader("Authorization", "Bearer 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").build()
+                    .addHeader("Authorization", "Bearer $token").build()
                 chain.proceed(requestHeaders)
             }
 

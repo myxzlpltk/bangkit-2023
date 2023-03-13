@@ -13,7 +13,7 @@ class ListUserAdapter(private val listUser: List<UserResponse>) :
     RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
 
     /* Provider reference custom type of view */
-    class ViewHolder(var binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         ItemRowUserBinding.inflate(
