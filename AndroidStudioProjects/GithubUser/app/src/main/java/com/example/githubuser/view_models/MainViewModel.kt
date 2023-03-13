@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import com.example.githubuser.networks.ApiConfig
 import com.example.githubuser.networks.SearchUsersResponse
 import com.example.githubuser.networks.UserResponse
+import com.example.githubuser.utils.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import timber.log.Timber
 
 class MainViewModel : ViewModel() {
 
@@ -19,20 +19,24 @@ class MainViewModel : ViewModel() {
         const val DEFAULT_PER_PAGE = 30
     }
 
-    private val _users = MutableLiveData<List<UserResponse>>()
+    private val _users = MutableLiveData<List<UserResponse>>(emptyList())
     val users: LiveData<List<UserResponse>> = _users
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _toastText = MutableLiveData<Event<String>>()
+    val toastText: LiveData<Event<String>> = _toastText
+
     private var total = 0
     private var query = DEFAULT_QUERY
-    var page = DEFAULT_PAGE
-        private set
+    private var page = DEFAULT_PAGE
 
     init {
         loadUsers()
     }
+
+    val isFirstPage get() = page == DEFAULT_PAGE
 
     fun findUsers(newQuery: String) {
         if (query == newQuery) return
@@ -40,6 +44,8 @@ class MainViewModel : ViewModel() {
         /* Reset all query */
         query = newQuery.ifEmpty { DEFAULT_QUERY }
         page = DEFAULT_PAGE
+        _users.value = emptyList()
+
         loadUsers()
     }
 
@@ -62,20 +68,18 @@ class MainViewModel : ViewModel() {
 
                     /* Save data */
                     val data = response.body()
-                    if (response.isSuccessful && data != null) {
-                        if (isLoadMore) _users.value = _users.value?.plus(data.items)
-                        else _users.value = data.items
+                    if (response.isSuccessful && data != null && data.items.isNotEmpty()) {
+                        _users.value = _users.value?.plus(data.items)
                         total = data.totalCount
                         page++
                     } else {
-                        Timber.e("Empty response on getAllUsers")
+                        _toastText.value = Event("There is no data to be found")
                     }
                 }
 
                 override fun onFailure(call: Call<SearchUsersResponse>, t: Throwable) {
                     _isLoading.value = false
-                    Timber.e("Fetch getAllUsers failed: $t")
-                    t.printStackTrace()
+                    _toastText.value = Event("Something went wrong. Check your network")
                 }
             })
     }

@@ -1,4 +1,4 @@
-package com.example.githubuser.activities
+package com.example.githubuser
 
 import android.app.SearchManager
 import android.content.Context
@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubuser.BuildConfig
-import com.example.githubuser.R
 import com.example.githubuser.adapters.ListUserAdapter
 import com.example.githubuser.databinding.ActivityMainBinding
 import com.example.githubuser.networks.UserResponse
@@ -22,7 +21,7 @@ import timber.log.Timber
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val mainViewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,19 +35,23 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = "All Github Users"
 
         /* Setup recycler view */
-        binding.rvUsers.setHasFixedSize(false)
+        binding.rvUsers.setHasFixedSize(true)
         binding.rvUsers.layoutManager = LinearLayoutManager(this)
         binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) mainViewModel.loadUsers(true)
+                if (!recyclerView.canScrollVertically(1)) viewModel.loadUsers(true)
             }
         })
 
-
         /* Subscribe to many stuff */
-        mainViewModel.isLoading.observe(this) { showLoading(it) }
-        mainViewModel.users.observe(this) { setAllUsersData(it) }
+        viewModel.isLoading.observe(this) { showLoading(it) }
+        viewModel.users.observe(this) { setAllUsersData(it) }
+        viewModel.toastText.observe(this) {
+            it.getContentIfNotHandled()?.let { text ->
+                Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -63,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean = false
             override fun onQueryTextSubmit(query: String): Boolean {
-                mainViewModel.findUsers(query)
+                viewModel.findUsers(query)
                 searchView.clearFocus()
                 return true
             }
@@ -74,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             .setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionExpand(p0: MenuItem): Boolean = true
                 override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
-                    mainViewModel.findUsers(MainViewModel.DEFAULT_QUERY)
+                    viewModel.findUsers(MainViewModel.DEFAULT_QUERY)
                     return true
                 }
             })
@@ -83,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAllUsersData(users: List<UserResponse>) {
-        if (mainViewModel.page == MainViewModel.DEFAULT_PAGE) {
+        if (viewModel.isFirstPage) {
             /* Reset position */
             binding.rvUsers.adapter = ListUserAdapter(users)
         } else {

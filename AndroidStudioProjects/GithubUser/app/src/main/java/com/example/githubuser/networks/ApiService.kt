@@ -10,4 +10,7 @@ interface ApiService {
         @Query("page") page: Int,
         @Query("per_page") perPage: Int = 30,
     ): Call<SearchUsersResponse>
+
+    @GET("users/{username}")
+    fun findUser(@Path("username") username: String): Call<UserDetailsResponse>
 }
