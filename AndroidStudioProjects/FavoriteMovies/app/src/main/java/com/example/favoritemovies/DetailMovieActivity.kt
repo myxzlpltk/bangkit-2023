@@ -1,16 +1,19 @@
 package com.example.favoritemovies
 
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toBitmap
+import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.example.favoritemovies.databinding.ActivityDetailMovieBinding
+import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
 
 
 class DetailMovieActivity : AppCompatActivity() {
@@ -31,8 +34,7 @@ class DetailMovieActivity : AppCompatActivity() {
         movie = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(EXTRA_MOVIE, Movie::class.java)
         } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableExtra(EXTRA_MOVIE)
+            @Suppress("DEPRECATION") intent.getParcelableExtra(EXTRA_MOVIE)
         } as Movie
 
         /* Setup view */
@@ -65,16 +67,27 @@ class DetailMovieActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun share() {
-        val bitmap = binding.moviePoster.drawable.toBitmap()
-        val bitmapPath: String =
-            MediaStore.Images.Media.insertImage(contentResolver, bitmap, "poster", "")
-        val bitmapUri: Uri = Uri.parse(bitmapPath)
+    private fun share() = Thread {
+        val url = URL(movie.poster)
+        val bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+        val filename = "poster-${System.currentTimeMillis()}.png"
+
+        val cacheFile = File(cacheDir, filename)
+        val out = FileOutputStream(cacheFile)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+        out.flush()
+        out.close()
+
+        val bitmapUri = FileProvider.getUriForFile(
+            this,
+            "${applicationContext.packageName}.provider",
+            cacheFile,
+        )
 
         val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "image/png"
+        intent.type = "image/jpeg"
         intent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
         intent.putExtra(Intent.EXTRA_TEXT, "Check out this movie! The title is ${movie.title}")
         startActivity(Intent.createChooser(intent, "Share"))
-    }
+    }.start()
 }
