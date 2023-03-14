@@ -24,14 +24,17 @@ class FollowListFragment : Fragment() {
         const val ARG_USER = "user"
     }
 
-    private lateinit var binding: FragmentFollowListBinding
-    private lateinit var viewModel: ListFollowViewModel
+    private var _binding: FragmentFollowListBinding? = null
+    private val binding get() = _binding!!
+
+    private var _viewModel: ListFollowViewModel? = null
+    private val viewModel get() = _viewModel!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentFollowListBinding.inflate(inflater, container, false)
+        _binding = FragmentFollowListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -52,7 +55,7 @@ class FollowListFragment : Fragment() {
         val total = if (type == "following") user.following else user.followers
 
         /* Setup viewModel */
-        viewModel = ViewModelProvider(
+        _viewModel = ViewModelProvider(
             this, ListFollowViewModelFactory(type, username, total)
         )[ListFollowViewModel::class.java]
 
@@ -76,6 +79,12 @@ class FollowListFragment : Fragment() {
                 Toast.makeText(activity, text, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        _viewModel = null
     }
 
     private fun setUsersData(users: List<UserResponse>) {
