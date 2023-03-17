@@ -1,16 +1,29 @@
 package com.example.githubuser.adapters
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.githubuser.UserDetailsActivity
 import com.example.githubuser.databinding.ItemRowUserBinding
+import com.example.githubuser.helpers.UserDiffCallback
 import com.example.githubuser.networks.UserResponse
 
-class ListUserAdapter(private val listUser: List<UserResponse>) :
-    RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
+class ListUserAdapter : RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
+
+    private var listUser = ArrayList<UserResponse>()
+
+    fun setListUser(newList: List<UserResponse>) {
+        val diffCallback = UserDiffCallback(listUser, newList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        listUser.clear()
+        listUser.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
+    }
 
     /* Provider reference custom type of view */
     class ViewHolder(val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root)
@@ -30,8 +43,7 @@ class ListUserAdapter(private val listUser: List<UserResponse>) :
             /* Start user detail activity */
             val intent = Intent(holder.itemView.context, UserDetailsActivity::class.java)
             intent.putExtra(
-                UserDetailsActivity.EXTRA_USER,
-                listUser[holder.adapterPosition].login.lowercase()
+                UserDetailsActivity.EXTRA_USER, listUser[holder.adapterPosition].login.lowercase()
             )
             holder.itemView.context.startActivity(intent)
         }

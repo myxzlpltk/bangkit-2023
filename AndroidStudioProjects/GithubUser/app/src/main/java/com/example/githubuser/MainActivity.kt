@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel by viewModels<MainViewModel>()
+    private val adapter = ListUserAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         /* Setup recycler view */
         binding.rvUsers.setHasFixedSize(true)
         binding.rvUsers.layoutManager = LinearLayoutManager(this)
+        binding.rvUsers.adapter = adapter
         binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -88,15 +90,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAllUsersData(users: List<UserResponse>) {
-        if (viewModel.isFirstPage) {
-            /* Reset position */
-            binding.rvUsers.adapter = ListUserAdapter(users)
-        } else {
-            /* Maintain position */
-            val recyclerViewState = binding.rvUsers.layoutManager?.onSaveInstanceState()
-            binding.rvUsers.adapter = ListUserAdapter(users)
-            binding.rvUsers.layoutManager?.onRestoreInstanceState(recyclerViewState)
-        }
+        adapter.setListUser(users)
     }
 
     private fun showLoading(isLoading: Boolean) {

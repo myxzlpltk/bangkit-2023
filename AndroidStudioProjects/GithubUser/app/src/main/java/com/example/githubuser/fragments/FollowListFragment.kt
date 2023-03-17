@@ -30,10 +30,14 @@ class FollowListFragment : Fragment() {
     private var _viewModel: ListFollowViewModel? = null
     private val viewModel get() = _viewModel!!
 
+    private var _adapter: ListUserAdapter? = null
+    private val adapter get() = _adapter!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        _adapter = ListUserAdapter()
         _binding = FragmentFollowListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -62,6 +66,7 @@ class FollowListFragment : Fragment() {
         /* Setup user */
         binding.rvListFollow.setHasFixedSize(true)
         binding.rvListFollow.layoutManager = LinearLayoutManager(activity)
+        binding.rvListFollow.adapter = adapter
         binding.rvListFollow.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -85,18 +90,11 @@ class FollowListFragment : Fragment() {
         super.onDestroyView()
         _binding = null
         _viewModel = null
+        _adapter = null
     }
 
     private fun setUsersData(users: List<UserResponse>) {
-        if (viewModel.isFirstPage) {
-            /* Reset position */
-            binding.rvListFollow.adapter = ListUserAdapter(users)
-        } else {
-            /* Maintain position */
-            val recyclerViewState = binding.rvListFollow.layoutManager?.onSaveInstanceState()
-            binding.rvListFollow.adapter = ListUserAdapter(users)
-            binding.rvListFollow.layoutManager?.onRestoreInstanceState(recyclerViewState)
-        }
+        adapter.setListUser(users)
     }
 
     private fun showLoading(isLoading: Boolean) {
