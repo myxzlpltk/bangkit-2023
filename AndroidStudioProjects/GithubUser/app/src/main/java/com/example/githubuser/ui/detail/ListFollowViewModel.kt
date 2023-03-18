@@ -1,11 +1,12 @@
-package com.example.githubuser.view_models
+package com.example.githubuser.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubuser.networks.ApiConfig
-import com.example.githubuser.networks.UserResponse
-import com.example.githubuser.utils.Event
+import com.example.githubuser.data.remote.retrofit.ApiConfig
+import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.ui.home.MainViewModel
+import com.example.githubuser.shared.util.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,8 +22,8 @@ class ListFollowViewModel(
         const val DEFAULT_PER_PAGE = 30
     }
 
-    private val _users = MutableLiveData<List<UserResponse>>(emptyList())
-    val users: LiveData<List<UserResponse>> = _users
+    private val _users = MutableLiveData<List<SimpleUser>>(emptyList())
+    val users: LiveData<List<SimpleUser>> = _users
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -55,10 +56,10 @@ class ListFollowViewModel(
 
         /* Fetch network */
         ApiConfig.getApiService().findFollow(username, type, page, DEFAULT_PER_PAGE)
-            .enqueue(object : Callback<List<UserResponse>> {
+            .enqueue(object : Callback<List<SimpleUser>> {
                 override fun onResponse(
-                    call: Call<List<UserResponse>>,
-                    response: Response<List<UserResponse>>,
+                    call: Call<List<SimpleUser>>,
+                    response: Response<List<SimpleUser>>,
                 ) {
                     _isLoading.value = false
 
@@ -72,7 +73,7 @@ class ListFollowViewModel(
                     }
                 }
 
-                override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
+                override fun onFailure(call: Call<List<SimpleUser>>, t: Throwable) {
                     _isLoading.value = false
                     _toastText.value = Event("Something went wrong. Check your network")
                 }

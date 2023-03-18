@@ -1,19 +1,19 @@
-package com.example.githubuser.view_models
+package com.example.githubuser.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubuser.networks.ApiConfig
-import com.example.githubuser.networks.UserDetailsResponse
-import com.example.githubuser.utils.Event
+import com.example.githubuser.data.remote.retrofit.ApiConfig
+import com.example.githubuser.data.remote.response.User
+import com.example.githubuser.shared.util.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class UserDetailsViewModel(private val username: String) : ViewModel() {
 
-    private val _user = MutableLiveData<UserDetailsResponse>()
-    val user: LiveData<UserDetailsResponse> = _user
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> = _user
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -31,22 +31,22 @@ class UserDetailsViewModel(private val username: String) : ViewModel() {
 
         /* Fetch network */
         ApiConfig.getApiService().findUser(username)
-            .enqueue(object : Callback<UserDetailsResponse> {
+            .enqueue(object : Callback<User> {
                 override fun onResponse(
-                    call: Call<UserDetailsResponse>,
-                    response: Response<UserDetailsResponse>,
+                    call: Call<User>,
+                    response: Response<User>,
                 ) {
                     _isLoading.value = false
 
                     /* Save data */
                     if (response.isSuccessful) {
-                        _user.value = response.body() as UserDetailsResponse
+                        _user.value = response.body() as User
                     } else {
                         _toastText.value = Event("There is no data to be found")
                     }
                 }
 
-                override fun onFailure(call: Call<UserDetailsResponse>, t: Throwable) {
+                override fun onFailure(call: Call<User>, t: Throwable) {
                     _isLoading.value = false
                     _toastText.value = Event("Something went wrong. Check your network")
                 }

@@ -1,4 +1,4 @@
-package com.example.githubuser.networks
+package com.example.githubuser.data.remote.retrofit
 
 import com.example.githubuser.BuildConfig
 import okhttp3.Interceptor
@@ -13,7 +13,7 @@ class ApiConfig {
 
         fun getApiService(): ApiService {
             /* Return existing api service if exists */
-            if (::apiService.isInitialized) return apiService
+            if (Companion::apiService.isInitialized) return apiService
 
             /* Conditional logging interceptor */
             val loggingInterceptor = if (BuildConfig.DEBUG) {

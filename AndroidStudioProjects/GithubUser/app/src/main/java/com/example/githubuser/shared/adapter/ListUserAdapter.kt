@@ -1,22 +1,21 @@
-package com.example.githubuser.adapters
+package com.example.githubuser.shared.adapter
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.githubuser.UserDetailsActivity
+import com.example.githubuser.ui.detail.UserDetailsActivity
 import com.example.githubuser.databinding.ItemRowUserBinding
-import com.example.githubuser.helpers.UserDiffCallback
-import com.example.githubuser.networks.UserResponse
+import com.example.githubuser.shared.helper.UserDiffCallback
+import com.example.githubuser.data.remote.response.SimpleUser
 
 class ListUserAdapter : RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
 
-    private var listUser = ArrayList<UserResponse>()
+    private var listUser = ArrayList<SimpleUser>()
 
-    fun setListUser(newList: List<UserResponse>) {
+    fun setListUser(newList: List<SimpleUser>) {
         val diffCallback = UserDiffCallback(listUser, newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 

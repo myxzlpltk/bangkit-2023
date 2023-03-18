@@ -1,4 +1,4 @@
-package com.example.githubuser
+package com.example.githubuser.ui.detail
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,11 +8,9 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.githubuser.adapters.SectionsPagerAdapter
+import com.example.githubuser.R
 import com.example.githubuser.databinding.ActivityUserDetailsBinding
-import com.example.githubuser.networks.UserDetailsResponse
-import com.example.githubuser.view_models.UserDetailsViewModel
-import com.example.githubuser.view_models.UserDetailsViewModelFactory
+import com.example.githubuser.data.remote.response.User
 import com.google.android.material.tabs.TabLayoutMediator
 
 class UserDetailsActivity : AppCompatActivity() {
@@ -74,7 +72,7 @@ class UserDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUserData(user: UserDetailsResponse) {
+    private fun setUserData(user: User) {
         /* Setup view pager */
         binding.viewPager.adapter = SectionsPagerAdapter(this, user)
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->

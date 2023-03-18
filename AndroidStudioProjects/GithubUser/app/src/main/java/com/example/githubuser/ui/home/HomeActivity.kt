@@ -1,4 +1,4 @@
-package com.example.githubuser
+package com.example.githubuser.ui.home
 
 import android.app.SearchManager
 import android.content.Context
@@ -12,15 +12,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubuser.adapters.ListUserAdapter
-import com.example.githubuser.databinding.ActivityMainBinding
-import com.example.githubuser.networks.UserResponse
-import com.example.githubuser.view_models.MainViewModel
+import com.example.githubuser.BuildConfig
+import com.example.githubuser.R
+import com.example.githubuser.shared.adapter.ListUserAdapter
+import com.example.githubuser.databinding.ActivityHomeBinding
+import com.example.githubuser.data.remote.response.SimpleUser
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityHomeBinding
     private val viewModel by viewModels<MainViewModel>()
     private val adapter = ListUserAdapter()
 
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         /* Bind view */
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         /* Setup android header */
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun setAllUsersData(users: List<UserResponse>) {
+    private fun setAllUsersData(users: List<SimpleUser>) {
         adapter.setListUser(users)
     }
 

@@ -1,5 +1,8 @@
-package com.example.githubuser.networks
+package com.example.githubuser.data.remote.retrofit
 
+import com.example.githubuser.data.remote.response.SearchResponse
+import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.data.remote.response.User
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -9,10 +12,10 @@ interface ApiService {
         @Query("q") query: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int = 30,
-    ): Call<SearchUsersResponse>
+    ): Call<SearchResponse>
 
     @GET("users/{username}")
-    fun findUser(@Path("username") username: String): Call<UserDetailsResponse>
+    fun findUser(@Path("username") username: String): Call<User>
 
     @GET("users/{username}/{type}")
     fun findFollow(
@@ -20,5 +23,5 @@ interface ApiService {
         @Path("type") type: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int = 30,
-    ): Call<List<UserResponse>>
+    ): Call<List<SimpleUser>>
 }

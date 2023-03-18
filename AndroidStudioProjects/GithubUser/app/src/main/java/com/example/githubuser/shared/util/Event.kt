@@ -1,4 +1,4 @@
-package com.example.githubuser.utils
+package com.example.githubuser.shared.util
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.

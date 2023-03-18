@@ -1,4 +1,4 @@
-package com.example.githubuser.fragments
+package com.example.githubuser.shared.fragment
 
 import android.os.Build
 import android.os.Bundle
@@ -10,12 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubuser.adapters.ListUserAdapter
+import com.example.githubuser.shared.adapter.ListUserAdapter
 import com.example.githubuser.databinding.FragmentFollowListBinding
-import com.example.githubuser.networks.UserDetailsResponse
-import com.example.githubuser.networks.UserResponse
-import com.example.githubuser.view_models.ListFollowViewModel
-import com.example.githubuser.view_models.ListFollowViewModelFactory
+import com.example.githubuser.data.remote.response.User
+import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.ui.detail.ListFollowViewModel
+import com.example.githubuser.ui.detail.ListFollowViewModelFactory
 
 class FollowListFragment : Fragment() {
 
@@ -49,10 +49,10 @@ class FollowListFragment : Fragment() {
         val mBundle = arguments as Bundle
         val type = mBundle.getString(ARG_TYPE, "")
         val user = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mBundle.getParcelable(ARG_USER, UserDetailsResponse::class.java)
+            mBundle.getParcelable(ARG_USER, User::class.java)
         } else {
             @Suppress("DEPRECATION") mBundle.getParcelable(ARG_USER)
-        } as UserDetailsResponse
+        } as User
 
         /* Get user */
         val username = user.login.lowercase()
@@ -93,7 +93,7 @@ class FollowListFragment : Fragment() {
         _adapter = null
     }
 
-    private fun setUsersData(users: List<UserResponse>) {
+    private fun setUsersData(users: List<SimpleUser>) {
         adapter.setListUser(users)
     }
 

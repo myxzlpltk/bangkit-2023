@@ -1,12 +1,12 @@
-package com.example.githubuser.view_models
+package com.example.githubuser.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubuser.networks.ApiConfig
-import com.example.githubuser.networks.SearchUsersResponse
-import com.example.githubuser.networks.UserResponse
-import com.example.githubuser.utils.Event
+import com.example.githubuser.data.remote.retrofit.ApiConfig
+import com.example.githubuser.data.remote.response.SearchResponse
+import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.shared.util.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,8 +20,8 @@ class MainViewModel : ViewModel() {
         const val DEFAULT_TOTAL = Int.MAX_VALUE
     }
 
-    private val _users = MutableLiveData<List<UserResponse>>(emptyList())
-    val users: LiveData<List<UserResponse>> = _users
+    private val _users = MutableLiveData<List<SimpleUser>>(emptyList())
+    val users: LiveData<List<SimpleUser>> = _users
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -62,10 +62,10 @@ class MainViewModel : ViewModel() {
 
         /* Fetch network */
         ApiConfig.getApiService().findUsers(query, page, DEFAULT_PER_PAGE)
-            .enqueue(object : Callback<SearchUsersResponse> {
+            .enqueue(object : Callback<SearchResponse> {
                 override fun onResponse(
-                    call: Call<SearchUsersResponse>,
-                    response: Response<SearchUsersResponse>,
+                    call: Call<SearchResponse>,
+                    response: Response<SearchResponse>,
                 ) {
                     _isLoading.value = false
 
@@ -80,7 +80,7 @@ class MainViewModel : ViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<SearchUsersResponse>, t: Throwable) {
+                override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                     _isLoading.value = false
                     _toastText.value = Event("Something went wrong. Check your network")
                 }

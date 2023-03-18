@@ -1,11 +1,11 @@
-package com.example.githubuser.networks
+package com.example.githubuser.data.remote.response
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UserDetailsResponse(
+data class User(
 
     @field:SerializedName("id")
     val id: Int,
