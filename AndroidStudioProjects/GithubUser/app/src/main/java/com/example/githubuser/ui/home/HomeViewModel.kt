@@ -44,9 +44,14 @@ class HomeViewModel(private val pref: SettingPreferences) : ViewModel() {
 
     fun findUsers(newQuery: String) {
         if (query == newQuery) return
+        else query = newQuery
 
+        findUsers()
+    }
+
+    fun findUsers() {
         /* Reset all query */
-        query = newQuery.ifEmpty { DEFAULT_QUERY }
+        query = query.ifEmpty { DEFAULT_QUERY }
         page = DEFAULT_PAGE
         total = DEFAULT_TOTAL
         _users.value = emptyList()

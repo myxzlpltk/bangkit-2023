@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +39,9 @@ class HomeActivity : AppCompatActivity() {
         /* Bind view */
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
         setContentView(binding.root)
+
+        /* Setup refresh layout */
+        binding.swipeRefresh.setOnRefreshListener { viewModel.findUsers() }
 
         /* Setup recycler view */
         binding.rvUsers.setHasFixedSize(true)
@@ -118,6 +120,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.swipeRefresh.isRefreshing = isLoading
     }
 }
