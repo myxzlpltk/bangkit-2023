@@ -117,6 +117,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
+            style="@style/MyTheme.TabLayout"
             android:layout_width="411dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -124,9 +125,7 @@
             android:fillViewport="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_bio"
-            app:tabSelectedTextColor="?attr/colorPrimary"
-            app:tabTextColor="?attr/colorOnSecondary" />
+            app:layout_constraintTop_toBottomOf="@+id/user_bio" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
