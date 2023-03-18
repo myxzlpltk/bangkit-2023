@@ -10,13 +10,14 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.iterator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.BuildConfig
 import com.example.githubuser.R
-import com.example.githubuser.shared.adapter.ListUserAdapter
-import com.example.githubuser.databinding.ActivityHomeBinding
 import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.databinding.ActivityHomeBinding
+import com.example.githubuser.shared.adapter.ListUserAdapter
 import timber.log.Timber
 
 class HomeActivity : AppCompatActivity() {
@@ -65,7 +66,8 @@ class HomeActivity : AppCompatActivity() {
 
         /* Init search manager*/
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        val searchItem = menu.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -76,18 +78,33 @@ class HomeActivity : AppCompatActivity() {
                 return true
             }
         })
+        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(searchItem: MenuItem): Boolean {
+                setItemsVisibility(menu, searchItem, false)
+                return true
+            }
 
-        /* Reset query on close */
-        menu.findItem(R.id.search)
-            .setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-                override fun onMenuItemActionExpand(p0: MenuItem): Boolean = true
-                override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
-                    viewModel.findUsers(MainViewModel.DEFAULT_QUERY)
-                    return true
-                }
-            })
+            override fun onMenuItemActionCollapse(searchItem: MenuItem): Boolean {
+                setItemsVisibility(menu, searchItem, true)
+                viewModel.findUsers(MainViewModel.DEFAULT_QUERY)
+                return true
+            }
+        })
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.settings -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setItemsVisibility(menu: Menu, exception: MenuItem, visible: Boolean) {
+        menu.iterator().forEach { if (it != exception) it.isVisible = visible }
     }
 
     private fun setAllUsersData(users: List<SimpleUser>) {

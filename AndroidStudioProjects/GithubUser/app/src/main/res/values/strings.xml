@@ -15,4 +15,9 @@
     <string name="john_doe_description">Degree in computer science or computer programming. End user-oriented. Expert IT skills. Strong aptitude for math. Advanced knowledge of operating systems.</string>
     <string name="no_name">No Name</string>
     <string name="no_bio">No Bio</string>
+
+    <!-- Preference Screen -->
+    <string name="settings">Settings</string>
+    <string name="show_menu">Show Menu</string>
+    <string name="favorites">Favorites</string>
 </resources>
