@@ -1,4 +1,4 @@
-package com.example.githubuser.shared.util
+package com.example.githubuser.helper
 
 import androidx.appcompat.app.AppCompatDelegate
 

@@ -16,7 +16,7 @@ abstract class GithubDatabase : RoomDatabase() {
 
         fun getInstance(context: Context): GithubDatabase {
             return instance ?: synchronized(this) {
-                Room.databaseBuilder(
+                instance ?: Room.databaseBuilder(
                     context.applicationContext, GithubDatabase::class.java, "Github.db"
                 ).build().also { instance = it }
             }

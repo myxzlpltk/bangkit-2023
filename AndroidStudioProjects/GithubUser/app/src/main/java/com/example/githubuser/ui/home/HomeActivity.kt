@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.BuildConfig
 import com.example.githubuser.R
+import com.example.githubuser.adapter.ListUserAdapter
 import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.databinding.ActivityHomeBinding
-import com.example.githubuser.shared.adapter.ListUserAdapter
-import com.example.githubuser.shared.util.AppUtils
+import com.example.githubuser.helper.AppUtils
 import com.example.githubuser.ui.settings.SettingPreferences
 import com.example.githubuser.ui.settings.SettingsActivity
 import timber.log.Timber

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.data.remote.retrofit.ApiConfig
-import com.example.githubuser.shared.util.Event
+import com.example.githubuser.helper.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

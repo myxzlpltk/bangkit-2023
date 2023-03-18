@@ -1,18 +1,22 @@
 package com.example.githubuser.data.local.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.example.githubuser.data.remote.response.UserResponse
+import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "users", indices = [Index(value = ["login"], unique = true)])
+@Parcelize
+@Entity(tableName = "users", indices = [Index(value = ["username"], unique = true)])
 class UserEntity(
     @ColumnInfo(name = "id")
     @PrimaryKey
     val id: Int,
 
-    @ColumnInfo(name = "login")
-    val login: String,
+    @ColumnInfo(name = "username")
+    private val _username: String,
 
     @ColumnInfo(name = "name")
     val name: String? = null,
@@ -33,5 +37,23 @@ class UserEntity(
     val followers: Int = 0,
 
     @ColumnInfo(name = "is_favorite")
-    val isFavorite: Boolean = false
-)
+    var isFavorite: Boolean = false,
+) : Parcelable {
+    val username get() = _username.lowercase()
+
+    companion object {
+        fun fromUserResponse(userResponse: UserResponse, isFavorite: Boolean): UserEntity {
+            return UserEntity(
+                userResponse.id,
+                userResponse.username,
+                userResponse.name,
+                userResponse.avatarUrl,
+                userResponse.bio,
+                userResponse.publicRepos,
+                userResponse.following,
+                userResponse.followers,
+                isFavorite,
+            )
+        }
+    }
+}

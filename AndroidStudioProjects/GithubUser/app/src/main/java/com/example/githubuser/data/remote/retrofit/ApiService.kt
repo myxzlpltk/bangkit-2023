@@ -14,7 +14,7 @@ interface ApiService {
     ): Call<SearchResponse>
 
     @GET("users/{username}")
-    fun findUser(@Path("username") username: String): Call<UserResponse>
+    suspend fun getUser(@Path("username") username: String): UserResponse
 
     @GET("users/{username}/followers")
     fun findFollowers(

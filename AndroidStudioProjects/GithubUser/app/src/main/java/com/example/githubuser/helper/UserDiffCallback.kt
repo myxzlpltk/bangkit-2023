@@ -1,4 +1,4 @@
-package com.example.githubuser.shared.helper
+package com.example.githubuser.helper
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.githubuser.data.remote.response.UserResponse
@@ -13,13 +13,13 @@ class UserDiffCallback(
     override fun getNewListSize(): Int = newList.size
 
     override fun areItemsTheSame(oldPos: Int, newPos: Int): Boolean {
-        return oldList[oldPos].login == newList[newPos].login
+        return oldList[oldPos].username == newList[newPos].username
     }
 
     override fun areContentsTheSame(oldPos: Int, newPos: Int): Boolean {
         val old = oldList[oldPos]
         val new = newList[newPos]
 
-        return old.login == new.login && old.id == new.id && old.avatarUrl == new.avatarUrl
+        return old.username == new.username && old.id == new.id && old.avatarUrl == new.avatarUrl
     }
 }

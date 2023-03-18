@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.githubuser.R
 import com.example.githubuser.databinding.ActivitySettingsBinding
-import com.example.githubuser.shared.util.AppUtils
+import com.example.githubuser.helper.AppUtils
 
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 

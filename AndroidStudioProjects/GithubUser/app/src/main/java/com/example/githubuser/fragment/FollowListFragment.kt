@@ -1,4 +1,4 @@
-package com.example.githubuser.shared.fragment
+package com.example.githubuser.fragment
 
 import android.os.Build
 import android.os.Bundle
@@ -10,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.githubuser.adapter.ListUserAdapter
+import com.example.githubuser.data.local.entity.UserEntity
 import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.databinding.FragmentFollowListBinding
-import com.example.githubuser.shared.adapter.ListUserAdapter
 import com.example.githubuser.ui.detail.ListFollowViewModel
 
 class FollowListFragment : Fragment() {
@@ -47,13 +48,13 @@ class FollowListFragment : Fragment() {
         val mBundle = arguments as Bundle
         val type = mBundle.getString(ARG_TYPE, "")
         val user = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mBundle.getParcelable(ARG_USER, UserResponse::class.java)
+            mBundle.getParcelable(ARG_USER, UserEntity::class.java)
         } else {
             @Suppress("DEPRECATION") mBundle.getParcelable(ARG_USER)
-        } as UserResponse
+        } as UserEntity
 
         /* Get user */
-        val username = user.login.lowercase()
+        val username = user.username
         val total = if (type == "following") user.following else user.followers
 
         /* Setup viewModel */

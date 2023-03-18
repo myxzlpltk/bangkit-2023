@@ -34,4 +34,8 @@
     <!-- Share Template -->
     <string name="share_template">This user has a lot of repositories and followers. Please follow them on Github via https://github.com/%1$s</string>
     <string name="share_using">Share using</string>
+
+    <!-- Network -->
+    <string name="offline_mode">No network detected</string>
+    <string name="general_error">Something went wrong! Try again later</string>
 </resources>

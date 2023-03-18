@@ -1,4 +1,4 @@
-package com.example.githubuser.shared.adapter
+package com.example.githubuser.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.databinding.ItemRowUserBinding
-import com.example.githubuser.shared.helper.UserDiffCallback
+import com.example.githubuser.helper.UserDiffCallback
 import com.example.githubuser.ui.detail.UserDetailsActivity
 
 class ListUserAdapter : RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
@@ -37,12 +37,12 @@ class ListUserAdapter : RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.itemView).load(listUser[position].avatarUrl).into(holder.binding.ivAvatar)
-        holder.binding.tvUsername.text = listUser[position].login.lowercase()
+        holder.binding.tvUsername.text = listUser[position].username
         holder.binding.itemRowUser.setOnClickListener {
             /* Start user detail activity */
             val intent = Intent(holder.itemView.context, UserDetailsActivity::class.java)
             intent.putExtra(
-                UserDetailsActivity.EXTRA_USER, listUser[holder.adapterPosition].login.lowercase()
+                UserDetailsActivity.EXTRA_USER, listUser[holder.adapterPosition].username
             )
             holder.itemView.context.startActivity(intent)
         }

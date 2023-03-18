@@ -1,18 +1,18 @@
 package com.example.githubuser.ui.detail
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.githubuser.R
-import com.example.githubuser.data.remote.response.UserResponse
+import com.example.githubuser.data.local.entity.UserEntity
 import com.example.githubuser.databinding.ActivityUserDetailsBinding
+import com.example.githubuser.helper.ResultState
 import com.google.android.material.tabs.TabLayoutMediator
 
 class UserDetailsActivity : AppCompatActivity() {
@@ -24,32 +24,36 @@ class UserDetailsActivity : AppCompatActivity() {
         private val TAB_TITLES = intArrayOf(R.string.tab_text_1, R.string.tab_text_2)
     }
 
-    private lateinit var binding: ActivityUserDetailsBinding
-    private lateinit var viewModel: UserDetailsViewModel
+    private val binding: ActivityUserDetailsBinding by lazy {
+        ActivityUserDetailsBinding.inflate(layoutInflater)
+    }
+    private val viewModel: UserDetailsViewModel by viewModels {
+        UserDetailsViewModel.Factory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        /* Bind view */
-        binding = ActivityUserDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /* Setup view model */
-        val username = (intent.getStringExtra(EXTRA_USER) as String).lowercase()
-        viewModel = ViewModelProvider(
-            this, UserDetailsViewModel.Factory(username)
-        )[UserDetailsViewModel::class.java]
-
         /* Setup android header */
+        val username = intent.getStringExtra(EXTRA_USER) as String
         supportActionBar?.title = username
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         /* Observe data */
-        viewModel.isLoading.observe(this) { showLoading(it) }
-        viewModel.user.observe(this) { setUserData(it) }
-        viewModel.toastText.observe(this) {
-            it.getContentIfNotHandled()?.let { text ->
-                Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+        viewModel.getUser(username).observe(this) { result ->
+            when (result) {
+                is ResultState.Loading -> showLoading(true)
+                is ResultState.Error -> {
+                    if (viewModel.getUser(username).isInitialized) showLoading(false)
+                    result.error.getContentIfNotHandled()?.let { text ->
+                        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is ResultState.Success -> {
+                    showLoading(false)
+                    setUserData(result.data)
+                }
             }
         }
     }
@@ -69,12 +73,12 @@ class UserDetailsActivity : AppCompatActivity() {
     }
 
     private fun share() {
-        viewModel.user.value?.let {
+        /*viewModel.user.value?.let {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
-            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_template, it.login))
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_template, it.username))
             startActivity(Intent.createChooser(intent, getString(R.string.share_using)))
-        }
+        }*/
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -87,7 +91,7 @@ class UserDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUserData(user: UserResponse) {
+    private fun setUserData(user: UserEntity) {
         /* Setup view pager */
         binding.viewPager.adapter = SectionsPagerAdapter(this, user)
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->

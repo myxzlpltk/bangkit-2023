@@ -1,17 +1,14 @@
 package com.example.githubuser.data.remote.response
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class UserResponse(
 
     @field:SerializedName("id")
     val id: Int,
 
     @field:SerializedName("login")
-    val login: String,
+    private val _username: String,
 
     @field:SerializedName("name")
     val name: String? = null,
@@ -30,4 +27,6 @@ data class UserResponse(
 
     @field:SerializedName("followers")
     val followers: Int = 0,
-) : Parcelable
+) {
+    val username get() = _username.lowercase()
+}
