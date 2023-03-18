@@ -3,8 +3,9 @@ package com.example.githubuser.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubuser.data.remote.retrofit.ApiConfig
+import androidx.lifecycle.ViewModelProvider
 import com.example.githubuser.data.remote.response.User
+import com.example.githubuser.data.remote.retrofit.ApiConfig
 import com.example.githubuser.shared.util.Event
 import retrofit2.Call
 import retrofit2.Callback
@@ -51,5 +52,12 @@ class UserDetailsViewModel(private val username: String) : ViewModel() {
                     _toastText.value = Event("Something went wrong. Check your network")
                 }
             })
+    }
+
+    class Factory(private val username: String) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            @Suppress("UNCHECKED_CAST")
+            return UserDetailsViewModel(username) as T
+        }
     }
 }

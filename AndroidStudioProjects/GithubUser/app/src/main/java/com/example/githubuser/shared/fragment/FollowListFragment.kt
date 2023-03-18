@@ -10,12 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubuser.shared.adapter.ListUserAdapter
-import com.example.githubuser.databinding.FragmentFollowListBinding
-import com.example.githubuser.data.remote.response.User
 import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.data.remote.response.User
+import com.example.githubuser.databinding.FragmentFollowListBinding
+import com.example.githubuser.shared.adapter.ListUserAdapter
 import com.example.githubuser.ui.detail.ListFollowViewModel
-import com.example.githubuser.ui.detail.ListFollowViewModelFactory
 
 class FollowListFragment : Fragment() {
 
@@ -60,7 +59,7 @@ class FollowListFragment : Fragment() {
 
         /* Setup viewModel */
         _viewModel = ViewModelProvider(
-            this, ListFollowViewModelFactory(type, username, total)
+            this, ListFollowViewModel.Factory(type, username, total)
         )[ListFollowViewModel::class.java]
 
         /* Setup user */

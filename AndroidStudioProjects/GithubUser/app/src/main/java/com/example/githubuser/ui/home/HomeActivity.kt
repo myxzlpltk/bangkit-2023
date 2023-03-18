@@ -2,6 +2,7 @@ package com.example.githubuser.ui.home
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -18,12 +19,19 @@ import com.example.githubuser.R
 import com.example.githubuser.data.remote.response.SimpleUser
 import com.example.githubuser.databinding.ActivityHomeBinding
 import com.example.githubuser.shared.adapter.ListUserAdapter
+import com.example.githubuser.shared.util.AppUtils
+import com.example.githubuser.ui.settings.SettingPreferences
+import com.example.githubuser.ui.settings.SettingsActivity
 import timber.log.Timber
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityHomeBinding
-    private val viewModel by viewModels<MainViewModel>()
+    private val binding: ActivityHomeBinding by lazy {
+        ActivityHomeBinding.inflate(layoutInflater)
+    }
+    private val viewModel by viewModels<HomeViewModel> {
+        HomeViewModel.Factory(SettingPreferences.getInstance(this))
+    }
     private val adapter = ListUserAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +39,7 @@ class HomeActivity : AppCompatActivity() {
 
         /* Bind view */
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
-        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        /* Setup android header */
-        supportActionBar?.title = "All Github Users"
 
         /* Setup recycler view */
         binding.rvUsers.setHasFixedSize(true)
@@ -58,6 +62,7 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
             }
         }
+        viewModel.getThemeSetting().observe(this) { which -> AppUtils.setTheme(which) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -86,7 +91,7 @@ class HomeActivity : AppCompatActivity() {
 
             override fun onMenuItemActionCollapse(searchItem: MenuItem): Boolean {
                 setItemsVisibility(menu, searchItem, true)
-                viewModel.findUsers(MainViewModel.DEFAULT_QUERY)
+                viewModel.findUsers(HomeViewModel.DEFAULT_QUERY)
                 return true
             }
         })
@@ -95,9 +100,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.settings -> {
-
+                val intent = Intent(this@HomeActivity, SettingsActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)

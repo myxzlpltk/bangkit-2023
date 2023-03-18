@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.githubuser.R
-import com.example.githubuser.databinding.ActivityUserDetailsBinding
 import com.example.githubuser.data.remote.response.User
+import com.example.githubuser.databinding.ActivityUserDetailsBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class UserDetailsActivity : AppCompatActivity() {
@@ -35,7 +35,7 @@ class UserDetailsActivity : AppCompatActivity() {
         /* Setup view model */
         val username = (intent.getStringExtra(EXTRA_USER) as String).lowercase()
         viewModel = ViewModelProvider(
-            this, UserDetailsViewModelFactory(username)
+            this, UserDetailsViewModel.Factory(username)
         )[UserDetailsViewModel::class.java]
 
         /* Setup android header */
@@ -53,13 +53,11 @@ class UserDetailsActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            android.R.id.home -> finish()
         }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -81,8 +79,10 @@ class UserDetailsActivity : AppCompatActivity() {
 
         /* Update UI */
         Glide.with(this).load(user.avatarUrl).into(binding.userAvatar)
-        binding.userName.text = if (user.name.isNullOrEmpty()) getString(R.string.no_name) else user.name
-        binding.userBio.text = if (user.bio.isNullOrEmpty()) getString(R.string.no_bio) else user.bio
+        binding.userName.text =
+            if (user.name.isNullOrEmpty()) getString(R.string.no_name) else user.name
+        binding.userBio.text =
+            if (user.bio.isNullOrEmpty()) getString(R.string.no_bio) else user.bio
         binding.repoCount.text = user.publicRepos.toString()
         binding.followersCount.text = user.followers.toString()
         binding.followingCount.text = user.following.toString()

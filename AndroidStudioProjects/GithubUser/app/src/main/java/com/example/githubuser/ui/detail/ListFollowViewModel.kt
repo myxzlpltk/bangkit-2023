@@ -3,9 +3,9 @@ package com.example.githubuser.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubuser.data.remote.retrofit.ApiConfig
+import androidx.lifecycle.ViewModelProvider
 import com.example.githubuser.data.remote.response.SimpleUser
-import com.example.githubuser.ui.home.MainViewModel
+import com.example.githubuser.data.remote.retrofit.ApiConfig
 import com.example.githubuser.shared.util.Event
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,7 +33,6 @@ class ListFollowViewModel(
 
     private var page = DEFAULT_PAGE
     private val totalLoaded get() = _users.value?.size ?: 0
-    val isFirstPage get() = page == MainViewModel.DEFAULT_PAGE
 
     init {
         if (total == 0) {
@@ -78,5 +77,12 @@ class ListFollowViewModel(
                     _toastText.value = Event("Something went wrong. Check your network")
                 }
             })
+    }
+
+    class Factory(private val type: String, private val username: String, private val total: Int) :
+        ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            @Suppress("UNCHECKED_CAST") return ListFollowViewModel(type, username, total) as T
+        }
     }
 }

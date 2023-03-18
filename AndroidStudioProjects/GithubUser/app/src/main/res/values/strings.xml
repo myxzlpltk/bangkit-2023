@@ -16,8 +16,17 @@
     <string name="no_name">No Name</string>
     <string name="no_bio">No Bio</string>
 
-    <!-- Preference Screen -->
+    <!-- Menu Screen -->
     <string name="settings">Settings</string>
     <string name="show_menu">Show Menu</string>
     <string name="favorites">Favorites</string>
+
+    <!-- Preference Screen -->
+    <string name="app_theme">App Theme</string>
+    <string name="app_theme_default">Follow System</string>
+
+    <!-- Activity Title -->
+    <string name="home_activity_title">All Github Users</string>
+    <string name="user_details_activity_title">Username</string>
+    <string name="settings_activity_title">App Settings</string>
 </resources>

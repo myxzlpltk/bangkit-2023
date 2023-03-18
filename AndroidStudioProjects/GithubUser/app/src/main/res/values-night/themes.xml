@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/gray</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/dark</item>
         <item name="actionBarStyle">@style/MyTheme.ActionBar</item>

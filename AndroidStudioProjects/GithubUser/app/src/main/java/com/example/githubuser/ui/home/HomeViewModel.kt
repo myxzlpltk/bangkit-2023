@@ -1,23 +1,26 @@
 package com.example.githubuser.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.githubuser.data.remote.retrofit.ApiConfig
+import androidx.lifecycle.*
 import com.example.githubuser.data.remote.response.SearchResponse
 import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.data.remote.retrofit.ApiConfig
 import com.example.githubuser.shared.util.Event
+import com.example.githubuser.ui.settings.SettingPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class HomeViewModel(private val pref: SettingPreferences) : ViewModel() {
 
     companion object {
         const val DEFAULT_QUERY = "saddam"
         const val DEFAULT_PAGE = 1
         const val DEFAULT_PER_PAGE = 30
         const val DEFAULT_TOTAL = Int.MAX_VALUE
+    }
+
+    fun getThemeSetting(): LiveData<Int> {
+        return pref.getThemeSetting().asLiveData()
     }
 
     private val _users = MutableLiveData<List<SimpleUser>>(emptyList())
@@ -37,7 +40,6 @@ class MainViewModel : ViewModel() {
         loadUsers()
     }
 
-    val isFirstPage get() = page == DEFAULT_PAGE
     private val totalLoaded get() = _users.value?.size ?: 0
 
     fun findUsers(newQuery: String) {
@@ -85,5 +87,12 @@ class MainViewModel : ViewModel() {
                     _toastText.value = Event("Something went wrong. Check your network")
                 }
             })
+    }
+
+    class Factory(private val pref: SettingPreferences) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            @Suppress("UNCHECKED_CAST")
+            return HomeViewModel(pref) as T
+        }
     }
 }
