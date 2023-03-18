@@ -54,29 +54,34 @@ class ListFollowViewModel(
         _isLoading.value = true
 
         /* Fetch network */
-        ApiConfig.getApiService().findFollow(username, type, page, DEFAULT_PER_PAGE)
-            .enqueue(object : Callback<List<UserResponse>> {
-                override fun onResponse(
-                    call: Call<List<UserResponse>>,
-                    response: Response<List<UserResponse>>,
-                ) {
-                    _isLoading.value = false
+        val apiRequest = if (type == "followers") {
+            ApiConfig.getApiService().findFollowers(username, page, DEFAULT_PER_PAGE)
+        } else {
+            ApiConfig.getApiService().findFollowing(username, page, DEFAULT_PER_PAGE)
+        }
 
-                    /* Save data */
-                    val data = response.body()
-                    if (response.isSuccessful && data != null) {
-                        _users.value = _users.value?.plus(data)
-                        page++
-                    } else {
-                        _toastText.value = Event("There is no data to be found")
-                    }
-                }
+        apiRequest.enqueue(object : Callback<List<UserResponse>> {
+            override fun onResponse(
+                call: Call<List<UserResponse>>,
+                response: Response<List<UserResponse>>,
+            ) {
+                _isLoading.value = false
 
-                override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
-                    _isLoading.value = false
-                    _toastText.value = Event("Something went wrong. Check your network")
+                /* Save data */
+                val data = response.body()
+                if (response.isSuccessful && data != null) {
+                    _users.value = _users.value?.plus(data)
+                    page++
+                } else {
+                    _toastText.value = Event("There is no data to be found")
                 }
-            })
+            }
+
+            override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
+                _isLoading.value = false
+                _toastText.value = Event("Something went wrong. Check your network")
+            }
+        })
     }
 
     class Factory(private val type: String, private val username: String, private val total: Int) :

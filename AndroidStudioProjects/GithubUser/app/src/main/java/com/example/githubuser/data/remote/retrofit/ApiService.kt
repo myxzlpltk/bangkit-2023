@@ -16,10 +16,16 @@ interface ApiService {
     @GET("users/{username}")
     fun findUser(@Path("username") username: String): Call<UserResponse>
 
-    @GET("users/{username}/{type}")
-    fun findFollow(
+    @GET("users/{username}/followers")
+    fun findFollowers(
         @Path("username") username: String,
-        @Path("type") type: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = 30,
+    ): Call<List<UserResponse>>
+
+    @GET("users/{username}/following")
+    fun findFollowing(
+        @Path("username") username: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int = 30,
     ): Call<List<UserResponse>>
