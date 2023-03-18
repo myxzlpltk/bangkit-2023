@@ -71,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
 
         /* Init search manager*/
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchItem = menu.findItem(R.id.search)
+        val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.search_hint)
@@ -101,7 +101,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.settings -> {
+            R.id.action_settings -> {
                 val intent = Intent(this@HomeActivity, SettingsActivity::class.java)
                 startActivity(intent)
             }

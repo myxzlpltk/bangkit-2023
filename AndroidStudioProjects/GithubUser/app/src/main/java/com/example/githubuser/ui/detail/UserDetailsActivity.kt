@@ -1,6 +1,8 @@
 package com.example.githubuser.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -52,12 +54,27 @@ class UserDetailsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.share_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
+            R.id.action_share -> share()
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun share() {
+        viewModel.user.value?.let {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_template, it.login))
+            startActivity(Intent.createChooser(intent, getString(R.string.share_using)))
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
