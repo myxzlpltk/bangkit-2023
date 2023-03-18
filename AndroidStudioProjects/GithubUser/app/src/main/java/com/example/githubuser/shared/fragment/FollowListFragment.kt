@@ -10,8 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubuser.data.remote.response.SimpleUser
-import com.example.githubuser.data.remote.response.User
+import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.databinding.FragmentFollowListBinding
 import com.example.githubuser.shared.adapter.ListUserAdapter
 import com.example.githubuser.ui.detail.ListFollowViewModel
@@ -48,10 +47,10 @@ class FollowListFragment : Fragment() {
         val mBundle = arguments as Bundle
         val type = mBundle.getString(ARG_TYPE, "")
         val user = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mBundle.getParcelable(ARG_USER, User::class.java)
+            mBundle.getParcelable(ARG_USER, UserResponse::class.java)
         } else {
             @Suppress("DEPRECATION") mBundle.getParcelable(ARG_USER)
-        } as User
+        } as UserResponse
 
         /* Get user */
         val username = user.login.lowercase()
@@ -92,7 +91,7 @@ class FollowListFragment : Fragment() {
         _adapter = null
     }
 
-    private fun setUsersData(users: List<SimpleUser>) {
+    private fun setUsersData(users: List<UserResponse>) {
         adapter.setListUser(users)
     }
 

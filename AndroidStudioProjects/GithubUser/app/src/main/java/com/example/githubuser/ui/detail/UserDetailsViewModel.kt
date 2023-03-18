@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.githubuser.data.remote.response.User
+import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.data.remote.retrofit.ApiConfig
 import com.example.githubuser.shared.util.Event
 import retrofit2.Call
@@ -13,8 +13,8 @@ import retrofit2.Response
 
 class UserDetailsViewModel(private val username: String) : ViewModel() {
 
-    private val _user = MutableLiveData<User>()
-    val user: LiveData<User> = _user
+    private val _user = MutableLiveData<UserResponse>()
+    val user: LiveData<UserResponse> = _user
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -32,22 +32,22 @@ class UserDetailsViewModel(private val username: String) : ViewModel() {
 
         /* Fetch network */
         ApiConfig.getApiService().findUser(username)
-            .enqueue(object : Callback<User> {
+            .enqueue(object : Callback<UserResponse> {
                 override fun onResponse(
-                    call: Call<User>,
-                    response: Response<User>,
+                    call: Call<UserResponse>,
+                    response: Response<UserResponse>,
                 ) {
                     _isLoading.value = false
 
                     /* Save data */
                     if (response.isSuccessful) {
-                        _user.value = response.body() as User
+                        _user.value = response.body() as UserResponse
                     } else {
                         _toastText.value = Event("There is no data to be found")
                     }
                 }
 
-                override fun onFailure(call: Call<User>, t: Throwable) {
+                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                     _isLoading.value = false
                     _toastText.value = Event("Something went wrong. Check your network")
                 }

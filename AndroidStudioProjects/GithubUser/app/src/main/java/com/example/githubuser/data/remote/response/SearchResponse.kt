@@ -8,5 +8,5 @@ data class SearchResponse(
 	val totalCount: Int,
 
     @field:SerializedName("items")
-	val items: List<SimpleUser>,
+	val items: List<UserResponse>,
 )

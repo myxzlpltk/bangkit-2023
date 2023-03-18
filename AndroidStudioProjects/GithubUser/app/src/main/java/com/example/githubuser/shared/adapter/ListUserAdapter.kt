@@ -6,16 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.databinding.ItemRowUserBinding
 import com.example.githubuser.shared.helper.UserDiffCallback
 import com.example.githubuser.ui.detail.UserDetailsActivity
 
 class ListUserAdapter : RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
 
-    private var listUser = ArrayList<SimpleUser>()
+    private var listUser = ArrayList<UserResponse>()
 
-    fun setListUser(newList: List<SimpleUser>) {
+    fun setListUser(newList: List<UserResponse>) {
         val diffCallback = UserDiffCallback(listUser, newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.data.remote.retrofit.ApiConfig
 import com.example.githubuser.shared.util.Event
 import retrofit2.Call
@@ -22,8 +22,8 @@ class ListFollowViewModel(
         const val DEFAULT_PER_PAGE = 30
     }
 
-    private val _users = MutableLiveData<List<SimpleUser>>(emptyList())
-    val users: LiveData<List<SimpleUser>> = _users
+    private val _users = MutableLiveData<List<UserResponse>>(emptyList())
+    val users: LiveData<List<UserResponse>> = _users
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -55,10 +55,10 @@ class ListFollowViewModel(
 
         /* Fetch network */
         ApiConfig.getApiService().findFollow(username, type, page, DEFAULT_PER_PAGE)
-            .enqueue(object : Callback<List<SimpleUser>> {
+            .enqueue(object : Callback<List<UserResponse>> {
                 override fun onResponse(
-                    call: Call<List<SimpleUser>>,
-                    response: Response<List<SimpleUser>>,
+                    call: Call<List<UserResponse>>,
+                    response: Response<List<UserResponse>>,
                 ) {
                     _isLoading.value = false
 
@@ -72,7 +72,7 @@ class ListFollowViewModel(
                     }
                 }
 
-                override fun onFailure(call: Call<List<SimpleUser>>, t: Throwable) {
+                override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
                     _isLoading.value = false
                     _toastText.value = Event("Something went wrong. Check your network")
                 }

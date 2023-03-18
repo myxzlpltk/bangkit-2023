@@ -1,11 +1,11 @@
 package com.example.githubuser.shared.helper
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.data.remote.response.UserResponse
 
 class UserDiffCallback(
-    private val oldList: List<SimpleUser>,
-    private val newList: List<SimpleUser>,
+    private val oldList: List<UserResponse>,
+    private val newList: List<UserResponse>,
 ) :
     DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size

@@ -2,7 +2,7 @@ package com.example.githubuser.ui.home
 
 import androidx.lifecycle.*
 import com.example.githubuser.data.remote.response.SearchResponse
-import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.data.remote.retrofit.ApiConfig
 import com.example.githubuser.shared.util.Event
 import com.example.githubuser.ui.settings.SettingPreferences
@@ -23,8 +23,8 @@ class HomeViewModel(private val pref: SettingPreferences) : ViewModel() {
         return pref.getThemeSetting().asLiveData()
     }
 
-    private val _users = MutableLiveData<List<SimpleUser>>(emptyList())
-    val users: LiveData<List<SimpleUser>> = _users
+    private val _users = MutableLiveData<List<UserResponse>>(emptyList())
+    val users: LiveData<List<UserResponse>> = _users
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading

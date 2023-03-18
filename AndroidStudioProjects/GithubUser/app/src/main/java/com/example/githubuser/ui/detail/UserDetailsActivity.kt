@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.githubuser.R
-import com.example.githubuser.data.remote.response.User
+import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.databinding.ActivityUserDetailsBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -87,7 +87,7 @@ class UserDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUserData(user: User) {
+    private fun setUserData(user: UserResponse) {
         /* Setup view pager */
         binding.viewPager.adapter = SectionsPagerAdapter(this, user)
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->

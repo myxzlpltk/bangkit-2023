@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.BuildConfig
 import com.example.githubuser.R
-import com.example.githubuser.data.remote.response.SimpleUser
+import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.databinding.ActivityHomeBinding
 import com.example.githubuser.shared.adapter.ListUserAdapter
 import com.example.githubuser.shared.util.AppUtils
@@ -113,7 +113,7 @@ class HomeActivity : AppCompatActivity() {
         menu.iterator().forEach { if (it != exception) it.isVisible = visible }
     }
 
-    private fun setAllUsersData(users: List<SimpleUser>) {
+    private fun setAllUsersData(users: List<UserResponse>) {
         adapter.setListUser(users)
     }
 
