@@ -9,6 +9,10 @@ import com.example.githubuser.fragment.FollowListFragment
 
 class SectionsPagerAdapter(activity: AppCompatActivity, private val user: UserEntity) :
     FragmentStateAdapter(activity) {
+    fun isNeedToUpdate(user: UserEntity): Boolean {
+        return user.followers != this.user.followers || user.following != this.user.following
+    }
+
     override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment {

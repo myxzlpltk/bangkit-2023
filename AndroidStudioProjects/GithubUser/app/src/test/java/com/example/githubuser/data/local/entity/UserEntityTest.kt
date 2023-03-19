@@ -15,10 +15,6 @@ class UserEntityTest {
     private val defaultFollowing = 10
     private val defaultFollowers = 11
 
-    @Before
-    fun before() {
-    }
-
     @Test
     fun getUsername() {
         userEntity = injectUserEntity("TESTUSERNAME")

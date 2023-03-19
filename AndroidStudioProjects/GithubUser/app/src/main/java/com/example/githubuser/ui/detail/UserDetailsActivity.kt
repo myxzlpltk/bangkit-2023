@@ -33,6 +33,7 @@ class UserDetailsActivity : AppCompatActivity() {
         UserDetailsViewModel.Factory.getInstance(this)
     }
     private val username: String by lazy { intent.getStringExtra(EXTRA_USER) as String }
+    private var adapter: SectionsPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,7 +94,11 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private fun setUserData(user: UserEntity) {
         // Setup view pager
-        binding.viewPager.adapter = SectionsPagerAdapter(this, user)
+        if (adapter == null || adapter?.isNeedToUpdate(user) == true) {
+            adapter = SectionsPagerAdapter(this, user)
+            binding.viewPager.adapter = adapter
+        }
+        // Mediate between viewpager and tablayout
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = getString(TAB_TITLES[position])
         }.attach()
