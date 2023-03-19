@@ -36,14 +36,14 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /* Bind view */
+        // Bind view
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
         setContentView(binding.root)
 
-        /* Setup refresh layout */
+        // Setup refresh layout
         binding.swipeRefresh.setOnRefreshListener { viewModel.findUsers() }
 
-        /* Setup recycler view */
+        // Setup recycler view
         binding.rvUsers.setHasFixedSize(true)
         binding.rvUsers.layoutManager = LinearLayoutManager(this)
         binding.rvUsers.adapter = adapter
@@ -56,7 +56,7 @@ class HomeActivity : AppCompatActivity() {
             }
         })
 
-        /* Subscribe to many stuff */
+        // Subscribe to many stuff
         viewModel.isLoading.observe(this) { showLoading(it) }
         viewModel.users.observe(this) { setAllUsersData(it) }
         viewModel.toastText.observe(this) {
@@ -68,7 +68,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        /* Bind menu */
+        // Bind menu
         menuInflater.inflate(R.menu.search_menu, menu)
 
         /* Init search manager*/

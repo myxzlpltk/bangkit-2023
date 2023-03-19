@@ -43,17 +43,17 @@ class ListFollowViewModel(
     }
 
     fun loadFollow() {
-        /* Cancel if still loading */
+        // Cancel if still loading
         if (_isLoading.value == true) return
-        /* Cancel if all data already loaded */
+        // Cancel if all data already loaded
         if (totalLoaded >= total) {
             _isLoading.value = false
             return
         }
-        /* Start loading */
+        // Start loading
         _isLoading.value = true
 
-        /* Fetch network */
+        // Fetch network
         val apiRequest = if (type == "followers") {
             ApiConfig.getApiService().findFollowers(username, page, DEFAULT_PER_PAGE)
         } else {
@@ -67,7 +67,7 @@ class ListFollowViewModel(
             ) {
                 _isLoading.value = false
 
-                /* Save data */
+                // Save data
                 val data = response.body()
                 if (response.isSuccessful && data != null) {
                     _users.value = _users.value?.plus(data)

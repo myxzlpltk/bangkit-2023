@@ -29,17 +29,17 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        /* Setup action bar */
+        // Setup action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        /* Listen to live data */
+        // Listen to live data
         viewModel.getThemeSetting().observe(this) { which ->
             selectedTheme = which
             binding.themeSummary.text = options[which]
             AppUtils.setTheme(which)
         }
 
-        /* Binding listener */
+        // Binding listener
         binding.themeSetting.setOnClickListener(this)
     }
 

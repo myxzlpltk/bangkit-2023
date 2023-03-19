@@ -12,17 +12,17 @@ class ApiConfig {
         private lateinit var apiService: ApiService
 
         fun getApiService(): ApiService {
-            /* Return existing api service if exists */
+            // Return existing api service if exists
             if (Companion::apiService.isInitialized) return apiService
 
-            /* Conditional logging interceptor */
+            // Conditional logging interceptor
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
             }
 
-            /* Setup auth interceptor to add token */
+            // Setup auth interceptor to add token
             val token = BuildConfig.GITHUB_TOKEN.reversed()
             val authInterceptor = Interceptor { chain ->
                 val req = chain.request()
@@ -31,18 +31,18 @@ class ApiConfig {
                 chain.proceed(requestHeaders)
             }
 
-            /* Build client */
+            // Build client
             val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor)
                 .addInterceptor(authInterceptor).build()
 
-            /* Create retrofit service */
+            // Create retrofit service
             val retrofit = Retrofit.Builder().baseUrl("https://api.github.com")
                 .addConverterFactory(GsonConverterFactory.create()).client(client).build()
 
-            /* Set new api service */
+            // Set new api service
             apiService = retrofit.create(ApiService::class.java)
 
-            /* Return api service */
+            // Return api service
             return apiService
         }
     }

@@ -35,12 +35,12 @@ class UserDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        /* Setup android header */
+        // Setup android header
         val username = intent.getStringExtra(EXTRA_USER) as String
         supportActionBar?.title = username
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        /* Observe data */
+        // Observe data
         viewModel.getUser(username).observe(this) { result ->
             when (result) {
                 is ResultState.Loading -> showLoading(true)
@@ -92,13 +92,13 @@ class UserDetailsActivity : AppCompatActivity() {
     }
 
     private fun setUserData(user: UserEntity) {
-        /* Setup view pager */
+        // Setup view pager
         binding.viewPager.adapter = SectionsPagerAdapter(this, user)
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = getString(TAB_TITLES[position])
         }.attach()
 
-        /* Update UI */
+        // Update UI
         Glide.with(this).load(user.avatarUrl).into(binding.userAvatar)
         binding.userName.text =
             if (user.name.isNullOrEmpty()) getString(R.string.no_name) else user.name

@@ -42,6 +42,12 @@ class UserEntity(
     val username get() = _username.lowercase()
 
     companion object {
+        /**
+         * To convert UserResponse into UserEntity
+         * @param userResponse A data class from network response
+         * @param isFavorite Is the user will be favorite
+         * @return UserEntity
+         */
         fun fromUserResponse(userResponse: UserResponse, isFavorite: Boolean): UserEntity {
             return UserEntity(
                 userResponse.id,

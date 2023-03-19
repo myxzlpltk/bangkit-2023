@@ -50,7 +50,7 @@ class HomeViewModel(private val pref: SettingPreferences) : ViewModel() {
     }
 
     fun findUsers() {
-        /* Reset all query */
+        // Reset all query
         query = query.ifEmpty { DEFAULT_QUERY }
         page = DEFAULT_PAGE
         total = DEFAULT_TOTAL
@@ -60,14 +60,14 @@ class HomeViewModel(private val pref: SettingPreferences) : ViewModel() {
     }
 
     fun loadUsers() {
-        /* Cancel if still loading */
+        // Cancel if still loading
         if (_isLoading.value == true) return
-        /* Cancel if in load more mode and all data already loaded */
+        // Cancel if in load more mode and all data already loaded
         if (totalLoaded >= total) return
-        /* Start loading */
+        // Start loading
         _isLoading.value = true
 
-        /* Fetch network */
+        // Fetch network
         ApiConfig.getApiService().findUsers(query, page, DEFAULT_PER_PAGE)
             .enqueue(object : Callback<SearchResponse> {
                 override fun onResponse(
@@ -76,7 +76,7 @@ class HomeViewModel(private val pref: SettingPreferences) : ViewModel() {
                 ) {
                     _isLoading.value = false
 
-                    /* Save data */
+                    // Save data
                     val data = response.body()
                     if (response.isSuccessful && data != null && data.items.isNotEmpty()) {
                         _users.value = _users.value?.plus(data.items)

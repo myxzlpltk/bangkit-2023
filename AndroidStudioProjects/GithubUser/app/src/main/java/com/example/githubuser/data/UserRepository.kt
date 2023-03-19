@@ -14,22 +14,37 @@ class UserRepository private constructor(
     private val userDao: UserDao,
 ) {
 
-    /* Get user from DB first then network */
+    /**
+     * To get the user from network or database
+     * @param username Username of the user
+     * @return UserEntity
+     */
     fun getUser(username: String): LiveData<ResultState<UserEntity>> = liveData {
+        // Send loading state
         emit(ResultState.Loading)
 
+        // Check database
         val localData: LiveData<ResultState<UserEntity>> = userDao.getUserByUsername(username).map {
-            if (it == null) ResultState.Loading else ResultState.Success(it)
+            // Send loading if not found
+            if (it == null) ResultState.Loading
+            // Send success with data if it found
+            else ResultState.Success(it)
         }
+        // Hook up the live data source
         emitSource(localData)
 
+        // Try fetch the user from network
         try {
+            // Get the response
             val response = apiService.getUser(username)
+            // Check if the user is favorite from db
             val isFavorite = userDao.isFavorite(response.username)
+            // Create UserEntity
             val user = UserEntity.fromUserResponse(response, isFavorite)
-
+            // Insert into database
             userDao.insertUser(user)
         } catch (e: Exception) {
+            // Send error
             emit(ResultState.Error(Event("Network error! Please try again later")))
         }
     }

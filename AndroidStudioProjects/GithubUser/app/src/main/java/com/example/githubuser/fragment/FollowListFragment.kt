@@ -44,7 +44,7 @@ class FollowListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /* Get Bundle */
+        // Get Bundle
         val mBundle = arguments as Bundle
         val type = mBundle.getString(ARG_TYPE, "")
         val user = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -53,16 +53,16 @@ class FollowListFragment : Fragment() {
             @Suppress("DEPRECATION") mBundle.getParcelable(ARG_USER)
         } as UserEntity
 
-        /* Get user */
+        // Get user
         val username = user.username
         val total = if (type == "following") user.following else user.followers
 
-        /* Setup viewModel */
+        // Setup viewModel
         _viewModel = ViewModelProvider(
             this, ListFollowViewModel.Factory(type, username, total)
         )[ListFollowViewModel::class.java]
 
-        /* Setup user */
+        // Setup user
         binding.rvListFollow.setHasFixedSize(true)
         binding.rvListFollow.layoutManager = LinearLayoutManager(activity)
         binding.rvListFollow.adapter = adapter
@@ -75,7 +75,7 @@ class FollowListFragment : Fragment() {
             }
         })
 
-        /* Observe update data */
+        // Observe update data
         viewModel.isLoading.observe(viewLifecycleOwner) { showLoading(it) }
         viewModel.users.observe(viewLifecycleOwner) { setUsersData(it) }
         viewModel.toastText.observe(viewLifecycleOwner) {
