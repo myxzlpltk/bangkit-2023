@@ -32,17 +32,6 @@
         app:layout_constraintStart_toEndOf="@+id/user_avatar" />
 
     <TextView
-        android:id="@+id/following_count"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/number_99"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/followers_count" />
-
-    <TextView
         android:id="@+id/followers_count"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -52,6 +41,17 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/following_count"
         app:layout_constraintStart_toEndOf="@+id/repo_count" />
+
+    <TextView
+        android:id="@+id/following_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/number_99"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/followers_count" />
 
 
     <TextView
@@ -137,7 +137,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        app:constraint_referenced_ids="repo_count,following_count,followers_count"
+        app:constraint_referenced_ids="repo_count,followers_count,following_count"
         app:layout_constraintBottom_toTopOf="@+id/flow_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/user_avatar"
