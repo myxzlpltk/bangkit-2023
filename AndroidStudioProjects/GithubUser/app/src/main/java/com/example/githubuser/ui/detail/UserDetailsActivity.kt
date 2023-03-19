@@ -1,5 +1,6 @@
 package com.example.githubuser.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.githubuser.R
 import com.example.githubuser.data.local.entity.UserEntity
@@ -30,13 +32,13 @@ class UserDetailsActivity : AppCompatActivity() {
     private val viewModel: UserDetailsViewModel by viewModels {
         UserDetailsViewModel.Factory.getInstance(this)
     }
+    private val username: String by lazy { intent.getStringExtra(EXTRA_USER) as String }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         // Setup android header
-        val username = intent.getStringExtra(EXTRA_USER) as String
         supportActionBar?.title = username
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -73,12 +75,10 @@ class UserDetailsActivity : AppCompatActivity() {
     }
 
     private fun share() {
-        /*viewModel.user.value?.let {
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "text/plain"
-            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_template, it.username))
-            startActivity(Intent.createChooser(intent, getString(R.string.share_using)))
-        }*/
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_template, username))
+        startActivity(Intent.createChooser(intent, getString(R.string.share_using)))
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -100,12 +100,19 @@ class UserDetailsActivity : AppCompatActivity() {
 
         // Update UI
         Glide.with(this).load(user.avatarUrl).into(binding.userAvatar)
-        binding.userName.text =
-            if (user.name.isNullOrEmpty()) getString(R.string.no_name) else user.name
-        binding.userBio.text =
-            if (user.bio.isNullOrEmpty()) getString(R.string.no_bio) else user.bio
+        binding.userName.text = (user.name ?: "").ifEmpty { getString(R.string.no_name) }
+        binding.userBio.text = (user.bio ?: "").ifEmpty { getString(R.string.no_bio) }
         binding.repoCount.text = user.publicRepos.toString()
         binding.followersCount.text = user.followers.toString()
         binding.followingCount.text = user.following.toString()
+        binding.fabFavorite.setImageDrawable(
+            ContextCompat.getDrawable(
+                binding.fabFavorite.context,
+                if (user.isFavorite) R.drawable.ic_favorite_24 else R.drawable.ic_favorite_border_24
+            )
+        )
+
+        // Set action
+        binding.fabFavorite.setOnClickListener { viewModel.toggleFavorite(user) }
     }
 }

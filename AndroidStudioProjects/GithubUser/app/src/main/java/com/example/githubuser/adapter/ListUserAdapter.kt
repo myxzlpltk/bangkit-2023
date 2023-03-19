@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.githubuser.data.remote.response.UserResponse
+import com.example.githubuser.data.local.entity.UserEntity
 import com.example.githubuser.databinding.ItemRowUserBinding
 import com.example.githubuser.helper.UserDiffCallback
 import com.example.githubuser.ui.detail.UserDetailsActivity
@@ -14,13 +14,13 @@ import com.example.githubuser.ui.detail.UserDetailsActivity
 class ListUserAdapter : RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
 
     // List of users
-    private var listUser = ArrayList<UserResponse>()
+    private var listUser = ArrayList<UserEntity>()
 
     /**
      * To replace the list of users and update the recycler view with keeping position
      * @param newList The updated list of users
      */
-    fun setListUser(newList: List<UserResponse>) {
+    fun setListUser(newList: List<UserEntity>) {
         val diffCallback = UserDiffCallback(listUser, newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 

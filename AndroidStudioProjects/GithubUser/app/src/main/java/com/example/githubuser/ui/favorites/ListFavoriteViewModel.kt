@@ -1,28 +1,19 @@
-package com.example.githubuser.ui.detail
+package com.example.githubuser.ui.favorites
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.githubuser.data.UserRepository
-import com.example.githubuser.data.local.entity.UserEntity
 import com.example.githubuser.di.Injection
-import kotlinx.coroutines.launch
 
-class UserDetailsViewModel(private val userRepository: UserRepository) : ViewModel() {
+class ListFavoriteViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    fun getUser(username: String) = userRepository.getUser(username)
-
-    fun toggleFavorite(user: UserEntity) {
-        viewModelScope.launch {
-            userRepository.setFavoriteUser(user, !user.isFavorite)
-        }
-    }
+    fun getFavoriteUsers() = userRepository.getFavoriteUsers()
 
     class Factory(private val userRepository: UserRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return UserDetailsViewModel(userRepository) as T
+            return ListFavoriteViewModel(userRepository) as T
         }
 
         companion object {

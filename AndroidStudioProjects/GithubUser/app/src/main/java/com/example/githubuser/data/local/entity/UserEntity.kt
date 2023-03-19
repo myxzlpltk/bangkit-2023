@@ -48,7 +48,7 @@ class UserEntity(
          * @param isFavorite Is the user will be favorite
          * @return UserEntity
          */
-        fun fromUserResponse(userResponse: UserResponse, isFavorite: Boolean): UserEntity {
+        fun fromUserResponse(userResponse: UserResponse, isFavorite: Boolean = false): UserEntity {
             return UserEntity(
                 userResponse.id,
                 userResponse.username,

@@ -93,7 +93,7 @@ class FollowListFragment : Fragment() {
     }
 
     private fun setUsersData(users: List<UserResponse>) {
-        adapter.setListUser(users)
+        adapter.setListUser(users.map { UserEntity.fromUserResponse(it) })
     }
 
     private fun showLoading(isLoading: Boolean) {

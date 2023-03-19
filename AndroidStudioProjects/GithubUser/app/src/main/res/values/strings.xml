@@ -30,6 +30,7 @@
     <string name="home_activity_title">All Github Users</string>
     <string name="user_details_activity_title">Username</string>
     <string name="settings_activity_title">App Settings</string>
+    <string name="list_favorite_activity_title">List Favorite User</string>
 
     <!-- Share Template -->
     <string name="share_template">This user has a lot of repositories and followers. Please follow them on Github via https://github.com/%1$s</string>
@@ -38,4 +39,6 @@
     <!-- Network -->
     <string name="offline_mode">No network detected</string>
     <string name="general_error">Something went wrong! Try again later</string>
+    <string name="no_data_description">There is no data to be found</string>
+    <string name="favorite_toggle_button">Favorite toggle button</string>
 </resources>

@@ -15,7 +15,7 @@ class UserRepository private constructor(
 ) {
 
     /**
-     * To get the user from network or database
+     * Get user from network or database
      * @param username Username of the user
      * @return UserEntity
      */
@@ -47,6 +47,26 @@ class UserRepository private constructor(
             // Send error
             emit(ResultState.Error(Event("Network error! Please try again later")))
         }
+    }
+
+    /**
+     * Get favorite users from database only
+     */
+    fun getFavoriteUsers(): LiveData<ResultState<List<UserEntity>>> = liveData {
+        // Send loading state
+        emit(ResultState.Loading)
+
+        // Check database
+        val localData: LiveData<ResultState<List<UserEntity>>> = userDao.getFavoriteUsers().map {
+            ResultState.Success(it)
+        }
+        // Hook up the live data source
+        emitSource(localData)
+    }
+
+    suspend fun setFavoriteUser(user: UserEntity, isFavorite: Boolean) {
+        user.isFavorite = isFavorite
+        userDao.updateUser(user)
     }
 
     companion object {

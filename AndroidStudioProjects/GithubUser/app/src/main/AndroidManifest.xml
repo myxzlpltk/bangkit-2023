@@ -14,17 +14,21 @@
         android:theme="@style/MyTheme"
         tools:targetApi="31">
         <activity
-            android:name=".ui.settings.SettingsActivity"
-            android:label="@string/settings_activity_title"
+            android:name=".ui.favorites.ListFavoriteActivity"
+            android:label="@string/list_favorite_activity_title"
             android:exported="false" />
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="false"
+            android:label="@string/settings_activity_title" />
         <activity
             android:name=".ui.detail.UserDetailsActivity"
-            android:label="@string/user_details_activity_title"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/user_details_activity_title" />
         <activity
             android:name=".ui.home.HomeActivity"
-            android:label="@string/home_activity_title"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/home_activity_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

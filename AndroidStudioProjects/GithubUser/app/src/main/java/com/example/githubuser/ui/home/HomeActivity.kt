@@ -16,9 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.BuildConfig
 import com.example.githubuser.R
 import com.example.githubuser.adapter.ListUserAdapter
+import com.example.githubuser.data.local.entity.UserEntity
 import com.example.githubuser.data.remote.response.UserResponse
 import com.example.githubuser.databinding.ActivityHomeBinding
 import com.example.githubuser.helper.AppUtils
+import com.example.githubuser.ui.favorites.ListFavoriteActivity
 import com.example.githubuser.ui.settings.SettingPreferences
 import com.example.githubuser.ui.settings.SettingsActivity
 import timber.log.Timber
@@ -107,6 +109,10 @@ class HomeActivity : AppCompatActivity() {
                 val intent = Intent(this@HomeActivity, SettingsActivity::class.java)
                 startActivity(intent)
             }
+            R.id.action_favorites -> {
+                val intent = Intent(this@HomeActivity, ListFavoriteActivity::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -116,7 +122,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setAllUsersData(users: List<UserResponse>) {
-        adapter.setListUser(users)
+        adapter.setListUser(users.map { UserEntity.fromUserResponse(it) })
     }
 
     private fun showLoading(isLoading: Boolean) {

@@ -7,9 +7,8 @@ import com.example.githubuser.data.remote.retrofit.ApiConfig
 
 object Injection {
     fun provideRepository(context: Context): UserRepository {
-        val database = GithubDatabase.getInstance(context)
         val apiService = ApiConfig.getApiService()
-        val userDao = database.userDao()
+        val userDao = GithubDatabase.getInstance(context).userDao()
 
         return UserRepository.getInstance(apiService, userDao)
     }
