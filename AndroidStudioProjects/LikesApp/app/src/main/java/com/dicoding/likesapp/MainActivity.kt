@@ -1,6 +1,7 @@
 package com.dicoding.likesapp
 
 import android.graphics.*
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -17,16 +18,20 @@ class MainActivity : AppCompatActivity() {
         binding.imageView.setImageBitmap(mBitmap)
 
         binding.like.setOnClickListener {
+            showEars()
             showFace()
             showEyes()
             showMouth(true)
             showNose()
+            showHair()
         }
         binding.dislike.setOnClickListener {
+            showEars()
             showFace()
             showEyes()
             showMouth(false)
             showNose()
+            showHair()
         }
     }
 
@@ -101,5 +106,34 @@ class MainActivity : AppCompatActivity() {
         mPaint.color = ResourcesCompat.getColor(resources, R.color.red_ear, null)
         mCanvas.drawCircle(halfOfWidth - 300F, halfOfHeight - 100F, 60F, mPaint)
         mCanvas.drawCircle(halfOfWidth + 300F, halfOfHeight - 100F, 60F, mPaint)
+    }
+
+    private fun showHair() {
+        mCanvas.save()
+
+        val path = Path()
+
+        path.addCircle(halfOfWidth - 100F,halfOfHeight - 10F, 150F, Path.Direction.CCW)
+        path.addCircle(halfOfWidth + 100F,halfOfHeight - 10F, 150F, Path.Direction.CCW)
+
+        val mouth = RectF(halfOfWidth - 250F, halfOfHeight, halfOfWidth + 250F, halfOfHeight + 500F)
+        path.addOval(mouth, Path.Direction.CCW)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            @Suppress("DEPRECATION")
+            mCanvas.clipPath(path, Region.Op.DIFFERENCE)
+        } else {
+            mCanvas.clipOutPath(path)
+        }
+
+        val face = RectF(left, top, right, bottom)
+
+        mPaint.color = ResourcesCompat.getColor(resources, R.color.brown_left_hair, null)
+        mCanvas.drawArc(face, 90F, 180F, false, mPaint)
+
+        mPaint.color = ResourcesCompat.getColor(resources, R.color.brown_right_hair, null)
+        mCanvas.drawArc(face, 270F, 180F, false, mPaint)
+
+        mCanvas.restore()
     }
 }
