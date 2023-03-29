@@ -16,10 +16,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
         setupView()
         setupAction()
+        setupData()
     }
 
     private fun setupView() {
@@ -37,6 +38,27 @@ class MainActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.settingsButton.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        }
+    }
+
+    private fun setupData() {
+        val data = RemoteDataSource(this)
+        data.getDetailProduct().apply {
+            binding.apply {
+                previewImageView.setImageResource(image)
+                nameTextView.text = name
+                storeTextView.text = store
+                colorTextView.text = color
+                sizeTextView.text = size
+                descTextView.text = desc
+                priceTextView.text = price.withCurrencyFormat()
+                dateTextView.text = getString(R.string.dateFormat, date.withDateFormat())
+                ratingTextView.text = getString(
+                    R.string.ratingFormat,
+                    rating.withNumberingFormat(),
+                    countRating.withNumberingFormat()
+                )
+            }
         }
     }
 }
