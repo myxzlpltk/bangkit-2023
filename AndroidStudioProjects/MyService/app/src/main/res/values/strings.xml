@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MyService</string>
-    <string name="service_number">Service Number</string>
+    <string name="service_number">Service Ready</string>
     <string name="start_background_service">Start Background Service</string>
     <string name="stop_background_service">Stop Background Service</string>
     <string name="start_foreground_service">Start Foreground Service</string>
