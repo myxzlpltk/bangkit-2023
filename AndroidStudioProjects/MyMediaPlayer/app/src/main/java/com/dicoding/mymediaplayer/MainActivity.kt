@@ -1,62 +1,74 @@
 package com.dicoding.mymediaplayer
 
-import android.media.AudioAttributes
-import android.media.MediaPlayer
-import android.os.Bundle
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.*
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.mymediaplayer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        const val TAG = "MainActivity"
+    }
+
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private var mMediaPlayer: MediaPlayer? = null
-    private var isReady = false
+    private var mService: Messenger? = null
+    private var mServiceBound = false
+    private lateinit var mBoundServiceIntent: Intent
+
+    private val mServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            mService = Messenger(service)
+            mServiceBound = true
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            mService = null
+            mServiceBound = false
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setupMediaPlayer()
+        mBoundServiceIntent = Intent(this@MainActivity, MediaService::class.java)
+        mBoundServiceIntent.action = MediaService.ACTION_CREATE
+
+        startService(mBoundServiceIntent)
+        bindService(mBoundServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE)
 
         binding.btnPlay.setOnClickListener {
-            if (!isReady) {
-                mMediaPlayer?.prepareAsync()
-            } else {
-                if (mMediaPlayer?.isPlaying == true) {
-                    mMediaPlayer?.pause()
-                } else {
-                    mMediaPlayer?.start()
+            if (mServiceBound) {
+                try {
+                    mService?.send(Message.obtain(null, MediaService.PLAY, 0, 0))
+                } catch (e: RemoteException) {
+                    e.printStackTrace()
                 }
             }
         }
 
         binding.btnStop.setOnClickListener {
-            if (mMediaPlayer?.isPlaying == true || isReady) {
-                mMediaPlayer?.stop()
-                isReady = false
+            if (mServiceBound) {
+                try {
+                    mService?.send(Message.obtain(null, MediaService.STOP, 0, 0))
+                } catch (e: RemoteException) {
+                    e.printStackTrace()
+                }
             }
         }
     }
 
-    private fun setupMediaPlayer() {
-        val afd = applicationContext.resources.openRawResourceFd(R.raw.deja_vu)
-        val audioAttrs = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_MEDIA)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .build()
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+        unbindService(mServiceConnection)
 
-        mMediaPlayer = MediaPlayer().apply {
-            setAudioAttributes(audioAttrs)
-            try {
-                setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            setOnPreparedListener {
-                isReady = true
-                it.start()
-            }
-            setOnErrorListener { _, _, _ -> false }
-        }
+        mBoundServiceIntent.action = MediaService.ACTION_DESTROY
+        startService(mBoundServiceIntent)
     }
 }
