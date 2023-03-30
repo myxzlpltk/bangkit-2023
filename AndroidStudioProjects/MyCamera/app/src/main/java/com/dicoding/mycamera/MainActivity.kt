@@ -2,14 +2,17 @@ package com.dicoding.mycamera
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.dicoding.mycamera.databinding.ActivityMainBinding
 import java.io.File
 
@@ -38,22 +41,6 @@ class MainActivity : AppCompatActivity() {
         binding.uploadButton.setOnClickListener { uploadImage() }
     }
 
-    private val launcherIntentCameraX =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == CAMERA_X_RESULT) {
-                val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    it.data?.getSerializableExtra("picture", File::class.java)
-                } else {
-                    @Suppress("DEPRECATION")
-                    it.data?.getSerializableExtra("picture")
-                } as File
-                val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
-
-                val result = rotateBitmap(BitmapFactory.decodeFile(myFile.path), isBackCamera)
-                binding.previewImageView.setImageBitmap(result)
-            }
-        }
-
     private fun uploadImage() {
         Toast.makeText(this, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
     }
@@ -62,9 +49,44 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
     }
 
+    private lateinit var currentPhotoPath: String
+    private val launcherIntentCamera =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val myFile = File(currentPhotoPath)
+                val result = BitmapFactory.decodeFile(myFile.path)
+                binding.previewImageView.setImageBitmap(result)
+            }
+        }
+
     private fun startTakePhoto() {
-        Toast.makeText(this, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+            resolveActivity(packageManager)
+        }
+
+        createTempFile(application).also {
+            val photoURI = FileProvider.getUriForFile(this@MainActivity, packageName, it)
+            currentPhotoPath = it.absolutePath
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            launcherIntentCamera.launch(intent)
+        }
     }
+
+
+    private val launcherIntentCameraX =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == CAMERA_X_RESULT) {
+                val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    it.data?.getSerializableExtra("picture", File::class.java)
+                } else {
+                    @Suppress("DEPRECATION") it.data?.getSerializableExtra("picture")
+                } as File
+                val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+
+                val result = rotateBitmap(BitmapFactory.decodeFile(myFile.path), isBackCamera)
+                binding.previewImageView.setImageBitmap(result)
+            }
+        }
 
     private fun startCameraX() {
         launcherIntentCameraX.launch(Intent(this, CameraActivity::class.java))
