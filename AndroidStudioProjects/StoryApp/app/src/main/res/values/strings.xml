@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">StoryApp</string>
+
+    <!-- Hint input -->
+    <string name="hint_email">Enter your email</string>
+    <string name="hint_password">Enter your password</string>
+    <string name="hint_name">Enter your name</string>
+
+    <!-- Validation input -->
+    <string name="error_email_empty">Email address must be filled</string>
+    <string name="error_email_invalid">Email address not valid</string>
+    <string name="error_password_empty">Password must be filled</string>
+    <string name="error_password_invalid">Password must be at least 8 characters</string>
+
+    <!-- Sign In Features -->
+    <string name="sign_in_title">Sign In</string>
+    <string name="sign_in_description">Welcome back! Please enter your email and password to sign in</string>
+    <string name="sign_in_action">Sign In</string>
+    <string name="sign_up_action">Sign Up</string>
+    <string name="sign_up_promo">I didn\'t have an account</string>
 </resources>
