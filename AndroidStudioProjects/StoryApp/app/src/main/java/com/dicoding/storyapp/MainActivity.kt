@@ -22,13 +22,13 @@ class MainActivity : AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                val isEmailValid = binding.emailEditText.isValid
-                val isPasswordValid = binding.passwordEditText.isValid
+                val isEmailValid = binding.edLoginEmail.isValid
+                val isPasswordValid = binding.edLoginPassword.isValid
                 binding.signInButton.isEnabled = isEmailValid && isPasswordValid
             }
         }
 
-        binding.emailEditText.addTextChangedListener(listener)
-        binding.passwordEditText.addTextChangedListener(listener)
+        binding.edLoginEmail.addTextChangedListener(listener)
+        binding.edLoginPassword.addTextChangedListener(listener)
     }
 }

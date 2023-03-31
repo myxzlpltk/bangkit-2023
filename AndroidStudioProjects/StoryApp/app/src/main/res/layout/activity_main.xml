@@ -30,23 +30,23 @@
         android:text="@string/sign_in_description"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-        app:layout_constraintBottom_toTopOf="@+id/email_edit_text"
-        app:layout_constraintEnd_toEndOf="@+id/email_edit_text"
-        app:layout_constraintStart_toStartOf="@+id/email_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/ed_login_email"
+        app:layout_constraintEnd_toEndOf="@+id/ed_login_email"
+        app:layout_constraintStart_toStartOf="@+id/ed_login_email"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_title" />
 
     <com.dicoding.storyapp.ui.EmailEditText
-        android:id="@+id/email_edit_text"
+        android:id="@+id/ed_login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/password_edit_text"
-        app:layout_constraintEnd_toEndOf="@+id/password_edit_text"
-        app:layout_constraintStart_toStartOf="@+id/password_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/ed_login_password"
+        app:layout_constraintEnd_toEndOf="@+id/ed_login_password"
+        app:layout_constraintStart_toStartOf="@+id/ed_login_password"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_description" />
 
     <com.dicoding.storyapp.ui.PasswordEditText
-        android:id="@+id/password_edit_text"
+        android:id="@+id/ed_login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="@+id/sign_in_button"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/sign_in_button"
-        app:layout_constraintTop_toBottomOf="@+id/email_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_login_email" />
 
     <Button
         android:id="@+id/sign_in_button"
@@ -65,7 +65,7 @@
         app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toEndOf="@+id/divider"
         app:layout_constraintStart_toStartOf="@+id/divider"
-        app:layout_constraintTop_toBottomOf="@+id/password_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_login_password" />
 
     <View
         android:id="@+id/divider"
