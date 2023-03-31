@@ -15,6 +15,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.dicoding.mycamera.databinding.ActivityMainBinding
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
 
+    private var getFile: File? = null
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +52,49 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun uploadImage() {
-        Toast.makeText(this, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
+        if (getFile == null) {
+            Toast.makeText(
+                this@MainActivity,
+                "Silakan masukkan berkas gambar terlebih dahulu.",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            // Prepare data
+            val myFile = reduceFileImage(getFile!!)
+            val description = "Ini adalah gambar".toRequestBody("text/plain".toMediaType())
+            val requestImageFile = myFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart =
+                MultipartBody.Part.createFormData("photo", myFile.name, requestImageFile)
+
+            // Send data
+            val service = ApiConfig().getApiService().uploadImage(imageMultipart, description)
+            service.enqueue(object : Callback<FileUploadResponse> {
+                override fun onResponse(
+                    call: Call<FileUploadResponse>,
+                    response: Response<FileUploadResponse>,
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null && !responseBody.error) {
+                            Toast.makeText(
+                                this@MainActivity,
+                                responseBody.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else {
+                        Toast.makeText(this@MainActivity, response.message(), Toast.LENGTH_SHORT)
+                            .show()
+
+                    }
+                }
+
+                override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
+                    Toast.makeText(this@MainActivity, "Gagal instance Retrofit", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
+        }
     }
 
     private val launcherIntentGallery = registerForActivityResult(
@@ -54,6 +105,8 @@ class MainActivity : AppCompatActivity() {
             val myFile = uriToFile(selectedImg, this@MainActivity)
             val result = BitmapFactory.decodeFile(myFile.path)
             binding.previewImageView.setImageBitmap(result)
+
+            getFile = myFile
         }
     }
 
@@ -73,6 +126,8 @@ class MainActivity : AppCompatActivity() {
                 val myFile = File(currentPhotoPath)
                 val result = BitmapFactory.decodeFile(myFile.path)
                 binding.previewImageView.setImageBitmap(result)
+
+                getFile = myFile
             }
         }
 
@@ -102,6 +157,8 @@ class MainActivity : AppCompatActivity() {
 
                 val result = rotateBitmap(BitmapFactory.decodeFile(myFile.path), isBackCamera)
                 binding.previewImageView.setImageBitmap(result)
+
+                getFile = myFile
             }
         }
 
