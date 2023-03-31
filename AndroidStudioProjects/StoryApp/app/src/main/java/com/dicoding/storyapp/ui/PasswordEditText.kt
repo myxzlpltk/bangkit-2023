@@ -1,33 +1,34 @@
 package com.dicoding.storyapp.ui
 
 import android.content.Context
-import android.graphics.Rect
-import android.text.InputType
 import android.text.TextUtils
-import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.content.ContextCompat
+import android.view.LayoutInflater
+import android.widget.FrameLayout
+import androidx.core.widget.doOnTextChanged
 import com.dicoding.storyapp.R
+import com.dicoding.storyapp.databinding.CustomPasswordEditTextBinding
 
 class PasswordEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null,
-) : AppCompatEditText(context, attrs) {
+) : FrameLayout(context, attrs) {
 
-    companion object {
-        internal val TAG = PasswordEditText::class.java.simpleName
-    }
-
-    // State
+    private var action: (() -> Unit)? = null
+    private val binding = CustomPasswordEditTextBinding.inflate(LayoutInflater.from(context), this)
     private var hasBeenFocused = false
     var isValid = false
         private set
 
     init {
-        background = ContextCompat.getDrawable(context, R.drawable.bg_input)
-        hint = context.getString(R.string.hint_password)
-        inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
-        transformationMethod = PasswordTransformationMethod.getInstance()
+        binding.field.doOnTextChanged { text, _, _, _ -> validate(text.toString()) }
+        binding.field.setOnFocusChangeListener { _, focused ->
+            if (focused) hasBeenFocused = true
+            else validate(binding.field.text.toString())
+        }
+    }
+
+    fun ifChanged(action: () -> Unit) {
+        this.action = action
     }
 
     private fun validate(value: CharSequence) {
@@ -35,24 +36,18 @@ class PasswordEditText @JvmOverloads constructor(
 
         if (TextUtils.isEmpty(value)) {
             isValid = false
-            error = context.getString(R.string.error_password_empty)
+            binding.container.error = context.getString(R.string.error_password_empty)
+            binding.container.isErrorEnabled = true
         } else if (value.length < 8) {
             isValid = false
-            error = context.getString(R.string.error_password_invalid)
+            binding.container.error = context.getString(R.string.error_password_invalid)
+            binding.container.isErrorEnabled = true
         } else {
             isValid = true
-            error = null
+            binding.container.error = null
+            binding.container.isErrorEnabled = false
         }
-    }
 
-    override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
-        super.onFocusChanged(focused, direction, previouslyFocusedRect)
-        if (focused) hasBeenFocused = true
-        else validate(text.toString())
-    }
-
-    override fun onTextChanged(text: CharSequence, p0: Int, p1: Int, p2: Int) {
-        super.onTextChanged(text, p0, p1, p2)
-        validate(text)
+        action?.let { it() }
     }
 }

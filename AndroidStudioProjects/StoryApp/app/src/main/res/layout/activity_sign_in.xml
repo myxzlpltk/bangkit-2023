@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     android:padding="24dp"
     tools:context=".features.sign_in.SignInActivity">
 
@@ -15,77 +16,49 @@
         android:text="@string/sign_in_title"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/sign_in_description"
-        app:layout_constraintEnd_toEndOf="@+id/sign_in_description"
-        app:layout_constraintStart_toStartOf="@+id/sign_in_description"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/sign_in_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="48dp"
         android:text="@string/sign_in_description"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-        app:layout_constraintBottom_toTopOf="@+id/ed_login_email"
-        app:layout_constraintEnd_toEndOf="@+id/ed_login_email"
-        app:layout_constraintStart_toStartOf="@+id/ed_login_email"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_title" />
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
     <com.dicoding.storyapp.ui.EmailEditText
         android:id="@+id/ed_login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/ed_login_password"
-        app:layout_constraintEnd_toEndOf="@+id/ed_login_password"
-        app:layout_constraintStart_toStartOf="@+id/ed_login_password"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_description" />
+        android:layout_marginBottom="8dp" />
 
     <com.dicoding.storyapp.ui.PasswordEditText
         android:id="@+id/ed_login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
-        app:layout_constraintEnd_toEndOf="@+id/sign_in_button"
-        app:layout_constraintStart_toStartOf="@+id/sign_in_button"
-        app:layout_constraintTop_toBottomOf="@+id/ed_login_email" />
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:id="@+id/sign_in_button"
+        style="@style/Widget.Material3.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:text="@string/sign_in_action"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
-        app:layout_constraintEnd_toEndOf="@+id/divider"
-        app:layout_constraintStart_toStartOf="@+id/divider"
-        app:layout_constraintTop_toBottomOf="@+id/ed_login_password" />
+        android:text="@string/sign_in_action" />
 
-    <View
+    <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/sign_up_promo"
-        app:layout_constraintEnd_toEndOf="@+id/sign_up_promo"
-        app:layout_constraintStart_toStartOf="@+id/sign_up_promo"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp" />
 
     <Button
         android:id="@+id/sign_up_promo"
+        style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorTertiary"
-        android:text="@string/sign_up_promo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        tools:layout_editor_absoluteX="36dp" />
+        android:text="@string/sign_up_promo" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

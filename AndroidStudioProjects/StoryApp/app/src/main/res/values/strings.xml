@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">StoryApp</string>
 
+    <!-- Label input -->
+    <string name="label_email">Email Address</string>
+    <string name="label_password">Password</string>
+    <string name="label_name">Full Name</string>
+
     <!-- Hint input -->
     <string name="hint_email">Enter your email</string>
     <string name="hint_password">Enter your password</string>
