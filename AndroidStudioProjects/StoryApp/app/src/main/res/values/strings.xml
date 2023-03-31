@@ -11,11 +11,17 @@
     <string name="error_email_invalid">Email address not valid</string>
     <string name="error_password_empty">Password must be filled</string>
     <string name="error_password_invalid">Password must be at least 8 characters</string>
+    <string name="error_name_empty">Name must be filled</string>
 
     <!-- Sign In Features -->
     <string name="sign_in_title">Sign In</string>
     <string name="sign_in_description">Welcome back! Please enter your email and password to sign in</string>
     <string name="sign_in_action">Sign In</string>
-    <string name="sign_up_action">Sign Up</string>
     <string name="sign_up_promo">I didn\'t have an account</string>
+
+    <!-- Sign Up Features -->
+    <string name="sign_up_title">Sign Up</string>
+    <string name="sign_up_description">Welcome aboard! Please fill this form below to register</string>
+    <string name="sign_up_action">Sign Up</string>
+    <string name="sign_in_promo">I already have an account</string>
 </resources>

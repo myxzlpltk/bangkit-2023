@@ -12,6 +12,12 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".features.sign_up.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.sign_in.SignInActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
