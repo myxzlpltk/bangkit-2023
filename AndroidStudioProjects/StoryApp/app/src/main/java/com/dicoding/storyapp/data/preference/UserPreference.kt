@@ -9,6 +9,7 @@ import com.dicoding.storyapp.data.entity.User
 import com.dicoding.storyapp.utils.Configuration
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -40,12 +41,11 @@ class UserPreference @Inject constructor(@ApplicationContext context: Context) {
     }
 
     suspend fun logout() {
-        dataStore.edit { prefs ->
-            prefs[USER_ID_KEY] = ""
-            prefs[NAME_KEY] = ""
-            prefs[TOKEN_KEY] = ""
-            prefs[STATE_KEY] = false
-        }
+        dataStore.edit { prefs -> prefs.clear() }
+    }
+
+    suspend fun getToken(): String {
+        return dataStore.data.first()[TOKEN_KEY] ?: ""
     }
 
     companion object {

@@ -15,6 +15,11 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.dashboard.DashboardActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".presentation.ui.sign_up.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait"

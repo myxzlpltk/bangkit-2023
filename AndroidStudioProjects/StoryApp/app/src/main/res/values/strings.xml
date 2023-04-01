@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StoryApp</string>
+    <string name="app_name">Story App</string>
 
     <!-- Label input -->
     <string name="label_email">Email Address</string>
@@ -29,4 +29,11 @@
     <string name="sign_up_description">Welcome aboard! Please fill this form below to register</string>
     <string name="sign_up_action">Sign Up</string>
     <string name="sign_in_promo">I already have an account</string>
+
+    <!-- Dashboard Activity Features -->
+    <string name="post_menu_title">Post</string>
+    <string name="logout_menu_title">Logout</string>
+    <string name="sample_name">John Doe</string>
+    <string name="sample_description">This is my story learning android intermediate</string>
+    <string name="story_image_description">An image of the story</string>
 </resources>

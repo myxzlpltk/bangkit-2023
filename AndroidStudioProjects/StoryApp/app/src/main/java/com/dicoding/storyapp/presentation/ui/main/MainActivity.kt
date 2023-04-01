@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.dicoding.storyapp.databinding.ActivityMainBinding
-import com.dicoding.storyapp.presentation.ui.sign_up.SignUpActivity
+import com.dicoding.storyapp.presentation.ui.dashboard.DashboardActivity
+import com.dicoding.storyapp.presentation.ui.sign_in.SignInActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,17 +20,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setupViewModel()
     }
 
     private fun setupViewModel() {
         viewModel.getUser().observe(this) { user ->
-            if (user == null) {
-                startActivity(Intent(this, SignUpActivity::class.java))
-                finish()
+            val intent = if (user == null) {
+                Intent(this, SignInActivity::class.java)
             } else {
-                binding.appName.text = "Logged in"
+                Intent(this, DashboardActivity::class.java)
             }
+            startActivity(intent)
+            finish()
         }
     }
 }
