@@ -3,11 +3,12 @@ package com.dicoding.storyapp.data.source
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.dicoding.storyapp.data.entity.Story
+import com.dicoding.storyapp.data.preference.UserPreference
 import com.dicoding.storyapp.data.remote.StoryService
 import com.dicoding.storyapp.utils.Configuration.START_PAGE_INDEX
 
 class StoryPagingDataSource(
-    private val token: String,
+    private val pref: UserPreference,
     private val storyService: StoryService,
 ) : PagingSource<Int, Story>() {
 
@@ -21,6 +22,7 @@ class StoryPagingDataSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Story> {
         return try {
             val page = params.key ?: START_PAGE_INDEX
+            val token = pref.getToken()
             val response = storyService.getStories("Bearer $token", page, params.loadSize)
             LoadResult.Page(
                 data = response.toListStory(),

@@ -44,8 +44,8 @@ class UserPreference @Inject constructor(@ApplicationContext context: Context) {
         dataStore.edit { prefs -> prefs.clear() }
     }
 
-    suspend fun getToken(): String {
-        return dataStore.data.first()[TOKEN_KEY] ?: ""
+    suspend fun getToken(): String? {
+        return dataStore.data.first()[TOKEN_KEY]
     }
 
     companion object {
