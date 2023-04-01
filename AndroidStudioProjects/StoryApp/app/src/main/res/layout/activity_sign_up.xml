@@ -27,19 +27,19 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
-    <com.dicoding.storyapp.ui.NameEditText
+    <com.dicoding.storyapp.view.NameEditText
         android:id="@+id/ed_register_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" />
 
-    <com.dicoding.storyapp.ui.EmailEditText
+    <com.dicoding.storyapp.view.EmailEditText
         android:id="@+id/ed_register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" />
 
-    <com.dicoding.storyapp.ui.PasswordEditText
+    <com.dicoding.storyapp.view.PasswordEditText
         android:id="@+id/ed_register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

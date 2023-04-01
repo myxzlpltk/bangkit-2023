@@ -1,4 +1,4 @@
-package com.dicoding.storyapp.ui
+package com.dicoding.storyapp.view
 
 import android.content.Context
 import android.text.TextUtils
@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.core.widget.doOnTextChanged
 import com.dicoding.storyapp.R
-import com.dicoding.storyapp.databinding.CustomNameEditTextBinding
+import com.dicoding.storyapp.databinding.CustomPasswordEditTextBinding
 
-class NameEditText @JvmOverloads constructor(
+class PasswordEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null,
 ) : FrameLayout(context, attrs) {
 
     private var action: (() -> Unit)? = null
-    private val binding = CustomNameEditTextBinding.inflate(LayoutInflater.from(context), this)
+    private val binding = CustomPasswordEditTextBinding.inflate(LayoutInflater.from(context), this)
     private var hasBeenFocused = false
     var isValid = false
         private set
@@ -36,7 +36,11 @@ class NameEditText @JvmOverloads constructor(
 
         if (TextUtils.isEmpty(value)) {
             isValid = false
-            binding.container.error = context.getString(R.string.error_name_empty)
+            binding.container.error = context.getString(R.string.error_password_empty)
+            binding.container.isErrorEnabled = true
+        } else if (value.length < 8) {
+            isValid = false
+            binding.container.error = context.getString(R.string.error_password_invalid)
             binding.container.isErrorEnabled = true
         } else {
             isValid = true

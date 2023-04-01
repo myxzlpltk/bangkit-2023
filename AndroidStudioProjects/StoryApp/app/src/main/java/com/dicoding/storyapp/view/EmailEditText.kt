@@ -1,4 +1,4 @@
-package com.dicoding.storyapp.ui
+package com.dicoding.storyapp.view
 
 import android.content.Context
 import android.text.TextUtils
