@@ -1,6 +1,6 @@
-package com.dicoding.storyapp.models
+package com.dicoding.storyapp.data.entity
 
-data class UserModel (
+data class User (
     val userId: String,
     val name: String,
     val token: String,

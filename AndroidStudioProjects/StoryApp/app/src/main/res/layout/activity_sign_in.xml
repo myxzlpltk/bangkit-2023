@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="24dp"
-    tools:context=".features.sign_in.SignInActivity">
+    tools:context=".presentation.ui.sign_in.SignInActivity">
 
     <TextView
         android:id="@+id/sign_in_title"
@@ -27,13 +27,13 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
-    <com.dicoding.storyapp.view.EmailEditText
+    <com.dicoding.storyapp.presentation.ui.shared.EmailEditText
         android:id="@+id/ed_login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" />
 
-    <com.dicoding.storyapp.view.PasswordEditText
+    <com.dicoding.storyapp.presentation.ui.shared.PasswordEditText
         android:id="@+id/ed_login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,11 +1,11 @@
-package com.dicoding.storyapp.features.main
+package com.dicoding.storyapp.presentation.ui.main
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.storyapp.databinding.ActivityMainBinding
-import com.dicoding.storyapp.features.sign_in.SignInActivity
+import com.dicoding.storyapp.presentation.ui.sign_up.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupViewModel() {
         viewModel.getUser().observe(this) { user ->
             if (user == null) {
-                startActivity(Intent(this@MainActivity, SignInActivity::class.java))
+                startActivity(Intent(this, SignUpActivity::class.java))
                 finish()
             } else {
                 binding.appName.text = "Logged in"

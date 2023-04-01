@@ -1,26 +1,28 @@
-package com.dicoding.storyapp.models
+package com.dicoding.storyapp.data.preference
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.dicoding.storyapp.data.entity.User
+import com.dicoding.storyapp.utils.Configuration
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import javax.inject.Singleton
 
-private val Context.dataStore by preferencesDataStore("settings")
+private val Context.dataStore by preferencesDataStore(Configuration.DATASTORE_KEY)
 
+@Singleton
 class UserPreference @Inject constructor(@ApplicationContext context: Context) {
 
     private val dataStore = context.dataStore
 
-    fun getUser(): Flow<UserModel?> {
+    fun getUser(): Flow<User?> {
         return dataStore.data.map { prefs ->
-            if (prefs[STATE_KEY] == true) UserModel(
+            if (prefs[STATE_KEY] == true) User(
                 prefs[USER_ID_KEY] ?: "",
                 prefs[NAME_KEY] ?: "",
                 prefs[TOKEN_KEY] ?: "",
@@ -28,11 +30,11 @@ class UserPreference @Inject constructor(@ApplicationContext context: Context) {
         }
     }
 
-    suspend fun login(userModel: UserModel) {
+    suspend fun login(user: User) {
         dataStore.edit { prefs ->
-            prefs[USER_ID_KEY] = userModel.userId
-            prefs[NAME_KEY] = userModel.name
-            prefs[TOKEN_KEY] = userModel.token
+            prefs[USER_ID_KEY] = user.userId
+            prefs[NAME_KEY] = user.name
+            prefs[TOKEN_KEY] = user.token
             prefs[STATE_KEY] = true
         }
     }
