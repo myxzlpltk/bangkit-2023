@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
@@ -66,11 +67,34 @@ class DashboardActivity : AppCompatActivity() {
                     binding.swipeRefresh.isRefreshing = true
                 } else if (it.refresh is LoadState.NotLoading) {
                     binding.rvStories.visibility = View.VISIBLE
+                    binding.rvStories.scrollToPosition(0)
                     binding.shimmerView.visibility = View.GONE
                     binding.shimmerFrame.hideShimmer()
                     binding.swipeRefresh.isRefreshing = false
-                    binding.rvStories.scrollToPosition(0)
+                } else if (it.refresh is LoadState.Error) {
+                    binding.shimmerView.visibility = View.GONE
+                    binding.shimmerFrame.hideShimmer()
+                    binding.swipeRefresh.isRefreshing = false
+                    (it.refresh as LoadState.Error).error.localizedMessage?.let { message ->
+                        viewModel.postMessage(message)
+                    }
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.append }.collect {
+                if (it.refresh is LoadState.Error) {
+                    (it.refresh as LoadState.Error).error.localizedMessage?.let { message ->
+                        viewModel.postMessage(message)
+                    }
+                }
+            }
+        }
+
+        viewModel.message.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { message ->
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
     }
