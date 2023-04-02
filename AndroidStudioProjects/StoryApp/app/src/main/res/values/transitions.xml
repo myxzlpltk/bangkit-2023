@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transition_name">name</string>
+    <string name="transition_photo">photo</string>
+    <string name="transition_description">description</string>
+</resources>

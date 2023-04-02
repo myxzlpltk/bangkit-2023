@@ -1,7 +1,17 @@
 package com.dicoding.storyapp.utils
 
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerDrawable
 
 internal val FALLBACK_SHIMMER: Shimmer =
     Shimmer.AlphaHighlightBuilder().setDuration(1000).setBaseAlpha(0.7f).setHighlightAlpha(0.3f)
@@ -13,4 +23,45 @@ fun getScreenWidth(): Int {
 
 fun getScreenHeight(): Int {
     return Resources.getSystem().displayMetrics.heightPixels
+}
+
+fun ImageView.load(
+    url: String,
+    loadOnlyFromCache: Boolean = false,
+    onLoadingFinished: () -> Unit = {},
+) {
+    val listener = object : RequestListener<Drawable> {
+        override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: Target<Drawable>?,
+            isFirstResource: Boolean,
+        ): Boolean {
+            onLoadingFinished()
+            return false
+        }
+
+        override fun onResourceReady(
+            resource: Drawable?,
+            model: Any?,
+            target: Target<Drawable>?,
+            dataSource: DataSource?,
+            isFirstResource: Boolean,
+        ): Boolean {
+            onLoadingFinished()
+            return false
+        }
+    }
+
+    this.build(url).dontTransform().onlyRetrieveFromCache(loadOnlyFromCache).listener(listener)
+        .into(this)
+}
+
+fun ImageView.load(url: String) {
+    this.build(url).into(this)
+}
+
+fun ImageView.build(url: String): RequestBuilder<Drawable> {
+    return Glide.with(this).load(url).diskCacheStrategy(DiskCacheStrategy.ALL)
+        .placeholder(ShimmerDrawable().apply { setShimmer(FALLBACK_SHIMMER) })
 }

@@ -41,31 +41,20 @@
                 app:cardPreventCornerOverlap="true">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image"
+                    android:id="@+id/iv_detail_photo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/story_image_description"
                     android:maxHeight="400dp"
+                    android:transitionName="@string/transition_photo"
                     app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media"
                     tools:src="@tools:sample/backgrounds/scenic" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/name"
-                style="@style/TextAppearance.Material3.LabelLarge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:drawablePadding="@dimen/drawable_padding"
-                android:gravity="center_vertical"
-                android:text="@string/sample_name"
-                android:textColor="?attr/colorSecondary"
-                app:drawableStartCompat="@drawable/baseline_person_24" />
-
-            <TextView
-                android:id="@+id/date_time"
+                android:id="@+id/tv_detail_date"
                 style="@style/TextAppearance.Material3.LabelLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,12 +66,24 @@
                 app:drawableStartCompat="@drawable/baseline_calendar_month_24" />
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/tv_detail_name"
+                style="@style/TextAppearance.Material3.TitleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:text="@string/sample_name"
+                android:textStyle="bold"
+                android:transitionName="@string/transition_name" />
+
+            <TextView
+                android:id="@+id/tv_detail_description"
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="@string/sample_description" />
+                android:text="@string/sample_description"
+                android:transitionName="@string/transition_description" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

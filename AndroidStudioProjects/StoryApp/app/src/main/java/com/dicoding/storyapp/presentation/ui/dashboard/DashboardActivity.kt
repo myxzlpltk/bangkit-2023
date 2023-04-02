@@ -1,16 +1,20 @@
 package com.dicoding.storyapp.presentation.ui.dashboard
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.storyapp.R
 import com.dicoding.storyapp.data.entity.Story
 import com.dicoding.storyapp.databinding.ActivityDashboardBinding
+import com.dicoding.storyapp.databinding.StoryCardItemBinding
 import com.dicoding.storyapp.presentation.ui.main.MainViewModel
 import com.dicoding.storyapp.presentation.ui.shared.MarginItemDecoration
 import com.dicoding.storyapp.presentation.ui.sign_in.SignInActivity
@@ -27,7 +31,9 @@ class DashboardActivity : AppCompatActivity() {
     private val viewModel: DashboardViewModel by viewModels()
     private val mainViewModel: MainViewModel by viewModels()
     private val storiesAdapter = StoryAdapter(object : StoryAdapter.OnItemClickCallback {
-        override fun onItemClicked(story: Story) = goToDetailStoryActivity(story)
+        override fun onItemClicked(story: Story, itemBinding: StoryCardItemBinding) {
+            goToDetailStoryActivity(story, itemBinding)
+        }
     })
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,9 +93,15 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToDetailStoryActivity(story: Story) {
+    private fun goToDetailStoryActivity(story: Story, itemBinding: StoryCardItemBinding) {
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            itemBinding.root.context as Activity,
+            Pair(itemBinding.ivItemPhoto, getString(R.string.transition_photo)),
+            Pair(itemBinding.tvItemName, getString(R.string.transition_name)),
+            Pair(itemBinding.tvItemDescription, getString(R.string.transition_description)),
+        )
         val intent = Intent(this, StoryDetailActivity::class.java)
         intent.putExtra(StoryDetailActivity.EXTRA_STORY, story)
-        startActivity(intent)
+        startActivity(intent, options.toBundle())
     }
 }

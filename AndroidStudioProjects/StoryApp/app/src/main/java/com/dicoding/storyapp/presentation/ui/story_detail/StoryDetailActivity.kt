@@ -3,10 +3,9 @@ package com.dicoding.storyapp.presentation.ui.story_detail
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.dicoding.storyapp.data.entity.Story
 import com.dicoding.storyapp.databinding.ActivityStoryDetailBinding
+import com.dicoding.storyapp.utils.load
 import com.dicoding.storyapp.utils.parcelable
 import com.dicoding.storyapp.utils.toLocaleFormat
 
@@ -24,21 +23,22 @@ class StoryDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        supportPostponeEnterTransition()
+
         story = intent.parcelable(EXTRA_STORY)!!
         setupView()
         setupActions()
     }
 
     private fun setupView() {
-        Glide.with(this).load(story.photoUrl).diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(binding.image)
-        binding.name.text = story.name
-        binding.description.text = story.description
-        binding.dateTime.text = story.createdAt.toLocaleFormat()
-        binding.image.scaleType = ImageView.ScaleType.CENTER_CROP
+        binding.ivDetailPhoto.load(story.photoUrl, true) { supportStartPostponedEnterTransition() }
+        binding.tvDetailName.text = story.name
+        binding.tvDetailDescription.text = story.description
+        binding.tvDetailDate.text = story.createdAt.toLocaleFormat()
+        binding.ivDetailPhoto.scaleType = ImageView.ScaleType.CENTER_CROP
     }
 
     private fun setupActions() {
-        binding.topAppBar.setNavigationOnClickListener { finish() }
+        binding.topAppBar.setNavigationOnClickListener { finishAfterTransition() }
     }
 }
