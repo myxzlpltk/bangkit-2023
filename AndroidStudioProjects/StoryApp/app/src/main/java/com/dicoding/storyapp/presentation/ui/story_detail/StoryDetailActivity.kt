@@ -1,7 +1,6 @@
 package com.dicoding.storyapp.presentation.ui.story_detail
 
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.storyapp.data.entity.Story
 import com.dicoding.storyapp.databinding.ActivityStoryDetailBinding
@@ -35,7 +34,6 @@ class StoryDetailActivity : AppCompatActivity() {
         binding.tvDetailName.text = story.name
         binding.tvDetailDescription.text = story.description
         binding.tvDetailDate.text = story.createdAt.toLocaleFormat()
-        binding.ivDetailPhoto.scaleType = ImageView.ScaleType.CENTER_CROP
     }
 
     private fun setupActions() {

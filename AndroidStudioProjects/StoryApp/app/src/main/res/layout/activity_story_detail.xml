@@ -48,6 +48,7 @@
                     android:contentDescription="@string/story_image_description"
                     android:maxHeight="400dp"
                     android:transitionName="@string/transition_photo"
+                    android:scaleType="centerCrop"
                     app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media"
                     tools:src="@tools:sample/backgrounds/scenic" />
