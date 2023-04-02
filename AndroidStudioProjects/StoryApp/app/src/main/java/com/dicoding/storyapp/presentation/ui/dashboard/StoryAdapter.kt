@@ -6,10 +6,14 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.dicoding.storyapp.data.entity.Story
 import com.dicoding.storyapp.databinding.StoryCardItemBinding
+import com.dicoding.storyapp.utils.FALLBACK_SHIMMER
+import com.facebook.shimmer.ShimmerDrawable
 
-class StoryAdapter : PagingDataAdapter<Story, StoryAdapter.ViewHolder>(STORY_COMPARATOR) {
+class StoryAdapter(private val onItemClickCallback: OnItemClickCallback) :
+    PagingDataAdapter<Story, StoryAdapter.ViewHolder>(STORY_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         StoryCardItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,14 +23,22 @@ class StoryAdapter : PagingDataAdapter<Story, StoryAdapter.ViewHolder>(STORY_COM
         getItem(position)?.let { story -> holder.bind(story) }
     }
 
+    interface OnItemClickCallback {
+        fun onItemClicked(story: Story)
+    }
+
     inner class ViewHolder(private val binding: StoryCardItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(story: Story) {
             with(binding) {
-                Glide.with(image.context).load(story.photoUrl).into(image)
+                Glide.with(image.context).load(story.photoUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(ShimmerDrawable().apply { setShimmer(FALLBACK_SHIMMER) })
+                    .into(image)
                 name.text = story.name
                 description.text = story.description
+                storyCard.setOnClickListener { onItemClickCallback.onItemClicked(story) }
             }
         }
     }

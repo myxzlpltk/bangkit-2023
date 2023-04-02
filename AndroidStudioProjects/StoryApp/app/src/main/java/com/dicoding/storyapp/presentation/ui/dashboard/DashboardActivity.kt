@@ -9,10 +9,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.storyapp.R
+import com.dicoding.storyapp.data.entity.Story
 import com.dicoding.storyapp.databinding.ActivityDashboardBinding
 import com.dicoding.storyapp.presentation.ui.main.MainViewModel
 import com.dicoding.storyapp.presentation.ui.shared.MarginItemDecoration
 import com.dicoding.storyapp.presentation.ui.sign_in.SignInActivity
+import com.dicoding.storyapp.presentation.ui.story_detail.StoryDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
@@ -24,7 +26,9 @@ class DashboardActivity : AppCompatActivity() {
     private val binding by lazy { ActivityDashboardBinding.inflate(layoutInflater) }
     private val viewModel: DashboardViewModel by viewModels()
     private val mainViewModel: MainViewModel by viewModels()
-    private val storiesAdapter = StoryAdapter()
+    private val storiesAdapter = StoryAdapter(object : StoryAdapter.OnItemClickCallback {
+        override fun onItemClicked(story: Story) = goToDetailStoryActivity(story)
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +56,7 @@ class DashboardActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }.collect {
-                if (it.refresh is LoadState.Loading) {
-                    binding.rvStories.visibility = View.GONE
-                    binding.shimmerView.visibility = View.VISIBLE
-                    binding.shimmerFrame.showShimmer(true)
+                if (it.refresh is LoadState.Loading && !binding.shimmerFrame.isShimmerVisible) {
                     binding.swipeRefresh.isRefreshing = true
                 } else if (it.refresh is LoadState.NotLoading) {
                     binding.rvStories.visibility = View.VISIBLE
@@ -70,18 +71,25 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setupActions() {
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
-            if (menuItem.itemId == R.id.logout_action) {
-                mainViewModel.logout()
-                startActivity(Intent(this, SignInActivity::class.java))
-                finish()
-                true
-            } else {
-                false
+            when (menuItem.itemId) {
+                R.id.logout_action -> {
+                    mainViewModel.logout()
+                    startActivity(Intent(this, SignInActivity::class.java))
+                    finish()
+                    true
+                }
+                else -> false
             }
         }
 
         binding.swipeRefresh.setOnRefreshListener {
             storiesAdapter.refresh()
         }
+    }
+
+    private fun goToDetailStoryActivity(story: Story) {
+        val intent = Intent(this, StoryDetailActivity::class.java)
+        intent.putExtra(StoryDetailActivity.EXTRA_STORY, story)
+        startActivity(intent)
     }
 }

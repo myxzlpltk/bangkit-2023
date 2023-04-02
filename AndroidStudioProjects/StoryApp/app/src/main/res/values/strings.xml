@@ -36,4 +36,8 @@
     <string name="sample_name">John Doe</string>
     <string name="sample_description">This is my story learning android intermediate</string>
     <string name="story_image_description">An image of the story</string>
+
+    <!-- Story Detail Activity Features -->
+    <string name="story_detail_title">Story</string>
+    <string name="sample_date_time">Saturday, 1 April 2022 10:00</string>
 </resources>
