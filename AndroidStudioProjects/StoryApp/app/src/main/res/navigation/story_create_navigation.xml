@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/story_create_navigation"
+    app:startDestination="@id/cameraFragment">
+
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.dicoding.storyapp.presentation.ui.story_create.CaptureImageFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_capture_image" >
+        <action
+            android:id="@+id/action_cameraFragment_to_addDescriptionFragment"
+            app:destination="@id/addDescriptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDescriptionFragment"
+        android:name="com.dicoding.storyapp.presentation.ui.story_create.AddDescriptionFragment"
+        android:label="fragment_add_description"
+        tools:layout="@layout/fragment_add_description" >
+        <argument
+            android:name="file"
+            app:argType="java.io.File" />
+    </fragment>
+</navigation>

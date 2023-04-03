@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
@@ -16,9 +17,9 @@ import com.dicoding.storyapp.R
 import com.dicoding.storyapp.data.entity.Story
 import com.dicoding.storyapp.databinding.ActivityDashboardBinding
 import com.dicoding.storyapp.databinding.StoryCardItemBinding
-import com.dicoding.storyapp.presentation.ui.camera.CameraActivity
 import com.dicoding.storyapp.presentation.ui.shared.MarginItemDecoration
 import com.dicoding.storyapp.presentation.ui.sign_in.SignInActivity
+import com.dicoding.storyapp.presentation.ui.story_create.StoryCreateActivity
 import com.dicoding.storyapp.presentation.ui.story_detail.StoryDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -36,6 +37,10 @@ class DashboardActivity : AppCompatActivity() {
         }
     })
 
+    private val launcherIntentPost = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result -> if (result.resultCode == RESULT_OK) storiesAdapter.refresh() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -43,15 +48,6 @@ class DashboardActivity : AppCompatActivity() {
         setupView()
         setupViewModel()
         setupActions()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        val needToExit = intent.getBooleanExtra("EXIT", false)
-        if (needToExit) {
-            finish()
-        }
     }
 
     private fun setupView() {
@@ -117,7 +113,7 @@ class DashboardActivity : AppCompatActivity() {
                     true
                 }
                 R.id.create_post_action -> {
-                    startActivity(Intent(this, CameraActivity::class.java))
+                    launcherIntentPost.launch(Intent(this, StoryCreateActivity::class.java))
                     true
                 }
                 else -> false

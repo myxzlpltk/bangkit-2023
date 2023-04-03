@@ -25,15 +25,6 @@ fun Context.hideKeyboard(view: View) {
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun Activity.showKeyboard() {
-    showKeyboard(currentFocus ?: View(this))
-}
-
-fun Context.showKeyboard(view: View) {
-    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-}
-
 fun hideSystemUI(window: Window) {
     @Suppress("DEPRECATION") if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -45,7 +36,7 @@ fun hideSystemUI(window: Window) {
     }
 }
 
-fun getFlippedCamera(cameraSelector: CameraSelector): CameraSelector {
+fun getOppositeCamera(cameraSelector: CameraSelector): CameraSelector {
     return if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
         CameraSelector.DEFAULT_FRONT_CAMERA
     } else {

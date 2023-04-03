@@ -1,17 +1,17 @@
 package com.dicoding.storyapp.utils
 
-import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
-import android.os.Environment
 import androidx.exifinterface.media.ExifInterface
-import com.dicoding.storyapp.R
 import com.dicoding.storyapp.utils.Configuration.DIM_IMAGE
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,19 +19,7 @@ val timeStamp: String
     get() = SimpleDateFormat("dd-MMM-yyyy", Locale.US).format(System.currentTimeMillis())
 
 fun createTempFile(context: Context): File {
-    val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-    return File.createTempFile(timeStamp, ".jpg", storageDir)
-}
-
-fun createFile(application: Application): File {
-    val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
-        File(it, application.resources.getString(R.string.app_name)).apply { mkdirs() }
-    }
-
-    val outputDirectory =
-        if (mediaDir != null && mediaDir.exists()) mediaDir else application.filesDir
-
-    return File(outputDirectory, "$timeStamp.jpg")
+    return File.createTempFile(timeStamp, ".jpg", context.cacheDir)
 }
 
 fun uriToFile(selectedImg: Uri, context: Context): File {
@@ -49,7 +37,7 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
     return myFile
 }
 
-fun reduceFileImage(file: File): File {
+/*fun reduceFileImage(file: File): File {
     val bitmap = BitmapFactory.decodeFile(file.path)
     var compressQuality = 100
     var streamLength: Int
@@ -62,7 +50,7 @@ fun reduceFileImage(file: File): File {
     } while (streamLength > 1000000)
     bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
     return file
-}
+}*/
 
 fun prepareImage(file: File): File {
     // Decode File into Bitmap
