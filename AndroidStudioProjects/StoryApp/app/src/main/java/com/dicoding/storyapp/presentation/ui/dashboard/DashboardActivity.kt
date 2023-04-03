@@ -22,8 +22,10 @@ import com.dicoding.storyapp.presentation.ui.sign_in.SignInActivity
 import com.dicoding.storyapp.presentation.ui.story_create.StoryCreateActivity
 import com.dicoding.storyapp.presentation.ui.story_detail.StoryDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 
@@ -61,40 +63,44 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         lifecycleScope.launch {
-            viewModel.flow.collectLatest { pagingData ->
+            viewModel.stories.collectLatest { pagingData ->
                 storiesAdapter.submitData(pagingData)
             }
         }
 
         lifecycleScope.launch {
-            storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }.collect {
-                if (it.refresh is LoadState.Loading && !binding.shimmerFrame.isShimmerVisible) {
-                    binding.swipeRefresh.isRefreshing = true
-                } else if (it.refresh is LoadState.NotLoading) {
+            storiesAdapter.loadStateFlow.filter { it.refresh is LoadState.Error || it.refresh is LoadState.NotLoading || it.append is LoadState.Error || it.append is LoadState.NotLoading }
+                .collect {
                     binding.rvStories.visibility = View.VISIBLE
-                    binding.rvStories.scrollToPosition(0)
                     binding.shimmerView.visibility = View.GONE
                     binding.shimmerFrame.hideShimmer()
                     binding.swipeRefresh.isRefreshing = false
-                } else if (it.refresh is LoadState.Error) {
-                    binding.shimmerView.visibility = View.GONE
-                    binding.shimmerFrame.hideShimmer()
-                    binding.swipeRefresh.isRefreshing = false
-                    (it.refresh as LoadState.Error).error.localizedMessage?.let { message ->
-                        viewModel.postMessage(message)
-                    }
                 }
-            }
         }
 
         lifecycleScope.launch {
-            storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.append }.collect {
-                if (it.refresh is LoadState.Error) {
+            storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.Loading && !binding.shimmerFrame.isShimmerVisible }
+                .collect {
+                    binding.swipeRefresh.isRefreshing = true
+                }
+        }
+
+        lifecycleScope.launch {
+            storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.NotLoading }.collect {
+                    delay(300)
+                    binding.rvStories.scrollToPosition(0)
+                }
+        }
+
+        lifecycleScope.launch {
+            storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.Error }.collect {
                     (it.refresh as LoadState.Error).error.localizedMessage?.let { message ->
                         viewModel.postMessage(message)
                     }
                 }
-            }
         }
 
         viewModel.message.observe(this) { event ->

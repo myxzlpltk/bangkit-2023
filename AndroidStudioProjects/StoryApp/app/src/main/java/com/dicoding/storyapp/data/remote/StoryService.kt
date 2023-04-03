@@ -12,7 +12,6 @@ interface StoryService {
 
     @GET("stories")
     suspend fun getAll(
-        @Header("Authorization") authorization: String,
         @Query("page") page: Int = START_PAGE_INDEX,
         @Query("size") size: Int = MAX_PAGE_SIZE,
         @Query("location") location: Int = 0,
@@ -21,7 +20,6 @@ interface StoryService {
     @Multipart
     @POST("stories")
     suspend fun create(
-        @Header("Authorization") authorization: String,
         @Part filePart: MultipartBody.Part,
         @Part("description") description: RequestBody,
     ): CreateStoryResponse

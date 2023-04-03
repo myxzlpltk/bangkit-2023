@@ -9,7 +9,6 @@ import com.dicoding.storyapp.data.entity.User
 import com.dicoding.storyapp.utils.Configuration
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -44,8 +43,8 @@ class UserPreference @Inject constructor(@ApplicationContext context: Context) {
         dataStore.edit { prefs -> prefs.clear() }
     }
 
-    suspend fun getToken(): String? {
-        return dataStore.data.first()[TOKEN_KEY]
+    fun getToken(): Flow<String?> {
+        return dataStore.data.map { prefs -> prefs[TOKEN_KEY] }
     }
 
     companion object {

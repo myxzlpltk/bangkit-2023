@@ -18,7 +18,6 @@ import javax.inject.Singleton
 class StoryDataSource @Inject constructor(private val storyService: StoryService) {
 
     suspend fun create(
-        token: String?,
         file: File,
         description: String,
     ): Flow<ApiResponse<CreateStoryResponse>> {
@@ -26,12 +25,11 @@ class StoryDataSource @Inject constructor(private val storyService: StoryService
             try {
                 emit(ApiResponse.Loading)
                 reduceFileImage(file)
-                val rToken = "Bearer $token"
                 val rDescription = RequestBody.create(MediaType.parse("text/plain"), description)
                 val rFile = MultipartBody.Part.createFormData(
                     "photo", file.name, RequestBody.create(MediaType.parse("image/*"), file)
                 )
-                val response = storyService.create(rToken, rFile, rDescription)
+                val response = storyService.create(rFile, rDescription)
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 val message = getErrorMessage(e)
