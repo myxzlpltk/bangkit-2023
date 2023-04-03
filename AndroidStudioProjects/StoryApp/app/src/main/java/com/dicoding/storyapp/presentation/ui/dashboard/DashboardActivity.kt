@@ -69,26 +69,12 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            storiesAdapter.loadStateFlow.filter { it.refresh is LoadState.Error || it.refresh is LoadState.NotLoading || it.append is LoadState.Error || it.append is LoadState.NotLoading }
-                .collect {
-                    binding.rvStories.visibility = View.VISIBLE
-                    binding.shimmerView.visibility = View.GONE
-                    binding.shimmerFrame.hideShimmer()
-                    binding.swipeRefresh.isRefreshing = false
-                }
-        }
-
-        lifecycleScope.launch {
-            storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }
-                .filter { it.refresh is LoadState.Loading && !binding.shimmerFrame.isShimmerVisible }
-                .collect {
-                    binding.swipeRefresh.isRefreshing = true
-                }
-        }
-
-        lifecycleScope.launch {
             storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }
                 .filter { it.refresh is LoadState.NotLoading }.collect {
+                    binding.rvStories.visibility = View.VISIBLE
+                    binding.swipeRefresh.isRefreshing = false
+                    binding.shimmerView.visibility = View.GONE
+                    binding.shimmerFrame.hideShimmer()
                     delay(300)
                     binding.rvStories.scrollToPosition(0)
                 }
@@ -97,6 +83,9 @@ class DashboardActivity : AppCompatActivity() {
         lifecycleScope.launch {
             storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }
                 .filter { it.refresh is LoadState.Error }.collect {
+                    binding.shimmerView.visibility = View.GONE
+                    binding.shimmerFrame.hideShimmer()
+                    binding.swipeRefresh.isRefreshing = false
                     (it.refresh as LoadState.Error).error.localizedMessage?.let { message ->
                         viewModel.postMessage(message)
                     }
