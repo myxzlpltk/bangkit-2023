@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.dicoding.storyapp.R
+import com.dicoding.storyapp.data.remote.ApiResponse
 import com.dicoding.storyapp.databinding.FragmentAddDescriptionBinding
 import com.dicoding.storyapp.utils.hideKeyboard
 import com.dicoding.storyapp.utils.showKeyboard
@@ -20,6 +23,7 @@ class AddDescriptionFragment : Fragment() {
 
     private var _binding: FragmentAddDescriptionBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: StoryCreateViewModel by activityViewModels()
 
     // State
     private lateinit var file: File
@@ -51,7 +55,7 @@ class AddDescriptionFragment : Fragment() {
     }
 
     private fun setupActions() {
-        binding.topAppBar.setNavigationOnClickListener {view ->
+        binding.topAppBar.setNavigationOnClickListener { view ->
             view.findNavController().popBackStack()
         }
 
@@ -59,10 +63,21 @@ class AddDescriptionFragment : Fragment() {
             when (menuItem.itemId) {
                 R.id.post_action -> {
                     hideKeyboard()
-                    // val description = binding.edAddDescription.text.toString().trim()
-                    with(requireActivity()) {
-                        setResult(RESULT_OK)
-                        finish()
+                    postButton.isEnabled = false
+
+                    val description = binding.edAddDescription.text.toString().trim()
+                    viewModel.create(file, description).observe(viewLifecycleOwner) { result ->
+                        if (result is ApiResponse.Success) {
+                            with(requireActivity()) {
+                                setResult(RESULT_OK)
+                                finish()
+                            }
+                        } else if (result is ApiResponse.Error) {
+                            postButton.isEnabled = true
+                            Toast.makeText(
+                                requireActivity(), result.errorMessage, Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                     true
                 }
@@ -72,11 +87,17 @@ class AddDescriptionFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.edAddDescription.doAfterTextChanged {
-            it?.let { editable ->
-                postButton.isEnabled = editable.isNotBlank()
-            }
+        binding.edAddDescription.doAfterTextChanged { updateButton() }
+
+        viewModel.isBusy.observe(viewLifecycleOwner) { isBusy ->
+            binding.progressIndicator.visibility = if (isBusy == true) View.VISIBLE else View.GONE
         }
+    }
+
+    private fun updateButton() {
+        val isNotBusy = viewModel.isBusy.value == false
+        val isDescriptionValid = binding.edAddDescription.text?.isNotBlank() == true
+        postButton.isEnabled = isNotBusy && isDescriptionValid
     }
 
     override fun onDestroy() {

@@ -30,7 +30,16 @@ class StoryDetailActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        binding.ivDetailPhoto.load(story.photoUrl, true) { supportStartPostponedEnterTransition() }
+        binding.ivDetailPhoto.load(story.photoUrl, true) { success ->
+            supportStartPostponedEnterTransition()
+            if (!success) {
+                binding.ivDetailPhoto.post {
+                    binding.ivDetailPhoto.load(story.photoUrl, false) {
+                        binding.ivDetailPhoto.adjustViewBounds = true
+                    }
+                }
+            }
+        }
         binding.tvDetailName.text = story.name
         binding.tvDetailDescription.text = story.description
         binding.tvDetailDate.text = story.createdAt.toLocaleFormat()

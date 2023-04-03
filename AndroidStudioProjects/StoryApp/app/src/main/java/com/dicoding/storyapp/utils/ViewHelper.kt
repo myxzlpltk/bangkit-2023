@@ -26,7 +26,7 @@ internal val FALLBACK_SHIMMER: Shimmer =
 fun ImageView.load(
     url: String,
     loadOnlyFromCache: Boolean = false,
-    onLoadingFinished: () -> Unit = {},
+    onLoadingFinished: (status: Boolean) -> Unit = {},
 ) {
     val listener = object : RequestListener<Drawable> {
         override fun onLoadFailed(
@@ -35,7 +35,7 @@ fun ImageView.load(
             target: Target<Drawable>?,
             isFirstResource: Boolean,
         ): Boolean {
-            onLoadingFinished()
+            onLoadingFinished(false)
             return false
         }
 
@@ -46,7 +46,7 @@ fun ImageView.load(
             dataSource: DataSource?,
             isFirstResource: Boolean,
         ): Boolean {
-            onLoadingFinished()
+            onLoadingFinished(true)
             return false
         }
     }

@@ -15,7 +15,7 @@ class DashboardViewModel @Inject constructor(
     storyRepository: StoryRepository,
 ) : BaseViewModel() {
 
-    val flow = storyRepository.getStories().cachedIn(viewModelScope)
+    val flow = storyRepository.getAll().cachedIn(viewModelScope)
 
     fun logout() {
         viewModelScope.launch {

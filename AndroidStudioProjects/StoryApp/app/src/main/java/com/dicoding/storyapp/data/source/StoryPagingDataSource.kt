@@ -23,7 +23,7 @@ class StoryPagingDataSource(
         return try {
             val page = params.key ?: START_PAGE_INDEX
             val token = pref.getToken()
-            val response = storyService.getStories("Bearer $token", page, params.loadSize)
+            val response = storyService.getAll("Bearer $token", page, params.loadSize)
             LoadResult.Page(
                 data = response.toListStory(),
                 prevKey = null,
