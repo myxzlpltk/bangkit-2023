@@ -17,7 +17,6 @@ import com.dicoding.storyapp.data.entity.Story
 import com.dicoding.storyapp.databinding.ActivityDashboardBinding
 import com.dicoding.storyapp.databinding.StoryCardItemBinding
 import com.dicoding.storyapp.presentation.ui.camera.CameraActivity
-import com.dicoding.storyapp.presentation.ui.main.MainViewModel
 import com.dicoding.storyapp.presentation.ui.shared.MarginItemDecoration
 import com.dicoding.storyapp.presentation.ui.sign_in.SignInActivity
 import com.dicoding.storyapp.presentation.ui.story_detail.StoryDetailActivity
@@ -31,7 +30,6 @@ class DashboardActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityDashboardBinding.inflate(layoutInflater) }
     private val viewModel: DashboardViewModel by viewModels()
-    private val mainViewModel: MainViewModel by viewModels()
     private val storiesAdapter = StoryAdapter(object : StoryAdapter.OnItemClickCallback {
         override fun onItemClicked(story: Story, itemBinding: StoryCardItemBinding) {
             goToDetailStoryActivity(story, itemBinding)
@@ -45,6 +43,15 @@ class DashboardActivity : AppCompatActivity() {
         setupView()
         setupViewModel()
         setupActions()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val needToExit = intent.getBooleanExtra("EXIT", false)
+        if (needToExit) {
+            finish()
+        }
     }
 
     private fun setupView() {
@@ -104,12 +111,12 @@ class DashboardActivity : AppCompatActivity() {
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.logout_action -> {
-                    mainViewModel.logout()
+                    viewModel.logout()
                     startActivity(Intent(this, SignInActivity::class.java))
                     finish()
                     true
                 }
-                R.id.post_action -> {
+                R.id.create_post_action -> {
                     startActivity(Intent(this, CameraActivity::class.java))
                     true
                 }
@@ -117,9 +124,7 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
-        binding.swipeRefresh.setOnRefreshListener {
-            storiesAdapter.refresh()
-        }
+        binding.swipeRefresh.setOnRefreshListener { storiesAdapter.refresh() }
     }
 
     private fun goToDetailStoryActivity(story: Story, itemBinding: StoryCardItemBinding) {

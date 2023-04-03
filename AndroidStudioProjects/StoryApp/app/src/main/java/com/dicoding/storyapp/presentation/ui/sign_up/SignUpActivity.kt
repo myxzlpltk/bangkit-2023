@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.storyapp.databinding.ActivitySignUpBinding
 import com.dicoding.storyapp.presentation.ui.main.MainActivity
-import com.dicoding.storyapp.presentation.ui.main.MainViewModel
 import com.dicoding.storyapp.presentation.ui.sign_in.SignInActivity
 import com.dicoding.storyapp.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
-    private val mainViewModel: MainViewModel by viewModels()
     private val viewModel: SignUpViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +37,7 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.isBusy.observe(this) { isBusy -> updateButton(isBusy) }
 
-        mainViewModel.getUser().observe(this) { user ->
+        viewModel.getUser().observe(this) { user ->
             if (user != null) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
@@ -56,9 +54,9 @@ class SignUpActivity : AppCompatActivity() {
             binding.edRegisterPassword.clearFocus()
 
             // Get data
-            val name = binding.edRegisterName.value
-            val email = binding.edRegisterEmail.value
-            val password = binding.edRegisterPassword.value
+            val name = binding.edRegisterName.value.trim()
+            val email = binding.edRegisterEmail.value.trim()
+            val password = binding.edRegisterPassword.value.trim()
 
             // Send request
             viewModel.register(name, email, password)

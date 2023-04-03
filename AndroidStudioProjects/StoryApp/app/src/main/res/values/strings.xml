@@ -5,11 +5,13 @@
     <string name="label_email">Email Address</string>
     <string name="label_password">Password</string>
     <string name="label_name">Full Name</string>
+    <string name="label_description">Description</string>
 
     <!-- Hint input -->
     <string name="hint_email">Enter your email</string>
     <string name="hint_password">Enter your password</string>
     <string name="hint_name">Enter your name</string>
+    <string name="hint_description">What this image is about?</string>
 
     <!-- Validation input -->
     <string name="error_email_empty">Email address must be filled</string>
@@ -31,7 +33,7 @@
     <string name="sign_in_promo">I already have an account</string>
 
     <!-- Dashboard Activity Features -->
-    <string name="post_menu_title">Post</string>
+    <string name="create_post_menu_title">Create Post</string>
     <string name="logout_menu_title">Logout</string>
     <string name="sample_name">John Doe</string>
     <string name="sample_description">This is my story learning android intermediate</string>
@@ -50,4 +52,7 @@
     <string name="failed_to_capture">Failed to capture an image</string>
     <string name="choose_picture">Choose a Picture</string>
     <string name="post_story_title">Post Story</string>
+
+    <!-- Post Activity Features -->
+    <string name="post_menu_title">Post</string>
 </resources>

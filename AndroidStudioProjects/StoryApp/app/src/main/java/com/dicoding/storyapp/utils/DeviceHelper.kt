@@ -8,6 +8,7 @@ import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.camera.core.CameraSelector
 import androidx.fragment.app.Fragment
 
@@ -22,6 +23,15 @@ fun Activity.hideKeyboard() {
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun Activity.showKeyboard() {
+    showKeyboard(currentFocus ?: View(this))
+}
+
+fun Context.showKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
 }
 
 fun hideSystemUI(window: Window) {
@@ -40,5 +50,13 @@ fun getFlippedCamera(cameraSelector: CameraSelector): CameraSelector {
         CameraSelector.DEFAULT_FRONT_CAMERA
     } else {
         CameraSelector.DEFAULT_BACK_CAMERA
+    }
+}
+
+fun EditText.showKeyboard() {
+    post {
+        requestFocus()
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     }
 }

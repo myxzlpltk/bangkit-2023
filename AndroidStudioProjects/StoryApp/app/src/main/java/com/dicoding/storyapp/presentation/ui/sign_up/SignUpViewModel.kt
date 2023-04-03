@@ -1,7 +1,10 @@
 package com.dicoding.storyapp.presentation.ui.sign_up
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.dicoding.storyapp.BaseViewModel
+import com.dicoding.storyapp.data.entity.User
 import com.dicoding.storyapp.data.preference.UserPreference
 import com.dicoding.storyapp.data.remote.ApiResponse
 import com.dicoding.storyapp.data.repository.UserRepository
@@ -27,5 +30,9 @@ class SignUpViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun getUser(): LiveData<User?> {
+        return pref.getUser().asLiveData()
     }
 }

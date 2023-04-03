@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.storyapp.databinding.ActivitySignInBinding
 import com.dicoding.storyapp.presentation.ui.main.MainActivity
-import com.dicoding.storyapp.presentation.ui.main.MainViewModel
 import com.dicoding.storyapp.presentation.ui.sign_up.SignUpActivity
 import com.dicoding.storyapp.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +18,6 @@ class SignInActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivitySignInBinding.inflate(layoutInflater) }
     private val viewModel: SignInViewModel by viewModels()
-    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +37,7 @@ class SignInActivity : AppCompatActivity() {
 
         viewModel.isBusy.observe(this) { isBusy -> updateButton(isBusy) }
 
-        mainViewModel.getUser().observe(this) { user ->
+        viewModel.getUser().observe(this) { user ->
             if (user != null) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
@@ -55,8 +53,8 @@ class SignInActivity : AppCompatActivity() {
             binding.edLoginPassword.clearFocus()
 
             // Get data
-            val email = binding.edLoginEmail.value
-            val password = binding.edLoginPassword.value
+            val email = binding.edLoginEmail.value.trim()
+            val password = binding.edLoginPassword.value.trim()
 
             // Send request
             viewModel.login(email, password)
