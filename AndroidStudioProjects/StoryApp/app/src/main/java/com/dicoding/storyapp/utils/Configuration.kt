@@ -5,4 +5,5 @@ object Configuration {
     const val DATASTORE_KEY = "settings"
     const val START_PAGE_INDEX = 1
     const val MAX_PAGE_SIZE = 30
+    const val DIM_IMAGE = 1080
 }

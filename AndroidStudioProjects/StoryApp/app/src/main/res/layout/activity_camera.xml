@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context=".presentation.ui.camera.CameraActivity">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/view_finder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/open_gallery"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/open_gallery_description"
+        android:padding="16dp"
+        app:icon="@drawable/baseline_photo_library_24"
+        app:iconGravity="textStart"
+        app:iconSize="32dp"
+        app:iconTint="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/capture_image"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_finder" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/capture_image"
+        style="?attr/materialIconButtonFilledStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/capture_image_description"
+        android:padding="20dp"
+        app:icon="@drawable/baseline_photo_camera_24"
+        app:iconGravity="textStart"
+        app:iconSize="36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/open_gallery"
+        app:layout_constraintEnd_toStartOf="@+id/switch_camera"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/open_gallery"
+        app:layout_constraintTop_toTopOf="@+id/open_gallery" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/switch_camera"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/switch_camera_description"
+        android:padding="16dp"
+        app:icon="@drawable/baseline_cameraswitch_24"
+        app:iconGravity="textStart"
+        app:iconSize="32dp"
+        app:iconTint="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/capture_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/capture_image"
+        app:layout_constraintTop_toTopOf="@+id/capture_image" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

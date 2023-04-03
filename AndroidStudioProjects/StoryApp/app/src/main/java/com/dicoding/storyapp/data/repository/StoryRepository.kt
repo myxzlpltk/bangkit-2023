@@ -22,7 +22,7 @@ class StoryRepository @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = MAX_PAGE_SIZE,
-                enablePlaceholders = true,
+                enablePlaceholders = false,
             ),
             pagingSourceFactory = { StoryPagingDataSource(pref, storyService) },
         ).flow

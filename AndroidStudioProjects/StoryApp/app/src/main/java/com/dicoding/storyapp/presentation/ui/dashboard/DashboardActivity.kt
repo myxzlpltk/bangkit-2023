@@ -16,6 +16,7 @@ import com.dicoding.storyapp.R
 import com.dicoding.storyapp.data.entity.Story
 import com.dicoding.storyapp.databinding.ActivityDashboardBinding
 import com.dicoding.storyapp.databinding.StoryCardItemBinding
+import com.dicoding.storyapp.presentation.ui.camera.CameraActivity
 import com.dicoding.storyapp.presentation.ui.main.MainViewModel
 import com.dicoding.storyapp.presentation.ui.shared.MarginItemDecoration
 import com.dicoding.storyapp.presentation.ui.sign_in.SignInActivity
@@ -106,6 +107,10 @@ class DashboardActivity : AppCompatActivity() {
                     mainViewModel.logout()
                     startActivity(Intent(this, SignInActivity::class.java))
                     finish()
+                    true
+                }
+                R.id.post_action -> {
+                    startActivity(Intent(this, CameraActivity::class.java))
                     true
                 }
                 else -> false

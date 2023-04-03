@@ -40,4 +40,14 @@
     <!-- Story Detail Activity Features -->
     <string name="story_detail_title">Story</string>
     <string name="sample_date_time">Saturday, 1 April 2022 10:00</string>
+
+    <!-- Camera Activity Features -->
+    <string name="switch_camera_description">Switch Camera</string>
+    <string name="capture_image_description">Capture an image</string>
+    <string name="open_gallery_description">Open gallery to pick image</string>
+    <string name="camera_error_message">Failed to start camera</string>
+    <string name="camera_permission_error_message">Didn\'t have permission to access camera</string>
+    <string name="failed_to_capture">Failed to capture an image</string>
+    <string name="choose_picture">Choose a Picture</string>
+    <string name="post_story_title">Post Story</string>
 </resources>
