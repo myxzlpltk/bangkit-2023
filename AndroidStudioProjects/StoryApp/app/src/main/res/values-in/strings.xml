@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aplikasi Story</string>
+
+    <!-- Label input -->
+    <string name="label_email">Alamat Email</string>
+    <string name="label_password">Kata Sandi</string>
+    <string name="label_name">Nama Lengkap</string>
+    <string name="label_description">Deskripsi</string>
+
+    <!-- Hint input -->
+    <string name="hint_email">Isi email anda</string>
+    <string name="hint_password">Isi kata sandi anda</string>
+    <string name="hint_name">Isi nama anda</string>
+    <string name="hint_description">Ceritakan tentang gambar ini…</string>
+
+    <!-- Validation input -->
+    <string name="error_email_empty">Alamat email wajib diisi</string>
+    <string name="error_email_invalid">Alamat email tidak valid</string>
+    <string name="error_password_empty">Kata sandi wajib diisi</string>
+    <string name="error_password_invalid">Kata sandi minimum 8 karakter</string>
+    <string name="error_name_empty">Nama wajib diisi</string>
+
+    <!-- Sign In Features -->
+    <string name="sign_in_title">Masuk</string>
+    <string name="sign_in_description">Selamat Datang! Silahkan isi email dan kata sandi untuk masuk</string>
+    <string name="sign_in_action">Masuk</string>
+    <string name="sign_up_promo">Saya tidak memiliki akun</string>
+
+    <!-- Sign Up Features -->
+    <string name="sign_up_title">Mendaftar</string>
+    <string name="sign_up_description">Selamat Datang! Silahkan isi formulir dibawah ini untuk mendaftar</string>
+    <string name="sign_up_action">Daftar</string>
+    <string name="sign_in_promo">Saya sudah memiliki akun</string>
+
+    <!-- Dashboard Activity Features -->
+    <string name="create_post_menu_title">Posting cerita</string>
+    <string name="logout_menu_title">Keluar</string>
+    <string name="sample_name">John Doe</string>
+    <string name="sample_description">Ini adalah cerita saya belajar android intermediate</string>
+    <string name="story_image_description">Sebuah gambar dari cerita</string>
+
+    <!-- Story Detail Activity Features -->
+    <string name="story_detail_title">Postingan</string>
+    <string name="sample_date_time">Sabtu, 1 April 2022 10:00</string>
+
+    <!-- Camera Activity Features -->
+    <string name="switch_camera_description">Ganti kamera</string>
+    <string name="capture_image_description">Ambil gambar</string>
+    <string name="open_gallery_description">Buka galeri untuk memilih gambar</string>
+    <string name="camera_error_message">Gagal memulai kamera</string>
+    <string name="camera_permission_error_message">Tidak memiliki izin untuk mengakses kamera</string>
+    <string name="failed_to_capture">Gagal mengambil gambar</string>
+    <string name="choose_picture">Pilih gambar</string>
+    <string name="post_story_title">Posting Cerita</string>
+
+    <!-- Post Activity Features -->
+    <string name="post_menu_title">Posting</string>
+</resources>

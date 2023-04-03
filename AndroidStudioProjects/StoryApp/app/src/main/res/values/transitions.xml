@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="transition_name">name</string>
-    <string name="transition_photo">photo</string>
-    <string name="transition_description">description</string>
+    <string name="transition_name" translatable="false">name</string>
+    <string name="transition_photo" translatable="false">photo</string>
+    <string name="transition_description" translatable="false">description</string>
 </resources>
