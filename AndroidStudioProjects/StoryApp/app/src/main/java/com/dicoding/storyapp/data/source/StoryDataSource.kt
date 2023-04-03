@@ -4,6 +4,7 @@ import com.dicoding.storyapp.data.remote.ApiResponse
 import com.dicoding.storyapp.data.remote.StoryService
 import com.dicoding.storyapp.data.remote.response.CreateStoryResponse
 import com.dicoding.storyapp.utils.getErrorMessage
+import com.dicoding.storyapp.utils.reduceFileImage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType
@@ -24,6 +25,7 @@ class StoryDataSource @Inject constructor(private val storyService: StoryService
         return flow {
             try {
                 emit(ApiResponse.Loading)
+                reduceFileImage(file)
                 val rToken = "Bearer $token"
                 val rDescription = RequestBody.create(MediaType.parse("text/plain"), description)
                 val rFile = MultipartBody.Part.createFormData(

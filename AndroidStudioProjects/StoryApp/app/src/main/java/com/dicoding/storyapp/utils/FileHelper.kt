@@ -8,10 +8,7 @@ import android.graphics.Matrix
 import android.net.Uri
 import androidx.exifinterface.media.ExifInterface
 import com.dicoding.storyapp.utils.Configuration.DIM_IMAGE
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,7 +34,7 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
     return myFile
 }
 
-/*fun reduceFileImage(file: File): File {
+fun reduceFileImage(file: File): File {
     val bitmap = BitmapFactory.decodeFile(file.path)
     var compressQuality = 100
     var streamLength: Int
@@ -50,7 +47,7 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
     } while (streamLength > 1000000)
     bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
     return file
-}*/
+}
 
 fun prepareImage(file: File): File {
     // Decode File into Bitmap
@@ -84,9 +81,3 @@ fun rotateBitmap(bitmap: Bitmap, path: String): Bitmap {
 
     return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
 }
-
-val File.size get() = if (!exists()) 0.0 else length().toDouble()
-val File.sizeInKb get() = size / 1024
-val File.sizeInMb get() = sizeInKb / 1024
-val File.sizeInGb get() = sizeInMb / 1024
-val File.sizeInTb get() = sizeInGb / 1024
