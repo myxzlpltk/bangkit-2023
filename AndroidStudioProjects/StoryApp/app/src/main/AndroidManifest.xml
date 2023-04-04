@@ -17,10 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
-        <service
-            android:name=".presentation.widgets.RandomPostWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-
         <receiver
             android:name=".presentation.widgets.RandomPostWidget"
             android:exported="false">

@@ -5,7 +5,7 @@
     android:initialLayout="@layout/random_post_widget"
     android:minWidth="250dp"
     android:minHeight="180dp"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:previewImage="@drawable/random_post_widget_preview"
     android:previewLayout="@layout/random_post_widget"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="4"

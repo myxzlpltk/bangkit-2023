@@ -59,4 +59,5 @@
     <!-- App Widget -->
     <string name="app_widget_description">A widget to show random story</string>
     <string name="refresh_widget_description">Refresh widget</string>
+    <string name="no_data_widget_message">Uppss… you should access the app first and sign in</string>
 </resources>

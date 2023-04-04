@@ -18,10 +18,9 @@ import com.dicoding.storyapp.data.entity.Story
 import com.dicoding.storyapp.data.repository.StoryRepository
 import com.dicoding.storyapp.presentation.ui.story_create.StoryCreateActivity
 import com.dicoding.storyapp.presentation.ui.story_detail.StoryDetailActivity
-import com.dicoding.storyapp.utils.FALLBACK_SHIMMER
-import com.facebook.shimmer.ShimmerDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -47,8 +46,9 @@ class RandomPostWidget : AppWidgetProvider() {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
 
         for (appWidgetId in appWidgetIds) {
-            val story = runBlocking { storyRepository.getRandom().first() }
-            updateAppWidget(context, appWidgetManager, appWidgetId, story)
+            val story = runBlocking { storyRepository.getRandom().firstOrNull() }
+            if (story == null) noDataAppWidget(context, appWidgetManager, appWidgetId)
+            else updateAppWidget(context, appWidgetManager, appWidgetId, story)
         }
     }
 
@@ -64,6 +64,15 @@ class RandomPostWidget : AppWidgetProvider() {
     }
 }
 
+internal fun noDataAppWidget(
+    context: Context,
+    appWidgetManager: AppWidgetManager,
+    appWidgetId: Int,
+) {
+    val views = RemoteViews(context.packageName, R.layout.random_post_widget_empty)
+    appWidgetManager.updateAppWidget(appWidgetId, views)
+}
+
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
@@ -75,14 +84,12 @@ internal fun updateAppWidget(
     views.setTextViewText(R.id.tv_name, story.name)
     views.setTextViewText(R.id.tv_description, story.description)
 
-    val shimmer = ShimmerDrawable().apply { setShimmer(FALLBACK_SHIMMER) }
     val imgView = object : AppWidgetTarget(context, R.id.iv_photo, views, appWidgetId) {
         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
             super.onResourceReady(resource, transition)
         }
     }
-    val options = RequestOptions().override(500).centerCrop().placeholder(shimmer)
-        .error(R.drawable.story_placeholder)
+    val options = RequestOptions().override(500).centerCrop().error(R.drawable.story_placeholder)
     Glide.with(context.applicationContext).asBitmap().load(story.photoUrl).apply(options)
         .into(imgView)
 
