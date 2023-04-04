@@ -57,4 +57,5 @@
     <!-- Post Activity Features -->
     <string name="post_menu_title">Posting</string>
     <string name="app_widget_description">Sebuah widget untuk menampilkan cerita acak</string>
+    <string name="refresh_widget_description">Muat ulang widget</string>
 </resources>
