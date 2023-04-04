@@ -39,4 +39,8 @@ class StoryRepository @Inject constructor(
     ): Flow<ApiResponse<CreateStoryResponse>> {
         return storyDataSource.create(file, description)
     }
+
+    fun getRandom(): Flow<Story> {
+        return database.getStoryDao().getRandom()
+    }
 }
