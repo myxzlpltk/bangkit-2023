@@ -2,16 +2,19 @@ package com.dicoding.mystudentdata.database
 
 import android.content.Context
 import android.util.Log
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import androidx.room.migration.AutoMigrationSpec
 import kotlinx.coroutines.CoroutineScope
 import java.util.concurrent.Executors
 
 @Database(
     entities = [Student::class, University::class, Course::class, CourseStudentCrossRef::class],
-    version = 1,
-    exportSchema = false
+    version = 3,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+        AutoMigration(from = 2, to = 3, spec = StudentDatabase.MyAutoMigration2To3::class),
+    ],
+    exportSchema = true,
 )
 abstract class StudentDatabase : RoomDatabase() {
 
@@ -58,4 +61,7 @@ abstract class StudentDatabase : RoomDatabase() {
         }
 
     }
+
+    @RenameColumn("Student", "graduate", "isGraduate")
+    class MyAutoMigration2To3 : AutoMigrationSpec
 }
