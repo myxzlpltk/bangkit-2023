@@ -2,6 +2,7 @@ package com.dicoding.myfirebasechat
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -11,7 +12,10 @@ import com.dicoding.myfirebasechat.databinding.ActivityMainBinding
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -65,6 +69,10 @@ class MainActivity : AppCompatActivity() {
         }
         adapter = FirebaseMessageAdapter(options, firebaseUser.displayName)
         binding.messageRecyclerView.adapter = adapter
+
+        Firebase.messaging.token.addOnSuccessListener {
+            Log.d("MainActivity", "Refreshed token: $it")
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
