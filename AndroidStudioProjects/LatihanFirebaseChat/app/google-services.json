@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "10836512057",
+    "project_id": "latihanfirebasechat-cd7b5",
+    "storage_bucket": "latihanfirebasechat-cd7b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10836512057:android:3220bf3c9a3b9bf2b8ece8",
+        "android_client_info": {
+          "package_name": "com.dicoding.myfirebasechat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10836512057-8qh6m6coku5t1vkjqlgun896i4fainha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dicoding.myfirebasechat",
+            "certificate_hash": "c1d5d64fafaa574b9e40b2503d90da43a2b0e101"
+          }
+        },
+        {
+          "client_id": "10836512057-13cqr1i9fpbcn63dmkrnt55lb6i5k8ft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9MLszkor83zV5d2HV3ti5gq4BWzVoHcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10836512057-13cqr1i9fpbcn63dmkrnt55lb6i5k8ft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
