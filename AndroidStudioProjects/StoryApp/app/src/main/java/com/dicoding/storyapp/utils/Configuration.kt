@@ -9,5 +9,4 @@ object Configuration {
     const val DB_NAME = "story_database"
     const val STORY_TABLE = "stories"
     const val REMOTE_KEY_TABLE = "remote_keys"
-    const val STORY_REMOTE_KEY_ID = "story_last_page"
 }

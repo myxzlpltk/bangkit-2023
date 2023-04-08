@@ -6,10 +6,13 @@ import androidx.room.PrimaryKey
 import com.dicoding.storyapp.utils.Configuration.REMOTE_KEY_TABLE
 
 @Entity(tableName = REMOTE_KEY_TABLE)
-data class RemoteKey(
-    @PrimaryKey(autoGenerate = false)
+data class RemoteKeys(
+    @PrimaryKey
     @ColumnInfo("id")
     val id: String,
+
+    @ColumnInfo("prev_key")
+    val prevKey: Int?,
 
     @ColumnInfo("next_key")
     val nextKey: Int?,

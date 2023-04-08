@@ -28,7 +28,7 @@ class StoryRepository @Inject constructor(
     fun getAll(): Flow<PagingData<Story>> {
         return Pager(
             config = PagingConfig(pageSize = MAX_PAGE_SIZE),
-            pagingSourceFactory = { database.getStoryDao().pagingSource() },
+            pagingSourceFactory = { database.storyDao().pagingSource() },
             remoteMediator = StoryRemoteMediator(database, storyService)
         ).flow
     }
@@ -41,6 +41,6 @@ class StoryRepository @Inject constructor(
     }
 
     fun getRandom(): Flow<Story> {
-        return database.getStoryDao().getRandom()
+        return database.storyDao().getRandom()
     }
 }
