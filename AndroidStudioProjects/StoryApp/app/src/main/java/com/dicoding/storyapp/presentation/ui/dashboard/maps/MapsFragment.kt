@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import timber.log.Timber
@@ -60,9 +61,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
+        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.map_style))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(dicodingSpace, 8f))
 
-        mMap.setOnInfoWindowClickListener {marker ->
+        mMap.setOnInfoWindowClickListener { marker ->
             markersMap[marker]?.let { story ->
                 val intent = Intent(activity, StoryDetailActivity::class.java)
                 intent.putExtra(StoryDetailActivity.EXTRA_STORY, story)
