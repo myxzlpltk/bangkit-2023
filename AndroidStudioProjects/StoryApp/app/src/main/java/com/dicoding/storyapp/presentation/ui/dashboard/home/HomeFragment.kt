@@ -103,20 +103,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupActions() {
-        /*binding.topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.logout_action -> {
-                    Timber.d("Should logout")
-                    viewModel.logout()
-                    startActivity(Intent(activity, SignInActivity::class.java))
-                    requireActivity().finish()
-                    true
-                }
-
-                else -> false
-            }
-        }*/
-
         binding.swipeRefresh.setOnRefreshListener { storiesAdapter.refresh() }
     }
 

@@ -30,12 +30,7 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setupView()
         setupActions()
-    }
-
-    private fun setupView() {
-        supportFragmentManager.commit { replace(binding.navHostFragment.id, homeFragment) }
     }
 
     private fun setupActions() {
@@ -49,7 +44,7 @@ class DashboardActivity : AppCompatActivity() {
                     true
                 }
                 R.id.maps_action -> {
-                    binding.postAction.show()
+                    binding.postAction.hide()
                     supportFragmentManager.commit {
                         replace(binding.navHostFragment.id, mapsFragment)
                     }

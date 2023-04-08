@@ -25,12 +25,16 @@ class StoryRepository @Inject constructor(
 ) {
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getAll(): Flow<PagingData<Story>> {
+    fun getPagingData(): Flow<PagingData<Story>> {
         return Pager(
             config = PagingConfig(pageSize = MAX_PAGE_SIZE),
             pagingSourceFactory = { database.storyDao().pagingSource() },
             remoteMediator = StoryRemoteMediator(database, storyService)
         ).flow
+    }
+
+    fun getAll(withLocation: Boolean): Flow<ApiResponse<List<Story>>> {
+        return storyDataSource.getAll(withLocation)
     }
 
     suspend fun create(

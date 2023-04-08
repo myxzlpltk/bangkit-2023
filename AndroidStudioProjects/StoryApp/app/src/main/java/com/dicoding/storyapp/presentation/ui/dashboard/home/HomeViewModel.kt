@@ -13,7 +13,7 @@ class HomeViewModel @Inject constructor(
     storyRepository: StoryRepository,
 ) : BaseViewModel() {
 
-    val stories = storyRepository.getAll().cachedIn(viewModelScope)
+    val stories = storyRepository.getPagingData().cachedIn(viewModelScope)
 
     override fun onCleared() {
         super.onCleared()
