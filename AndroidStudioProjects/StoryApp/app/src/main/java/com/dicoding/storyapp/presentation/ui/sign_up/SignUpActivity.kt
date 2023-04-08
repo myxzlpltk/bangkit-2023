@@ -11,6 +11,8 @@ import com.dicoding.storyapp.databinding.ActivitySignUpBinding
 import com.dicoding.storyapp.presentation.ui.main.MainActivity
 import com.dicoding.storyapp.presentation.ui.sign_in.SignInActivity
 import com.dicoding.storyapp.utils.hideKeyboard
+import com.dicoding.storyapp.utils.hideProgress
+import com.dicoding.storyapp.utils.showProgress
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +37,13 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.isBusy.observe(this) { isBusy -> updateButton(isBusy) }
+        viewModel.isBusy.observe(this) { isBusy ->
+            if (isBusy) {
+                binding.signUpButton.showProgress()
+            } else {
+                binding.signUpButton.hideProgress()
+            }
+        }
 
         viewModel.getUser().observe(this) { user ->
             if (user != null) {
@@ -73,20 +81,15 @@ class SignUpActivity : AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                updateButton()
+                val isNameValid = binding.edRegisterName.isValid
+                val isEmailValid = binding.edRegisterEmail.isValid
+                val isPasswordValid = binding.edRegisterPassword.isValid
+                binding.signUpButton.isEnabled = isNameValid && isEmailValid && isPasswordValid
             }
         }
 
         binding.edRegisterName.addTextChangedListener(listener)
         binding.edRegisterEmail.addTextChangedListener(listener)
         binding.edRegisterPassword.addTextChangedListener(listener)
-    }
-
-    private fun updateButton(_isBusy: Boolean? = null) {
-        val isNameValid = binding.edRegisterName.isValid
-        val isEmailValid = binding.edRegisterEmail.isValid
-        val isPasswordValid = binding.edRegisterPassword.isValid
-        val isBusy = _isBusy ?: viewModel.isBusy.value ?: false
-        binding.signUpButton.isEnabled = !isBusy && isNameValid && isEmailValid && isPasswordValid
     }
 }

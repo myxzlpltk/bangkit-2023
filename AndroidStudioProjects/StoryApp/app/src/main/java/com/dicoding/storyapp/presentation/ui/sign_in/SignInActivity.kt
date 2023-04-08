@@ -11,6 +11,8 @@ import com.dicoding.storyapp.databinding.ActivitySignInBinding
 import com.dicoding.storyapp.presentation.ui.main.MainActivity
 import com.dicoding.storyapp.presentation.ui.sign_up.SignUpActivity
 import com.dicoding.storyapp.utils.hideKeyboard
+import com.dicoding.storyapp.utils.hideProgress
+import com.dicoding.storyapp.utils.showProgress
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +37,13 @@ class SignInActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.isBusy.observe(this) { isBusy -> updateButton(isBusy) }
+        viewModel.isBusy.observe(this) { isBusy ->
+            if (isBusy) {
+                binding.signInButton.showProgress()
+            } else {
+                binding.signInButton.hideProgress()
+            }
+        }
 
         viewModel.getUser().observe(this) { user ->
             if (user != null) {
@@ -71,17 +79,12 @@ class SignInActivity : AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                updateButton()
+                val isEmailValid = binding.edLoginEmail.isValid
+                val isPasswordValid = binding.edLoginPassword.isValid
+                binding.signInButton.isEnabled = isEmailValid && isPasswordValid
             }
         }
         binding.edLoginEmail.addTextChangedListener(listener)
         binding.edLoginPassword.addTextChangedListener(listener)
-    }
-
-    private fun updateButton(_isBusy: Boolean? = null) {
-        val isEmailValid = binding.edLoginEmail.isValid
-        val isPasswordValid = binding.edLoginPassword.isValid
-        val isBusy = _isBusy ?: viewModel.isBusy.value ?: false
-        binding.signInButton.isEnabled = !isBusy && isEmailValid && isPasswordValid
     }
 }
