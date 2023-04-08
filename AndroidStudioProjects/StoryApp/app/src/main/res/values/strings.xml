@@ -65,4 +65,8 @@
     <string name="home_navigation_title">Home</string>
     <string name="maps_navigation_title">Maps</string>
     <string name="profile_navigation_title">Profile</string>
+    <string name="simple_greeting">Hello,</string>
+
+    <!-- Profile Fragment -->
+    <string name="sign_out_title">Sign out</string>
 </resources>
