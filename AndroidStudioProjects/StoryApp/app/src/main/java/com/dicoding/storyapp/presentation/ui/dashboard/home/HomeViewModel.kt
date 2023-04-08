@@ -1,25 +1,22 @@
-package com.dicoding.storyapp.presentation.ui.dashboard
+package com.dicoding.storyapp.presentation.ui.dashboard.home
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.dicoding.storyapp.BaseViewModel
-import com.dicoding.storyapp.data.preference.UserPreference
 import com.dicoding.storyapp.data.repository.StoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor(
-    private val pref: UserPreference,
+class HomeViewModel @Inject constructor(
     storyRepository: StoryRepository,
 ) : BaseViewModel() {
 
     val stories = storyRepository.getAll().cachedIn(viewModelScope)
 
-    fun logout() {
-        viewModelScope.launch {
-            pref.logout()
-        }
+    override fun onCleared() {
+        super.onCleared()
+        Timber.d("HomeViewModel onCleared")
     }
 }

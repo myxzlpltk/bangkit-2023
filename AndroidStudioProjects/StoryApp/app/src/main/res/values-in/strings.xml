@@ -59,4 +59,9 @@
     <string name="app_widget_description">Sebuah widget untuk menampilkan cerita acak</string>
     <string name="refresh_widget_description">Muat ulang widget</string>
     <string name="no_data_widget_message">Waduh… kamu harus mengakses aplikasi terlebih dahulu dan melakukan sign in</string>
+
+    <!-- Bottom Navigation Title -->
+    <string name="home_navigation_title">Beranda</string>
+    <string name="maps_navigation_title">Peta</string>
+    <string name="profile_navigation_title">Profil</string>
 </resources>

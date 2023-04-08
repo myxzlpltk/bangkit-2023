@@ -1,133 +1,73 @@
 package com.dicoding.storyapp.presentation.ui.dashboard
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.commit
 import com.dicoding.storyapp.R
-import com.dicoding.storyapp.data.entity.Story
 import com.dicoding.storyapp.databinding.ActivityDashboardBinding
-import com.dicoding.storyapp.databinding.StoryCardItemBinding
-import com.dicoding.storyapp.presentation.ui.shared.MarginItemDecoration
-import com.dicoding.storyapp.presentation.ui.sign_in.SignInActivity
+import com.dicoding.storyapp.presentation.ui.dashboard.home.HomeFragment
+import com.dicoding.storyapp.presentation.ui.dashboard.maps.MapsFragment
+import com.dicoding.storyapp.presentation.ui.dashboard.profile.ProfileFragment
 import com.dicoding.storyapp.presentation.ui.story_create.StoryCreateActivity
-import com.dicoding.storyapp.presentation.ui.story_detail.StoryDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
 class DashboardActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityDashboardBinding.inflate(layoutInflater) }
-    private val viewModel: DashboardViewModel by viewModels()
-    private val storiesAdapter = StoryAdapter(object : StoryAdapter.OnItemClickCallback {
-        override fun onItemClicked(story: Story, itemBinding: StoryCardItemBinding) {
-            goToDetailStoryActivity(story, itemBinding)
-        }
-    })
+    private val launcherIntentPost = registerForActivityResult(StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) homeFragment.storiesAdapter.refresh()
+    }
 
-    private val launcherIntentPost = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result -> if (result.resultCode == RESULT_OK) storiesAdapter.refresh() }
+    private val homeFragment = HomeFragment()
+    private val mapsFragment = MapsFragment()
+    private val profileFragment = ProfileFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setupView()
-        setupViewModel()
         setupActions()
     }
 
     private fun setupView() {
-        binding.rvStories.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.margin)))
-            adapter = storiesAdapter
-        }
-    }
-
-    private fun setupViewModel() {
-        lifecycleScope.launch {
-            viewModel.stories.collectLatest { pagingData ->
-                storiesAdapter.submitData(pagingData)
-            }
-        }
-
-        lifecycleScope.launch {
-            storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }
-                .filter { it.refresh is LoadState.NotLoading }.collect {
-                    binding.rvStories.visibility = View.VISIBLE
-                    binding.swipeRefresh.isRefreshing = false
-                    binding.shimmerView.visibility = View.GONE
-                    binding.shimmerFrame.hideShimmer()
-                    delay(300)
-                    binding.rvStories.scrollToPosition(0)
-                }
-        }
-
-        lifecycleScope.launch {
-            storiesAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }
-                .filter { it.refresh is LoadState.Error }.collect {
-                    binding.shimmerView.visibility = View.GONE
-                    binding.shimmerFrame.hideShimmer()
-                    binding.swipeRefresh.isRefreshing = false
-                    (it.refresh as LoadState.Error).error.localizedMessage?.let { message ->
-                        viewModel.postMessage(message)
-                    }
-                }
-        }
-
-        viewModel.message.observe(this) { event ->
-            event.getContentIfNotHandled()?.let { message ->
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-            }
-        }
+        supportFragmentManager.commit { replace(binding.navHostFragment.id, homeFragment) }
     }
 
     private fun setupActions() {
-        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.logout_action -> {
-                    viewModel.logout()
-                    startActivity(Intent(this, SignInActivity::class.java))
-                    finish()
+                R.id.home_action -> {
+                    binding.postAction.show()
+                    supportFragmentManager.commit {
+                        replace(binding.navHostFragment.id, homeFragment)
+                    }
                     true
                 }
-                R.id.create_post_action -> {
-                    launcherIntentPost.launch(Intent(this, StoryCreateActivity::class.java))
+                R.id.maps_action -> {
+                    binding.postAction.show()
+                    supportFragmentManager.commit {
+                        replace(binding.navHostFragment.id, mapsFragment)
+                    }
+                    true
+                }
+                R.id.profile_action -> {
+                    binding.postAction.hide()
+                    supportFragmentManager.commit {
+                        replace(binding.navHostFragment.id, profileFragment)
+                    }
                     true
                 }
                 else -> false
             }
         }
 
-        binding.swipeRefresh.setOnRefreshListener { storiesAdapter.refresh() }
-    }
-
-    private fun goToDetailStoryActivity(story: Story, itemBinding: StoryCardItemBinding) {
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-            itemBinding.root.context as Activity,
-            Pair(itemBinding.ivItemPhoto, getString(R.string.transition_photo)),
-            Pair(itemBinding.tvItemName, getString(R.string.transition_name)),
-            Pair(itemBinding.tvItemDescription, getString(R.string.transition_description)),
-        )
-        val intent = Intent(this, StoryDetailActivity::class.java)
-        intent.putExtra(StoryDetailActivity.EXTRA_STORY, story)
-        startActivity(intent, options.toBundle())
+        binding.postAction.setOnClickListener {
+            launcherIntentPost.launch(Intent(this, StoryCreateActivity::class.java))
+        }
     }
 }

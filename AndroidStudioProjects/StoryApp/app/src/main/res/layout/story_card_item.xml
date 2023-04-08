@@ -25,6 +25,7 @@
             android:background="?attr/colorPrimaryContainer"
             android:contentDescription="@string/story_image_description"
             android:scaleType="centerCrop"
+            android:transitionName="@string/transition_photo"
             app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media"
             tools:src="@tools:sample/backgrounds/scenic" />
@@ -41,7 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sample_name"
-                android:textAppearance="?attr/textAppearanceTitleMedium" />
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:transitionName="@string/transition_name" />
 
             <TextView
                 android:id="@+id/tv_item_description"
@@ -52,7 +54,8 @@
                 android:maxLines="2"
                 android:text="@string/sample_description"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="?android:attr/textColorSecondary"
+                android:transitionName="@string/transition_description" />
 
         </LinearLayout>
     </LinearLayout>
