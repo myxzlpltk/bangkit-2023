@@ -39,7 +39,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupActions() {
-        binding.signOut.setOnClickListener {
+        binding.signOutButton.setOnClickListener {
             viewModel.logout()
             startActivity(Intent(activity, SignInActivity::class.java))
             requireActivity().finish()
