@@ -18,8 +18,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class DashboardActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityDashboardBinding.inflate(layoutInflater) }
+
     private val launcherIntentPost = registerForActivityResult(StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) homeFragment.storiesAdapter.refresh()
+        if (result.resultCode == RESULT_OK) {
+            homeFragment.refreshAdapter()
+        }
     }
 
     private val homeFragment = HomeFragment()
@@ -29,7 +32,9 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        supportFragmentManager.commit {
+            replace(binding.navHostFragment.id, homeFragment, HOME_TAG)
+        }
         setupActions()
     }
 
@@ -39,21 +44,21 @@ class DashboardActivity : AppCompatActivity() {
                 R.id.home_action -> {
                     binding.postAction.show()
                     supportFragmentManager.commit {
-                        replace(binding.navHostFragment.id, homeFragment)
+                        replace(binding.navHostFragment.id, homeFragment, HOME_TAG)
                     }
                     true
                 }
                 R.id.maps_action -> {
                     binding.postAction.hide()
                     supportFragmentManager.commit {
-                        replace(binding.navHostFragment.id, mapsFragment)
+                        replace(binding.navHostFragment.id, mapsFragment, MAPS_TAG)
                     }
                     true
                 }
                 R.id.profile_action -> {
                     binding.postAction.hide()
                     supportFragmentManager.commit {
-                        replace(binding.navHostFragment.id, profileFragment)
+                        replace(binding.navHostFragment.id, profileFragment, PROFILE_TAG)
                     }
                     true
                 }
@@ -64,5 +69,11 @@ class DashboardActivity : AppCompatActivity() {
         binding.postAction.setOnClickListener {
             launcherIntentPost.launch(Intent(this, StoryCreateActivity::class.java))
         }
+    }
+
+    companion object {
+        private const val HOME_TAG = "HomeFragment"
+        private const val MAPS_TAG = "MapsFragment"
+        private const val PROFILE_TAG = "ProfileFragment"
     }
 }

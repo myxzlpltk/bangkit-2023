@@ -55,6 +55,11 @@
 
     <!-- Post Activity Features -->
     <string name="post_menu_title">Post</string>
+    <string name="location_not_found">Cannot find your location</string>
+    <string name="location_not_granted">Location permission not granted</string>
+    <string name="add_location">Add Location</string>
+    <string name="searching_location">Searching Location…</string>
+    <string name="coordinate_template" translatable="false">%1$.2f, %2$.2f</string>
 
     <!-- App Widget -->
     <string name="app_widget_description">A widget to show random story</string>

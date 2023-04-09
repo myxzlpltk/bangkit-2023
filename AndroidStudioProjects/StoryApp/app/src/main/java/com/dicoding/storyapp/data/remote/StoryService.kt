@@ -22,5 +22,7 @@ interface StoryService {
     suspend fun create(
         @Part filePart: MultipartBody.Part,
         @Part("description") description: RequestBody,
+        @Part("lat") latitude: RequestBody?,
+        @Part("lon") longitude: RequestBody?,
     ): CreateStoryResponse
 }

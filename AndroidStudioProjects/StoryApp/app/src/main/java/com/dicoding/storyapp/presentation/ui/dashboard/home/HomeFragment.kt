@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by activityViewModels()
 
-    val storiesAdapter = StoryAdapter(object : StoryAdapter.OnItemClickCallback {
+    private val storiesAdapter = StoryAdapter(object : StoryAdapter.OnItemClickCallback {
         override fun onItemClicked(story: Story, itemBinding: StoryCardItemBinding) {
             goToDetailStoryActivity(story, itemBinding)
         }
@@ -105,6 +105,8 @@ class HomeFragment : Fragment() {
     private fun setupActions() {
         binding.swipeRefresh.setOnRefreshListener { storiesAdapter.refresh() }
     }
+
+    fun refreshAdapter() = storiesAdapter.refresh()
 
     private fun goToDetailStoryActivity(story: Story, itemBinding: StoryCardItemBinding) {
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(

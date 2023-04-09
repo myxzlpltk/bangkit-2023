@@ -56,6 +56,12 @@
 
     <!-- Post Activity Features -->
     <string name="post_menu_title">Posting</string>
+    <string name="location_not_found">Tidak dapat menemukan lokasi</string>
+    <string name="location_not_granted">Izin lokasi tidak diberikan</string>
+    <string name="add_location">Tambahkan lokasi</string>
+    <string name="searching_location">Mencari lokasi…</string>
+
+    <!-- App Widget -->
     <string name="app_widget_description">Sebuah widget untuk menampilkan cerita acak</string>
     <string name="refresh_widget_description">Muat ulang widget</string>
     <string name="no_data_widget_message">Waduh… kamu harus mengakses aplikasi terlebih dahulu dan melakukan sign in</string>

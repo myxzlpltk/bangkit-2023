@@ -40,8 +40,10 @@ class StoryRepository @Inject constructor(
     suspend fun create(
         file: File,
         description: String,
+        latitude: Double?,
+        longitude: Double?,
     ): Flow<ApiResponse<CreateStoryResponse>> {
-        return storyDataSource.create(file, description)
+        return storyDataSource.create(file, description, latitude, longitude)
     }
 
     fun getRandom(): Flow<Story> {

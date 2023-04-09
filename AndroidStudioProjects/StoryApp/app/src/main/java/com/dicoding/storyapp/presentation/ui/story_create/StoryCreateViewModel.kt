@@ -17,13 +17,18 @@ class StoryCreateViewModel @Inject constructor(
     private val storyRepository: StoryRepository,
 ) : BaseViewModel() {
 
-    fun create(file: File, description: String): LiveData<ApiResponse<CreateStoryResponse>> {
+    fun create(
+        file: File,
+        description: String,
+        latitude: Double?,
+        longitude: Double?,
+    ): LiveData<ApiResponse<CreateStoryResponse>> {
         val result = MutableLiveData<ApiResponse<CreateStoryResponse>>()
 
         if (isBusy.value == false) {
             postBusy(true)
             viewModelScope.launch {
-                storyRepository.create(file, description).collect {
+                storyRepository.create(file, description, latitude, longitude).collect {
                     if (it is ApiResponse.Success || it is ApiResponse.Error) postBusy(false)
                     result.postValue(it)
                 }

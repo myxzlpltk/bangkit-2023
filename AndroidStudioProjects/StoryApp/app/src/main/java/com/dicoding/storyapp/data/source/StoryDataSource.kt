@@ -22,16 +22,24 @@ class StoryDataSource @Inject constructor(private val storyService: StoryService
     suspend fun create(
         file: File,
         description: String,
+        latitude: Double?,
+        longitude: Double?,
     ): Flow<ApiResponse<CreateStoryResponse>> {
         return flow {
             try {
                 emit(ApiResponse.Loading)
                 reduceFileImage(file)
                 val rDescription = RequestBody.create(MediaType.parse("text/plain"), description)
+                val rLatitude = latitude?.let {
+                    RequestBody.create(MediaType.parse("text/plain"), latitude.toString())
+                }
+                val rLongitude = longitude?.let {
+                    RequestBody.create(MediaType.parse("text/plain"), longitude.toString())
+                }
                 val rFile = MultipartBody.Part.createFormData(
                     "photo", file.name, RequestBody.create(MediaType.parse("image/*"), file)
                 )
-                val response = storyService.create(rFile, rDescription)
+                val response = storyService.create(rFile, rDescription, rLatitude, rLongitude)
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 val message = getErrorMessage(e)
