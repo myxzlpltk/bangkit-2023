@@ -14,10 +14,6 @@ import com.dicoding.storyapp.utils.toLocaleFormat
 
 class StoryDetailActivity : AppCompatActivity() {
 
-    companion object {
-        const val EXTRA_STORY = "extra_story"
-    }
-
     private val binding by lazy { ActivityStoryDetailBinding.inflate(layoutInflater) }
     private lateinit var story: Story
 
@@ -64,5 +60,9 @@ class StoryDetailActivity : AppCompatActivity() {
 
     private fun setupActions() {
         binding.topAppBar.setNavigationOnClickListener { finishAfterTransition() }
+    }
+
+    companion object {
+        const val EXTRA_STORY = "extra_story"
     }
 }

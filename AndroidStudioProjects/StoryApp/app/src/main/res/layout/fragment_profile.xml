@@ -22,10 +22,10 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sample_name"
         android:textAppearance="@style/TextAppearance.Material3.DisplayMedium"
         app:layout_constraintStart_toStartOf="@+id/hello_title"
-        app:layout_constraintTop_toBottomOf="@+id/hello_title" />
+        app:layout_constraintTop_toBottomOf="@+id/hello_title"
+        tools:text="@string/sample_name" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -36,8 +36,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/sign_out_title"
         android:backgroundTint="?attr/colorError"
+        android:text="@string/sign_out_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

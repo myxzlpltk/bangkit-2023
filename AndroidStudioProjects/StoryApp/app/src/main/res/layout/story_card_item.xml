@@ -41,9 +41,9 @@
                 android:id="@+id/tv_item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sample_name"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:transitionName="@string/transition_name" />
+                android:transitionName="@string/transition_name"
+                tools:text="@string/sample_name" />
 
             <TextView
                 android:id="@+id/tv_item_description"
@@ -52,10 +52,10 @@
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@string/sample_description"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textColor="?android:attr/textColorSecondary"
-                android:transitionName="@string/transition_description" />
+                android:transitionName="@string/transition_description"
+                tools:text="@string/sample_description" />
 
         </LinearLayout>
     </LinearLayout>

@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.Dark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/AppTheme.Dark"
     tools:context=".presentation.ui.story_create.CaptureImageFragment">
 
     <androidx.camera.view.PreviewView

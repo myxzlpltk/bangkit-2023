@@ -47,8 +47,8 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/story_image_description"
                     android:maxHeight="400dp"
-                    android:transitionName="@string/transition_photo"
                     android:scaleType="centerCrop"
+                    android:transitionName="@string/transition_photo"
                     app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media"
                     tools:src="@tools:sample/backgrounds/scenic" />
@@ -62,9 +62,9 @@
                 android:layout_marginBottom="8dp"
                 android:drawablePadding="@dimen/drawable_padding"
                 android:gravity="center_vertical"
-                android:text="@string/sample_date_time"
                 android:textColor="?attr/colorSecondary"
-                app:drawableStartCompat="@drawable/baseline_calendar_month_24" />
+                app:drawableStartCompat="@drawable/baseline_calendar_month_24"
+                tools:text="@string/sample_date_time" />
 
             <TextView
                 android:id="@+id/tv_detail_name"
@@ -73,9 +73,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:gravity="center_vertical"
-                android:text="@string/sample_name"
                 android:textStyle="bold"
-                android:transitionName="@string/transition_name" />
+                android:transitionName="@string/transition_name"
+                tools:text="@string/sample_name" />
 
             <TextView
                 android:id="@+id/tv_detail_description"
@@ -83,8 +83,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="@string/sample_description"
-                android:transitionName="@string/transition_description" />
+                android:transitionName="@string/transition_description"
+                tools:text="@string/sample_description" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -95,5 +95,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="@string/open_google_maps"
-        app:srcCompat="@drawable/baseline_map_24"/>
+        app:srcCompat="@drawable/baseline_map_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

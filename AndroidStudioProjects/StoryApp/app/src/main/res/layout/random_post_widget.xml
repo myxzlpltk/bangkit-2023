@@ -59,17 +59,17 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/round_outline"
             android:clipToOutline="true"
-            android:scaleType="centerCrop"
             android:contentDescription="@string/story_image_description"
-            android:src="@drawable/story_placeholder" />
+            android:scaleType="centerCrop"
+            tools:src="@drawable/story_placeholder" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="@string/sample_name"
-            android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            tools:text="@string/sample_name" />
 
         <TextView
             android:id="@+id/tv_description"
@@ -77,9 +77,9 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@string/sample_description"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-            android:textColor="@color/md_theme_light_secondary" />
+            android:textColor="@color/md_theme_light_secondary"
+            tools:text="@string/sample_description" />
 
     </LinearLayout>
 

@@ -33,11 +33,6 @@ class RandomPostWidget : AppWidgetProvider() {
     @Inject
     lateinit var storyRepository: StoryRepository
 
-    companion object {
-        const val WIDGET_CLICK = "android.appwidget.action.APPWIDGET_UPDATE"
-        const val WIDGET_ID_EXTRA = "widget_id_extra"
-    }
-
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -61,6 +56,11 @@ class RandomPostWidget : AppWidgetProvider() {
             val story = runBlocking { storyRepository.getRandom().first() }
             updateAppWidget(context, appWidgetManager, appWidgetId, story)
         }
+    }
+
+    companion object {
+        const val WIDGET_CLICK = "android.appwidget.action.APPWIDGET_UPDATE"
+        const val WIDGET_ID_EXTRA = "widget_id_extra"
     }
 }
 
