@@ -100,12 +100,12 @@ fun Greeting(name: String) {
       )
       Spacer(modifier = Modifier.width(8.dp))
       Column(modifier = Modifier.weight(1f)) {
+        Text(text = "Welcome to Dicoding!")
         Text(
             text = "Hello $name!",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
         )
-        Text(text = "Welcome to Dicoding!")
       }
       IconButton(onClick = { isExpanded = !isExpanded }) {
         Icon(
