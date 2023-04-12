@@ -1,7 +1,6 @@
 package com.dicoding.mynavdrawer
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -20,13 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dicoding.mynavdrawer.ui.theme.MyNavDrawerTheme
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,65 +38,6 @@ class MainActivity : ComponentActivity() {
           MyNavDrawerApp()
         }
       }
-    }
-  }
-}
-
-@Composable
-fun MyNavDrawerApp() {
-  val context = LocalContext.current
-  val scaffoldState = rememberScaffoldState()
-  val scope = rememberCoroutineScope()
-
-  Scaffold(
-      scaffoldState = scaffoldState,
-      topBar = {
-        MyTopBar(
-            onMenuClick = {
-              scope.launch {
-                // Launch drawer
-                scaffoldState.drawerState.open()
-              }
-            },
-        )
-      },
-      drawerContent = {
-        // Drawer content
-        MyDrawerContent(
-            onItemSelected = { title ->
-              // Show snackbar
-              scope.launch {
-                scaffoldState.drawerState.close()
-                val snackbarResult =
-                    scaffoldState.snackbarHostState.showSnackbar(
-                        message = context.resources.getString(R.string.coming_soon, title),
-                        actionLabel = context.resources.getString(R.string.subscribe_question),
-                    )
-
-                if (snackbarResult == SnackbarResult.ActionPerformed) {
-                  Toast.makeText(
-                          context,
-                          context.resources.getString(R.string.subscribed_info),
-                          Toast.LENGTH_SHORT,
-                      )
-                      .show()
-                }
-              }
-            },
-            onBackPress = {
-              if (scaffoldState.drawerState.isOpen) {
-                scope.launch { scaffoldState.drawerState.close() }
-              }
-            },
-        )
-        Text(stringResource(R.string.hello_from_nav_drawer))
-      },
-  ) { innerPadding ->
-    Box(
-        modifier = Modifier.fillMaxSize().padding(innerPadding),
-        contentAlignment = Alignment.Center,
-    ) {
-      Text(stringResource(R.string.hello_world))
     }
   }
 }
