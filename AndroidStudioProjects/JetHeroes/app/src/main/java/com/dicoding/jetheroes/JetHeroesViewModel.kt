@@ -1,5 +1,7 @@
 package com.dicoding.jetheroes
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.jetheroes.data.HeroRepository
@@ -9,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class JetHeroesViewModel(private val repository: HeroRepository) : ViewModel() {
 
+    val groupedHeroes: StateFlow<Map<Char, List<Hero>>> get() = _groupedHeroes
     private val _groupedHeroes = MutableStateFlow(
         // Return data
         repository.getHeroes() // Get heroes
@@ -17,7 +20,15 @@ class JetHeroesViewModel(private val repository: HeroRepository) : ViewModel() {
             .groupBy { it.name.first() } // Group by first character
     )
 
-    val groupedHeroes: StateFlow<Map<Char, List<Hero>>> get() = _groupedHeroes
+    val query: State<String> get() = _query
+    private val _query = mutableStateOf("")
+
+    fun search(newQuery: String) {
+        _query.value = newQuery
+        _groupedHeroes.value = repository.searchHeroes(_query.value)
+            .sortedBy { it.name }
+            .groupBy { it.name.first() }
+    }
 }
 
 class ViewModelFactory(private val repository: HeroRepository) :
