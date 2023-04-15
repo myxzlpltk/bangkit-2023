@@ -3,21 +3,12 @@ package com.example.githubusercompose.features.dashboard
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.example.githubusercompose.data.entities.User
 
 
 /**
  * UI State that represents DashboardScreen
  **/
-class DashboardState(
-    val users: List<User> = emptyList(),
-) {
-    fun copy(users: List<User>? = null): DashboardState {
-        return DashboardState(
-            users = users ?: this.users
-        )
-    }
-}
+class DashboardState
 
 /**
  * Dashboard Actions emitted from the UI Layer

@@ -8,7 +8,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -18,13 +17,6 @@ object NetworkModule {
 
     @Provides
     fun provideRetrofit(): Retrofit {
-        // Conditional logging interceptor
-        val loggingInterceptor = if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        } else {
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
-        }
-
         // Setup auth interceptor to add token
         val token = BuildConfig.GITHUB_API_KEY
         val authInterceptor = Interceptor { chain ->
@@ -37,7 +29,6 @@ object NetworkModule {
 
         // Build client
         val client = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
             .addInterceptor(authInterceptor)
             .build()
 

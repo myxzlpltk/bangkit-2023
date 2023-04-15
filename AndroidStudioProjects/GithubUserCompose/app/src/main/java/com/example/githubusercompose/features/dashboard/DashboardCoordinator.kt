@@ -12,6 +12,7 @@ class DashboardCoordinator(
     val viewModel: DashboardViewModel
 ) {
     val screenStateFlow = viewModel.stateFlow
+    val userPager = viewModel.userPager
 
     fun doStuff() {
         // TODO Handle UI Action

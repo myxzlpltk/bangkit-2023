@@ -30,6 +30,7 @@ data class UserResponse(
     val followers: Int = 0,
 )
 
+fun List<UserResponse>.toListUser() = this.map { userResponse -> userResponse.toUser() }
 fun UserResponse.toUser() = User(
     this.id,
     this.login,
