@@ -27,11 +27,15 @@ fun DashboardState.copy(
  * passed to the coordinator to handle
  **/
 data class DashboardActions(
+    val navigateToDetail: (String) -> Unit = {},
+    val navigateToFavorites: () -> Unit = {},
+    val navigateToAbout: () -> Unit = {},
+
     val openSearch: () -> Unit = {},
     val clearSearch: () -> Unit = {},
     val closeSearch: () -> Unit = {},
     val onValueChange: (TextFieldValue) -> Unit = {},
-    val navigateToDetail: (String) -> Unit = {},
+
     val openOverflowMenu: () -> Unit = {},
     val closeOverflowMenu: () -> Unit = {},
 )

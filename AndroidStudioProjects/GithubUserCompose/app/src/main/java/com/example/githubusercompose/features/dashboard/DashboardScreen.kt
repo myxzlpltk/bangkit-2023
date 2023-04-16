@@ -90,7 +90,7 @@ fun DashboardScreen(
                                         contentDescription = stringResource(R.string.favorite_users)
                                     )
                                 },
-                                onClick = { /* doSomething() */ }
+                                onClick = actions.navigateToFavorites
                             )
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.about_me)) },
@@ -100,7 +100,7 @@ fun DashboardScreen(
                                         contentDescription = stringResource(R.string.about_me)
                                     )
                                 },
-                                onClick = { /* doSomething() */ }
+                                onClick = actions.navigateToAbout
                             )
                         }
                     }

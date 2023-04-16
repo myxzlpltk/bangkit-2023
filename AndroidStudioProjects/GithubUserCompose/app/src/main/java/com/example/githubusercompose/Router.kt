@@ -1,6 +1,7 @@
 package com.example.githubusercompose
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -8,14 +9,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.githubusercompose.features.about.AboutRoute
 import com.example.githubusercompose.features.dashboard.DashboardRoute
 import com.example.githubusercompose.features.detail_user.DetailUserRoute
+import kotlinx.coroutines.delay
 
 sealed class Screen(val route: String) {
     object Dashboard : Screen("dashboard")
     object DetailUser : Screen("users/{login}") {
         fun createRoute(login: String) = "users/$login"
     }
+
+    object Favorites : Screen("favorites")
+    object About : Screen("about")
 }
 
 @Composable
@@ -24,10 +30,10 @@ fun Router(
     navController: NavHostController = rememberNavController(),
 ) {
 
-    /*LaunchedEffect(true) {
+    LaunchedEffect(true) {
         delay(1000)
-        navController.navigate(Screen.DetailUser.createRoute("myxzlpltk"))
-    }*/
+        navController.navigate(Screen.About.route)
+    }
 
     NavHost(
         navController = navController,
@@ -38,6 +44,12 @@ fun Router(
             DashboardRoute(
                 navigateToDetail = { login ->
                     navController.navigate(Screen.DetailUser.createRoute(login))
+                },
+                navigateToFavorites = {
+                    navController.navigate(Screen.Favorites.route)
+                },
+                navigateToAbout = {
+                    navController.navigate(Screen.About.route)
                 }
             )
         }
@@ -52,6 +64,19 @@ fun Router(
                 login = login,
                 navigateBack = {
                     navController.navigateUp()
+                }
+            )
+        }
+        composable(Screen.Favorites.route) {
+
+        }
+        composable(Screen.About.route) {
+            AboutRoute(
+                navigateBack = {
+                    navController.navigateUp()
+                },
+                navigateToGithub = {
+                    navController.navigate(Screen.DetailUser.createRoute("myxzlpltk"))
                 }
             )
         }

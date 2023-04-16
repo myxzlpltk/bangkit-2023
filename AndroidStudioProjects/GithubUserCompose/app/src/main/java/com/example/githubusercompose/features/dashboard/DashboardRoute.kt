@@ -9,6 +9,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 @Composable
 fun DashboardRoute(
     navigateToDetail: (String) -> Unit,
+    navigateToFavorites: () -> Unit,
+    navigateToAbout: () -> Unit,
     coordinator: DashboardCoordinator = rememberDashboardCoordinator(),
 ) {
     // State observing and declarations
@@ -16,7 +18,12 @@ fun DashboardRoute(
     val pager = coordinator.pager.collectAsLazyPagingItems()
 
     // UI Actions
-    val actions = rememberDashboardActions(coordinator, navigateToDetail)
+    val actions = rememberDashboardActions(
+        coordinator,
+        navigateToDetail,
+        navigateToFavorites,
+        navigateToAbout,
+    )
 
     // UI Rendering
     DashboardScreen(uiState, actions, pager)
@@ -26,15 +33,21 @@ fun DashboardRoute(
 @Composable
 fun rememberDashboardActions(
     coordinator: DashboardCoordinator,
-    navigateToDetail: (String) -> Unit
+    navigateToDetail: (String) -> Unit,
+    navigateToFavorites: () -> Unit,
+    navigateToAbout: () -> Unit,
 ): DashboardActions {
     return remember(coordinator) {
         DashboardActions(
+            navigateToDetail = navigateToDetail,
+            navigateToFavorites = navigateToFavorites,
+            navigateToAbout = navigateToAbout,
+
             openSearch = coordinator::openSearch,
             clearSearch = coordinator::clearSearch,
             closeSearch = coordinator::closeSearch,
             onValueChange = coordinator::onValueChange,
-            navigateToDetail = navigateToDetail,
+
             openOverflowMenu = coordinator::openOverflowMenu,
             closeOverflowMenu = coordinator::closeOverflowMenu,
         )

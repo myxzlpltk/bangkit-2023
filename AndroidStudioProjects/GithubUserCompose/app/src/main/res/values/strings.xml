@@ -3,6 +3,7 @@
 
     <!-- Generic -->
     <string name="retry">Retry</string>
+    <string name="navigate_up">Navigate Up</string>
 
     <!-- User List Item -->
     <string name="avatar_description">%s\'s avatar</string>

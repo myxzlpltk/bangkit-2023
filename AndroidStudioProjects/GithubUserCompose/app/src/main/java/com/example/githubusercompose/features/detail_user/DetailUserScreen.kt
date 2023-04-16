@@ -45,7 +45,7 @@ fun DetailUserScreen(
                     IconButton(onClick = actions.navigateBack) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.dashboard_close)
+                            contentDescription = stringResource(R.string.navigate_up)
                         )
                     }
                 },
@@ -59,6 +59,7 @@ fun DetailUserScreen(
                                 )
                             }
                         }
+
                         else -> {}
                     }
                 }
@@ -76,6 +77,7 @@ fun DetailUserScreen(
                     Text(stringResource(R.string.cannot_fetch_user_data))
                 }
             }
+
             DetailUserState.Loading -> {
                 Box(
                     modifier = Modifier
@@ -86,6 +88,7 @@ fun DetailUserScreen(
                     CircularProgressIndicator()
                 }
             }
+
             is DetailUserState.Success -> {
                 Column(
                     modifier = Modifier
