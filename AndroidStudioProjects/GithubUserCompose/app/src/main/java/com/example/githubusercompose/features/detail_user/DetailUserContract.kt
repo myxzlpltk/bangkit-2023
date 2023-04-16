@@ -3,19 +3,24 @@ package com.example.githubusercompose.features.detail_user
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
+import com.example.githubusercompose.data.entities.User
 
 
 /**
  * UI State that represents DetailUserScreen
  **/
-class DetailUserState
+sealed class DetailUserState {
+    object Loading : DetailUserState()
+    object Error : DetailUserState()
+    class Success(val user: User) : DetailUserState()
+}
 
 /**
  * DetailUser Actions emitted from the UI Layer
  * passed to the coordinator to handle
  **/
 data class DetailUserActions(
-    val onClick: () -> Unit = {}
+    val navigateBack: () -> Unit = {},
 )
 
 /**

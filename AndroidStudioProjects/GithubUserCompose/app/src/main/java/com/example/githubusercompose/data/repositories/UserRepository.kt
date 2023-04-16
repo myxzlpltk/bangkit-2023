@@ -4,8 +4,7 @@ import com.example.githubusercompose.data.entities.User
 import com.example.githubusercompose.data.local.database.GithubDatabase
 import com.example.githubusercompose.data.responses.toUser
 import com.example.githubusercompose.data.services.UserService
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,10 +14,24 @@ class UserRepository @Inject constructor(
     private val database: GithubDatabase,
 ) {
 
-    fun getAll(): Flow<List<User>> {
+    fun getByLogin(login: String): Flow<Result<User>> {
         return flow {
-            val users = userService.getAll(0).map { it.toUser() }
-            emit(users)
+            /* Local */
+            database.userDao().getByLogin(login).first()?.let { emit(Result.success(it)) }
+
+            /* Remote */
+            try {
+                val user = userService.getByLogin(login)
+                database.userDao().insert(user.toUser())
+            } catch (e: Exception) {
+                emit(Result.failure(e))
+            }
+
+            /* Local */
+            val flowLocal = database.userDao().getByLogin(login)
+                .filterNotNull()
+                .map { Result.success(it) }
+            emitAll(flowLocal)
         }
     }
 }

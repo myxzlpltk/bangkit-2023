@@ -26,7 +26,7 @@ data class User(
     @ColumnInfo(name = "bio")
     val bio: String? = null,
 
-    @ColumnInfo(name = "public_repo")
+    @ColumnInfo(name = "public_repos")
     val publicRepos: Int = 0,
 
     @ColumnInfo(name = "following")

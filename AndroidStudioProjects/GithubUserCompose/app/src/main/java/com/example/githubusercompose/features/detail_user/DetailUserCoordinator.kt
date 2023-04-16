@@ -13,8 +13,8 @@ class DetailUserCoordinator(
 ) {
     val screenStateFlow = viewModel.stateFlow
 
-    fun doStuff() {
-        // TODO Handle UI Action
+    fun setUser(login: String) {
+        viewModel.setUser(login)
     }
 }
 

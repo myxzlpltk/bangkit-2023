@@ -29,7 +29,11 @@ fun Router(
         modifier = modifier
     ) {
         composable(Screen.Dashboard.route) {
-            DashboardRoute()
+            DashboardRoute(
+                navigateToDetail = { login ->
+                    navController.navigate(Screen.DetailUser.createRoute(login))
+                }
+            )
         }
         composable(
             route = Screen.DetailUser.route,
@@ -38,7 +42,12 @@ fun Router(
             })
         ) {
             val login = it.arguments?.getString("login") ?: ""
-            DetailUserRoute()
+            DetailUserRoute(
+                login = login,
+                navigateBack = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

@@ -32,12 +32,12 @@ data class UserResponse(
 
 fun List<UserResponse>.toListUser() = this.map { userResponse -> userResponse.toUser() }
 fun UserResponse.toUser() = User(
-    this.id,
-    this.login.lowercase(),
-    this.name,
-    this.avatarUrl,
-    this.bio,
-    this.publicRepos,
-    this.following,
-    this.followers,
+    id = this.id,
+    login = this.login.lowercase(),
+    name = this.name,
+    avatarUrl = this.avatarUrl,
+    bio = this.bio,
+    publicRepos = this.publicRepos,
+    following = this.following,
+    followers = this.followers,
 )

@@ -1,6 +1,8 @@
 package com.example.githubusercompose.features.dashboard
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -22,7 +24,9 @@ import com.example.githubusercompose.features.dashboard.components.DashboardSear
 fun DashboardScreen(
     state: DashboardState = DashboardState(),
     actions: DashboardActions = DashboardActions(),
-    pager: LazyPagingItems<User>
+    pager: LazyPagingItems<User>,
+    listState: LazyListState,
+    scrollState: ScrollState,
 ) {
     Scaffold(
         topBar = {
@@ -34,7 +38,7 @@ fun DashboardScreen(
                     actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 ),
                 title = {
-                    if(state.search) {
+                    if (state.search) {
                         DashboardSearchView(
                             value = state.query,
                             onValueChange = actions.onValueChange,
@@ -83,13 +87,14 @@ fun DashboardScreen(
     ) { innerPadding ->
         DashboardList(
             modifier = Modifier.padding(innerPadding),
-            pager = pager
+            pager = pager,
+            scrollState = scrollState,
+            listState = listState,
+            navigateToDetail = actions.navigateToDetail
         )
     }
 
-    BackPressHandler {
-        if (state.search) {
-            actions.closeSearch()
-        }
+    BackPressHandler(state.search) {
+        actions.closeSearch()
     }
 }

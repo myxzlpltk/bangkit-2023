@@ -8,28 +8,35 @@ import androidx.paging.compose.collectAsLazyPagingItems
 
 @Composable
 fun DashboardRoute(
-    coordinator: DashboardCoordinator = rememberDashboardCoordinator()
+    navigateToDetail: (String) -> Unit,
+    coordinator: DashboardCoordinator = rememberDashboardCoordinator(),
 ) {
     // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle(DashboardState())
     val pager = coordinator.pager.collectAsLazyPagingItems()
+    val listState = coordinator.listState
+    val scrollState = coordinator.scrollState
 
     // UI Actions
-    val actions = rememberDashboardActions(coordinator)
+    val actions = rememberDashboardActions(coordinator, navigateToDetail)
 
     // UI Rendering
-    DashboardScreen(uiState, actions, pager)
+    DashboardScreen(uiState, actions, pager, listState, scrollState)
 }
 
 
 @Composable
-fun rememberDashboardActions(coordinator: DashboardCoordinator): DashboardActions {
+fun rememberDashboardActions(
+    coordinator: DashboardCoordinator,
+    navigateToDetail: (String) -> Unit
+): DashboardActions {
     return remember(coordinator) {
         DashboardActions(
             openSearch = coordinator::openSearch,
             clearSearch = coordinator::clearSearch,
             closeSearch = coordinator::closeSearch,
             onValueChange = coordinator::onValueChange,
+            navigateToDetail = navigateToDetail
         )
     }
 }

@@ -31,6 +31,7 @@ data class DashboardActions(
     val clearSearch: () -> Unit = {},
     val closeSearch: () -> Unit = {},
     val onValueChange: (TextFieldValue) -> Unit = {},
+    val navigateToDetail: (String) -> Unit = {},
 )
 
 /**

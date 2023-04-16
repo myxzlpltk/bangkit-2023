@@ -14,6 +14,8 @@ class DashboardCoordinator(
 ) {
     val screenStateFlow = viewModel.stateFlow
     val pager = viewModel.pager
+    val scrollState = viewModel.scrollState
+    val listState = viewModel.listState
 
     fun openSearch() = viewModel.openSearch()
     fun clearSearch() = viewModel.clearSearch()

@@ -1,5 +1,7 @@
 package com.example.githubusercompose.features.dashboard
 
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -7,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
+import androidx.paging.cachedIn
 import com.example.githubusercompose.config.PAGE_SIZE
 import com.example.githubusercompose.data.entities.User
 import com.example.githubusercompose.data.paging.SearchUserPagingSource
@@ -27,6 +30,9 @@ class DashboardViewModel @Inject constructor(
     userRepository: UserRepository,
     private val userService: UserService
 ) : ViewModel() {
+
+    val scrollState = ScrollState(0)
+    val listState = LazyListState()
 
     private val _stateFlow = MutableStateFlow(DashboardState())
     val stateFlow = _stateFlow.asStateFlow()
@@ -51,7 +57,7 @@ class DashboardViewModel @Inject constructor(
     val pager = Pager(
         config = PagingConfig(pageSize = PAGE_SIZE),
         pagingSourceFactory = { pagingSource }
-    ).flow
+    ).flow.cachedIn(viewModelScope)
 
     fun openSearch() {
         _stateFlow.value = _stateFlow.value.copy(
