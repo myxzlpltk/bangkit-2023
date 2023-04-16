@@ -33,7 +33,7 @@ data class UserResponse(
 fun List<UserResponse>.toListUser() = this.map { userResponse -> userResponse.toUser() }
 fun UserResponse.toUser() = User(
     this.id,
-    this.login,
+    this.login.lowercase(),
     this.name,
     this.avatarUrl,
     this.bio,

@@ -1,8 +1,5 @@
 package com.example.githubusercompose
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -21,30 +18,27 @@ sealed class Screen(val route: String) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Router(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
-    Scaffold(modifier = modifier) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = Screen.Dashboard.route,
-            modifier = Modifier.padding(innerPadding)
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Dashboard.route,
+        modifier = modifier
+    ) {
+        composable(Screen.Dashboard.route) {
+            DashboardRoute()
+        }
+        composable(
+            route = Screen.DetailUser.route,
+            arguments = listOf(navArgument("login") {
+                type = NavType.StringType
+            })
         ) {
-            composable(Screen.Dashboard.route) {
-                DashboardRoute()
-            }
-            composable(
-                route = Screen.DetailUser.route,
-                arguments = listOf(navArgument("login") {
-                    type = NavType.StringType
-                })
-            ) {
-                val login = it.arguments?.getString("login") ?: ""
-                DetailUserRoute()
-            }
+            val login = it.arguments?.getString("login") ?: ""
+            DetailUserRoute()
         }
     }
 }

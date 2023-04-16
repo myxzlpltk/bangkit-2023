@@ -12,13 +12,13 @@ fun DashboardRoute(
 ) {
     // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle(DashboardState())
-    val userPager = coordinator.userPager.collectAsLazyPagingItems()
+    val pager = coordinator.pager.collectAsLazyPagingItems()
 
     // UI Actions
     val actions = rememberDashboardActions(coordinator)
 
     // UI Rendering
-    DashboardScreen(uiState, actions, userPager)
+    DashboardScreen(uiState, actions, pager)
 }
 
 
@@ -26,7 +26,10 @@ fun DashboardRoute(
 fun rememberDashboardActions(coordinator: DashboardCoordinator): DashboardActions {
     return remember(coordinator) {
         DashboardActions(
-            onClick = coordinator::doStuff
+            openSearch = coordinator::openSearch,
+            clearSearch = coordinator::clearSearch,
+            closeSearch = coordinator::closeSearch,
+            onValueChange = coordinator::onValueChange,
         )
     }
 }

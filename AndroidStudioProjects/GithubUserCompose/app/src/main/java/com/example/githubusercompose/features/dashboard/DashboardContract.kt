@@ -3,19 +3,34 @@ package com.example.githubusercompose.features.dashboard
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.text.input.TextFieldValue
 
 
 /**
  * UI State that represents DashboardScreen
  **/
-class DashboardState
+class DashboardState(
+    val query: TextFieldValue = TextFieldValue(""),
+    val search: Boolean = false,
+)
+
+fun DashboardState.copy(
+    query: TextFieldValue? = null,
+    search: Boolean? = null,
+) = DashboardState(
+    query = query ?: this.query,
+    search = search ?: this.search,
+)
 
 /**
  * Dashboard Actions emitted from the UI Layer
  * passed to the coordinator to handle
  **/
 data class DashboardActions(
-    val onClick: () -> Unit = {}
+    val openSearch: () -> Unit = {},
+    val clearSearch: () -> Unit = {},
+    val closeSearch: () -> Unit = {},
+    val onValueChange: (TextFieldValue) -> Unit = {},
 )
 
 /**

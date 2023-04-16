@@ -3,4 +3,12 @@
 
     <!-- User List Item -->
     <string name="avatar_description">%s\'s avatar</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">All Github Users</string>
+    <string name="dashboard_search">Search Users</string>
+    <string name="dashboard_favorite">Favorited Users</string>
+    <string name="dashboard_clear">Clear search field</string>
+    <string name="dashboard_close">Close search field</string>
+    <string name="dashboard_search_hint">Search username…</string>
 </resources>

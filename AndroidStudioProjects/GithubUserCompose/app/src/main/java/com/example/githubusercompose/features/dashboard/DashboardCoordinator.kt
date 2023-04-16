@@ -2,6 +2,7 @@ package com.example.githubusercompose.features.dashboard
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 
 /**
@@ -12,11 +13,12 @@ class DashboardCoordinator(
     val viewModel: DashboardViewModel
 ) {
     val screenStateFlow = viewModel.stateFlow
-    val userPager = viewModel.userPager
+    val pager = viewModel.pager
 
-    fun doStuff() {
-        // TODO Handle UI Action
-    }
+    fun openSearch() = viewModel.openSearch()
+    fun clearSearch() = viewModel.clearSearch()
+    fun closeSearch() = viewModel.closeSearch()
+    fun onValueChange(value: TextFieldValue) = viewModel.onValueChange(value)
 }
 
 @Composable
