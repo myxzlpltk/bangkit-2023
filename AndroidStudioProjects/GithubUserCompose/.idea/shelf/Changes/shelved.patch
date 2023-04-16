@@ -1,0 +1,182 @@
+Index: .idea/deploymentTargetDropDown.xml
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+deleted file mode 100644
+--- a/.idea/deploymentTargetDropDown.xml	(revision 90b3309536617004f667a1e3fc78f8ab965f9ef9)
++++ /dev/null	(revision 90b3309536617004f667a1e3fc78f8ab965f9ef9)
+@@ -1,17 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="deploymentTargetDropDown">
+-    <runningDeviceTargetSelectedWithDropDown>
+-      <Target>
+-        <type value="RUNNING_DEVICE_TARGET" />
+-        <deviceKey>
+-          <Key>
+-            <type value="SERIAL_NUMBER" />
+-            <value value="d3a62431" />
+-          </Key>
+-        </deviceKey>
+-      </Target>
+-    </runningDeviceTargetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2023-04-16T09:20:57.575841100Z" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardCoordinator.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.githubusercompose.features.dashboard\r\n\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.runtime.remember\r\nimport androidx.compose.ui.text.input.TextFieldValue\r\nimport androidx.hilt.navigation.compose.hiltViewModel\r\n\r\n/**\r\n * Screen's coordinator which is responsible for handling actions from the UI layer\r\n * and one-shot actions based on the new UI state\r\n */\r\nclass DashboardCoordinator(\r\n    val viewModel: DashboardViewModel\r\n) {\r\n    val screenStateFlow = viewModel.stateFlow\r\n    val pager = viewModel.pager\r\n    val scrollState = viewModel.scrollState\r\n    val listState = viewModel.listState\r\n\r\n    fun openSearch() = viewModel.openSearch()\r\n    fun clearSearch() = viewModel.clearSearch()\r\n    fun closeSearch() = viewModel.closeSearch()\r\n    fun onValueChange(value: TextFieldValue) = viewModel.onValueChange(value)\r\n}\r\n\r\n@Composable\r\nfun rememberDashboardCoordinator(\r\n    viewModel: DashboardViewModel = hiltViewModel()\r\n): DashboardCoordinator {\r\n    return remember(viewModel) {\r\n        DashboardCoordinator(\r\n            viewModel = viewModel\r\n        )\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardCoordinator.kt b/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardCoordinator.kt
+--- a/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardCoordinator.kt	(revision 90b3309536617004f667a1e3fc78f8ab965f9ef9)
++++ b/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardCoordinator.kt	(date 1681650270672)
+@@ -14,8 +14,6 @@
+ ) {
+     val screenStateFlow = viewModel.stateFlow
+     val pager = viewModel.pager
+-    val scrollState = viewModel.scrollState
+-    val listState = viewModel.listState
+ 
+     fun openSearch() = viewModel.openSearch()
+     fun clearSearch() = viewModel.clearSearch()
+Index: app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardRoute.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.githubusercompose.features.dashboard\r\n\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.runtime.getValue\r\nimport androidx.compose.runtime.remember\r\nimport androidx.lifecycle.compose.collectAsStateWithLifecycle\r\nimport androidx.paging.compose.collectAsLazyPagingItems\r\n\r\n@Composable\r\nfun DashboardRoute(\r\n    navigateToDetail: (String) -> Unit,\r\n    coordinator: DashboardCoordinator = rememberDashboardCoordinator(),\r\n) {\r\n    // State observing and declarations\r\n    val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle(DashboardState())\r\n    val pager = coordinator.pager.collectAsLazyPagingItems()\r\n    val listState = coordinator.listState\r\n    val scrollState = coordinator.scrollState\r\n\r\n    // UI Actions\r\n    val actions = rememberDashboardActions(coordinator, navigateToDetail)\r\n\r\n    // UI Rendering\r\n    DashboardScreen(uiState, actions, pager, listState, scrollState)\r\n}\r\n\r\n\r\n@Composable\r\nfun rememberDashboardActions(\r\n    coordinator: DashboardCoordinator,\r\n    navigateToDetail: (String) -> Unit\r\n): DashboardActions {\r\n    return remember(coordinator) {\r\n        DashboardActions(\r\n            openSearch = coordinator::openSearch,\r\n            clearSearch = coordinator::clearSearch,\r\n            closeSearch = coordinator::closeSearch,\r\n            onValueChange = coordinator::onValueChange,\r\n            navigateToDetail = navigateToDetail\r\n        )\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardRoute.kt b/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardRoute.kt
+--- a/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardRoute.kt	(revision 90b3309536617004f667a1e3fc78f8ab965f9ef9)
++++ b/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardRoute.kt	(date 1681650310494)
+@@ -14,14 +14,12 @@
+     // State observing and declarations
+     val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle(DashboardState())
+     val pager = coordinator.pager.collectAsLazyPagingItems()
+-    val listState = coordinator.listState
+-    val scrollState = coordinator.scrollState
+ 
+     // UI Actions
+     val actions = rememberDashboardActions(coordinator, navigateToDetail)
+ 
+     // UI Rendering
+-    DashboardScreen(uiState, actions, pager, listState, scrollState)
++    DashboardScreen(uiState, actions, pager)
+ }
+ 
+ 
+Index: app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.githubusercompose.features.dashboard\r\n\r\nimport androidx.compose.foundation.ScrollState\r\nimport androidx.compose.foundation.layout.padding\r\nimport androidx.compose.foundation.lazy.LazyListState\r\nimport androidx.compose.material.icons.Icons\r\nimport androidx.compose.material.icons.filled.ArrowBack\r\nimport androidx.compose.material.icons.filled.Clear\r\nimport androidx.compose.material.icons.filled.Favorite\r\nimport androidx.compose.material.icons.filled.Search\r\nimport androidx.compose.material3.*\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.compose.ui.res.stringResource\r\nimport androidx.paging.compose.LazyPagingItems\r\nimport com.example.githubusercompose.R\r\nimport com.example.githubusercompose.components.BackPressHandler\r\nimport com.example.githubusercompose.data.entities.User\r\nimport com.example.githubusercompose.features.dashboard.components.DashboardList\r\nimport com.example.githubusercompose.features.dashboard.components.DashboardSearchView\r\n\r\n@OptIn(ExperimentalMaterial3Api::class)\r\n@Composable\r\nfun DashboardScreen(\r\n    state: DashboardState = DashboardState(),\r\n    actions: DashboardActions = DashboardActions(),\r\n    pager: LazyPagingItems<User>,\r\n    listState: LazyListState,\r\n    scrollState: ScrollState,\r\n) {\r\n    Scaffold(\r\n        topBar = {\r\n            TopAppBar(\r\n                scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),\r\n                colors = TopAppBarDefaults.mediumTopAppBarColors(\r\n                    containerColor = MaterialTheme.colorScheme.primaryContainer,\r\n                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,\r\n                    actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,\r\n                ),\r\n                title = {\r\n                    if (state.search) {\r\n                        DashboardSearchView(\r\n                            value = state.query,\r\n                            onValueChange = actions.onValueChange,\r\n                        )\r\n                    } else {\r\n                        Text(stringResource(R.string.dashboard_title))\r\n                    }\r\n                },\r\n                navigationIcon = {\r\n                    if (state.search) {\r\n                        IconButton(onClick = actions.closeSearch) {\r\n                            Icon(\r\n                                imageVector = Icons.Filled.ArrowBack,\r\n                                contentDescription = stringResource(R.string.dashboard_close)\r\n                            )\r\n                        }\r\n                    }\r\n                },\r\n                actions = {\r\n                    if (state.search) {\r\n                        if (state.query.text.isNotEmpty()) {\r\n                            IconButton(onClick = actions.clearSearch) {\r\n                                Icon(\r\n                                    imageVector = Icons.Filled.Clear,\r\n                                    contentDescription = stringResource(R.string.dashboard_clear)\r\n                                )\r\n                            }\r\n                        }\r\n                    } else {\r\n                        IconButton(onClick = { /* doSomething() */ }) {\r\n                            Icon(\r\n                                imageVector = Icons.Filled.Favorite,\r\n                                contentDescription = stringResource(R.string.dashboard_favorite)\r\n                            )\r\n                        }\r\n                        IconButton(onClick = actions.openSearch) {\r\n                            Icon(\r\n                                imageVector = Icons.Filled.Search,\r\n                                contentDescription = stringResource(R.string.dashboard_search)\r\n                            )\r\n                        }\r\n                    }\r\n                }\r\n            )\r\n        },\r\n    ) { innerPadding ->\r\n        DashboardList(\r\n            modifier = Modifier.padding(innerPadding),\r\n            pager = pager,\r\n            scrollState = scrollState,\r\n            listState = listState,\r\n            navigateToDetail = actions.navigateToDetail\r\n        )\r\n    }\r\n\r\n    BackPressHandler(state.search) {\r\n        actions.closeSearch()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardScreen.kt b/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardScreen.kt
+--- a/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardScreen.kt	(revision 90b3309536617004f667a1e3fc78f8ab965f9ef9)
++++ b/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardScreen.kt	(date 1681650375463)
+@@ -1,8 +1,6 @@
+ package com.example.githubusercompose.features.dashboard
+ 
+-import androidx.compose.foundation.ScrollState
+ import androidx.compose.foundation.layout.padding
+-import androidx.compose.foundation.lazy.LazyListState
+ import androidx.compose.material.icons.Icons
+ import androidx.compose.material.icons.filled.ArrowBack
+ import androidx.compose.material.icons.filled.Clear
+@@ -25,8 +23,6 @@
+     state: DashboardState = DashboardState(),
+     actions: DashboardActions = DashboardActions(),
+     pager: LazyPagingItems<User>,
+-    listState: LazyListState,
+-    scrollState: ScrollState,
+ ) {
+     Scaffold(
+         topBar = {
+@@ -88,8 +84,6 @@
+         DashboardList(
+             modifier = Modifier.padding(innerPadding),
+             pager = pager,
+-            scrollState = scrollState,
+-            listState = listState,
+             navigateToDetail = actions.navigateToDetail
+         )
+     }
+Index: app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.githubusercompose.features.dashboard\r\n\r\nimport androidx.compose.foundation.ScrollState\r\nimport androidx.compose.foundation.lazy.LazyListState\r\nimport androidx.compose.ui.text.input.TextFieldValue\r\nimport androidx.lifecycle.SavedStateHandle\r\nimport androidx.lifecycle.ViewModel\r\nimport androidx.lifecycle.viewModelScope\r\nimport androidx.paging.Pager\r\nimport androidx.paging.PagingConfig\r\nimport androidx.paging.PagingSource\r\nimport androidx.paging.cachedIn\r\nimport com.example.githubusercompose.config.PAGE_SIZE\r\nimport com.example.githubusercompose.data.entities.User\r\nimport com.example.githubusercompose.data.paging.SearchUserPagingSource\r\nimport com.example.githubusercompose.data.paging.UserPagingSource\r\nimport com.example.githubusercompose.data.repositories.UserRepository\r\nimport com.example.githubusercompose.data.services.UserService\r\nimport dagger.hilt.android.lifecycle.HiltViewModel\r\nimport kotlinx.coroutines.FlowPreview\r\nimport kotlinx.coroutines.flow.*\r\nimport kotlinx.coroutines.launch\r\nimport timber.log.Timber\r\nimport javax.inject.Inject\r\n\r\n@OptIn(FlowPreview::class)\r\n@HiltViewModel\r\nclass DashboardViewModel @Inject constructor(\r\n    savedStateHandle: SavedStateHandle,\r\n    userRepository: UserRepository,\r\n    private val userService: UserService\r\n) : ViewModel() {\r\n\r\n    val scrollState = ScrollState(0)\r\n    val listState = LazyListState()\r\n\r\n    private val _stateFlow = MutableStateFlow(DashboardState())\r\n    val stateFlow = _stateFlow.asStateFlow()\r\n\r\n    private var pagingSource: PagingSource<Int, User> = UserPagingSource(userService)\r\n\r\n    init {\r\n        viewModelScope.launch {\r\n            stateFlow.map { it.query.text }.distinctUntilChanged().debounce(500)\r\n                .collectLatest { query ->\r\n                    Timber.d(\"QUERY: $query\")\r\n                    pagingSource.invalidate()\r\n                    pagingSource = if (query.isNotBlank()) {\r\n                        SearchUserPagingSource(query.trim(), userService)\r\n                    } else {\r\n                        UserPagingSource(userService)\r\n                    }\r\n                }\r\n        }\r\n    }\r\n\r\n    val pager = Pager(\r\n        config = PagingConfig(pageSize = PAGE_SIZE),\r\n        pagingSourceFactory = { pagingSource }\r\n    ).flow.cachedIn(viewModelScope)\r\n\r\n    fun openSearch() {\r\n        _stateFlow.value = _stateFlow.value.copy(\r\n            query = TextFieldValue(\"\"),\r\n            search = true,\r\n        )\r\n    }\r\n\r\n    fun clearSearch() {\r\n        _stateFlow.value = _stateFlow.value.copy(query = TextFieldValue(\"\"))\r\n    }\r\n\r\n    fun closeSearch() {\r\n        _stateFlow.value = _stateFlow.value.copy(\r\n            query = TextFieldValue(\"\"),\r\n            search = false\r\n        )\r\n    }\r\n\r\n    fun onValueChange(value: TextFieldValue) {\r\n        if (_stateFlow.value.search) {\r\n            _stateFlow.value = _stateFlow.value.copy(query = value)\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardViewModel.kt b/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardViewModel.kt
+--- a/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardViewModel.kt	(revision 90b3309536617004f667a1e3fc78f8ab965f9ef9)
++++ b/app/src/main/java/com/example/githubusercompose/features/dashboard/DashboardViewModel.kt	(date 1681650495734)
+@@ -1,7 +1,5 @@
+ package com.example.githubusercompose.features.dashboard
+ 
+-import androidx.compose.foundation.ScrollState
+-import androidx.compose.foundation.lazy.LazyListState
+ import androidx.compose.ui.text.input.TextFieldValue
+ import androidx.lifecycle.SavedStateHandle
+ import androidx.lifecycle.ViewModel
+@@ -31,9 +29,6 @@
+     private val userService: UserService
+ ) : ViewModel() {
+ 
+-    val scrollState = ScrollState(0)
+-    val listState = LazyListState()
+-
+     private val _stateFlow = MutableStateFlow(DashboardState())
+     val stateFlow = _stateFlow.asStateFlow()
+ 
+@@ -56,6 +51,7 @@
+ 
+     val pager = Pager(
+         config = PagingConfig(pageSize = PAGE_SIZE),
++        initialKey = 0,
+         pagingSourceFactory = { pagingSource }
+     ).flow.cachedIn(viewModelScope)
+ 
+Index: app/src/main/java/com/example/githubusercompose/features/dashboard/components/DashboardList.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.githubusercompose.features.dashboard.components\r\n\r\nimport androidx.compose.foundation.ScrollState\r\nimport androidx.compose.foundation.gestures.Orientation\r\nimport androidx.compose.foundation.gestures.scrollable\r\nimport androidx.compose.foundation.layout.Arrangement\r\nimport androidx.compose.foundation.layout.Column\r\nimport androidx.compose.foundation.lazy.LazyColumn\r\nimport androidx.compose.foundation.lazy.LazyListState\r\nimport androidx.compose.material3.Button\r\nimport androidx.compose.material3.CircularProgressIndicator\r\nimport androidx.compose.material3.Text\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.ui.Alignment\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.compose.ui.res.stringResource\r\nimport androidx.compose.ui.unit.dp\r\nimport androidx.paging.LoadState\r\nimport androidx.paging.compose.LazyPagingItems\r\nimport androidx.paging.compose.items\r\nimport com.example.githubusercompose.R\r\nimport com.example.githubusercompose.components.UserListItem\r\nimport com.example.githubusercompose.data.entities.User\r\n\r\n@Composable\r\nfun DashboardList(\r\n    modifier: Modifier = Modifier,\r\n    pager: LazyPagingItems<User>,\r\n    scrollState: ScrollState,\r\n    listState: LazyListState,\r\n    navigateToDetail: (String) -> Unit,\r\n) {\r\n    LazyColumn(\r\n        modifier = modifier.scrollable(scrollState, Orientation.Vertical),\r\n        state = listState\r\n    ) {\r\n        when (pager.loadState.refresh) {\r\n            is LoadState.Loading -> item {\r\n                Column(\r\n                    modifier = Modifier.fillParentMaxSize(),\r\n                    horizontalAlignment = Alignment.CenterHorizontally,\r\n                    verticalArrangement = Arrangement.Center,\r\n                ) { CircularProgressIndicator() }\r\n            }\r\n            is LoadState.Error -> item {\r\n                Column(\r\n                    modifier = Modifier.fillParentMaxSize(),\r\n                    horizontalAlignment = Alignment.CenterHorizontally,\r\n                    verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),\r\n                ) {\r\n                    Text(stringResource(R.string.cannot_fetch_user_list))\r\n                    Button(onClick = { pager.retry() }) {\r\n                        Text(stringResource(R.string.retry))\r\n                    }\r\n                }\r\n            }\r\n            else -> {\r\n                if (pager.itemCount == 0) {\r\n                    item {\r\n                        Column(\r\n                            modifier = Modifier.fillParentMaxSize(),\r\n                            horizontalAlignment = Alignment.CenterHorizontally,\r\n                            verticalArrangement = Arrangement.spacedBy(\r\n                                8.dp,\r\n                                Alignment.CenterVertically\r\n                            ),\r\n                        ) {\r\n                            Text(stringResource(R.string.no_data_user_list))\r\n                        }\r\n                    }\r\n                } else {\r\n                    items(pager, key = { it.id }) { user ->\r\n                        user?.let {\r\n                            UserListItem(\r\n                                login = user.login,\r\n                                imageUrl = user.avatarUrl,\r\n                                navigateToDetail = navigateToDetail\r\n                            )\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/githubusercompose/features/dashboard/components/DashboardList.kt b/app/src/main/java/com/example/githubusercompose/features/dashboard/components/DashboardList.kt
+--- a/app/src/main/java/com/example/githubusercompose/features/dashboard/components/DashboardList.kt	(revision 90b3309536617004f667a1e3fc78f8ab965f9ef9)
++++ b/app/src/main/java/com/example/githubusercompose/features/dashboard/components/DashboardList.kt	(date 1681650375470)
+@@ -1,12 +1,8 @@
+ package com.example.githubusercompose.features.dashboard.components
+ 
+-import androidx.compose.foundation.ScrollState
+-import androidx.compose.foundation.gestures.Orientation
+-import androidx.compose.foundation.gestures.scrollable
+ import androidx.compose.foundation.layout.Arrangement
+ import androidx.compose.foundation.layout.Column
+ import androidx.compose.foundation.lazy.LazyColumn
+-import androidx.compose.foundation.lazy.LazyListState
+ import androidx.compose.material3.Button
+ import androidx.compose.material3.CircularProgressIndicator
+ import androidx.compose.material3.Text
+@@ -26,14 +22,9 @@
+ fun DashboardList(
+     modifier: Modifier = Modifier,
+     pager: LazyPagingItems<User>,
+-    scrollState: ScrollState,
+-    listState: LazyListState,
+     navigateToDetail: (String) -> Unit,
+ ) {
+-    LazyColumn(
+-        modifier = modifier.scrollable(scrollState, Orientation.Vertical),
+-        state = listState
+-    ) {
++    LazyColumn {
+         when (pager.loadState.refresh) {
+             is LoadState.Loading -> item {
+                 Column(

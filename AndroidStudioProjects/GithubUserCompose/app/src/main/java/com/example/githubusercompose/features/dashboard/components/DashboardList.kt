@@ -1,12 +1,9 @@
 package com.example.githubusercompose.features.dashboard.components
 
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -26,12 +23,12 @@ import com.example.githubusercompose.data.entities.User
 fun DashboardList(
     modifier: Modifier = Modifier,
     pager: LazyPagingItems<User>,
-    scrollState: ScrollState,
-    listState: LazyListState,
     navigateToDetail: (String) -> Unit,
 ) {
+    val listState = rememberLazyListState()
+
     LazyColumn(
-        modifier = modifier.scrollable(scrollState, Orientation.Vertical),
+        modifier = modifier,
         state = listState
     ) {
         when (pager.loadState.refresh) {

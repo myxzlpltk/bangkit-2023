@@ -14,14 +14,12 @@ fun DashboardRoute(
     // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle(DashboardState())
     val pager = coordinator.pager.collectAsLazyPagingItems()
-    val listState = coordinator.listState
-    val scrollState = coordinator.scrollState
 
     // UI Actions
     val actions = rememberDashboardActions(coordinator, navigateToDetail)
 
     // UI Rendering
-    DashboardScreen(uiState, actions, pager, listState, scrollState)
+    DashboardScreen(uiState, actions, pager)
 }
 
 

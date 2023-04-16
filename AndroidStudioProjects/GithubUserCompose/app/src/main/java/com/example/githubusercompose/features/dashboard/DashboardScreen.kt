@@ -1,8 +1,6 @@
 package com.example.githubusercompose.features.dashboard
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -25,8 +23,6 @@ fun DashboardScreen(
     state: DashboardState = DashboardState(),
     actions: DashboardActions = DashboardActions(),
     pager: LazyPagingItems<User>,
-    listState: LazyListState,
-    scrollState: ScrollState,
 ) {
     Scaffold(
         topBar = {
@@ -88,8 +84,6 @@ fun DashboardScreen(
         DashboardList(
             modifier = Modifier.padding(innerPadding),
             pager = pager,
-            scrollState = scrollState,
-            listState = listState,
             navigateToDetail = actions.navigateToDetail
         )
     }

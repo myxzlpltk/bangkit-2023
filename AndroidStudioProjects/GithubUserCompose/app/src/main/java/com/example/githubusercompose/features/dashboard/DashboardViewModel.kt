@@ -1,7 +1,5 @@
 package com.example.githubusercompose.features.dashboard
 
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -31,9 +29,6 @@ class DashboardViewModel @Inject constructor(
     private val userService: UserService
 ) : ViewModel() {
 
-    val scrollState = ScrollState(0)
-    val listState = LazyListState()
-
     private val _stateFlow = MutableStateFlow(DashboardState())
     val stateFlow = _stateFlow.asStateFlow()
 
@@ -56,6 +51,7 @@ class DashboardViewModel @Inject constructor(
 
     val pager = Pager(
         config = PagingConfig(pageSize = PAGE_SIZE),
+        initialKey = 0,
         pagingSourceFactory = { pagingSource }
     ).flow.cachedIn(viewModelScope)
 
