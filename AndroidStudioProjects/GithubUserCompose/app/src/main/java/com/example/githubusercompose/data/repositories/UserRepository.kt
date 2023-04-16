@@ -34,4 +34,8 @@ class UserRepository @Inject constructor(
             emitAll(flowLocal)
         }
     }
+
+    suspend fun updateUserLocal(user: User) {
+        database.userDao().update(user)
+    }
 }

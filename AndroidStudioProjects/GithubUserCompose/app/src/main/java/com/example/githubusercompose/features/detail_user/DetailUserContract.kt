@@ -21,6 +21,7 @@ sealed class DetailUserState {
  **/
 data class DetailUserActions(
     val navigateBack: () -> Unit = {},
+    val toggleFavorite: () -> Unit = {},
 )
 
 /**

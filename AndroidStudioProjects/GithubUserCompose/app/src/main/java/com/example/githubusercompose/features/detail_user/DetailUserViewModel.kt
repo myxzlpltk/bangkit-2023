@@ -34,4 +34,15 @@ class DetailUserViewModel @Inject constructor(
         }
     }
 
+    fun toggleFavorite() {
+        viewModelScope.launch {
+            if (_stateFlow.value is DetailUserState.Success) {
+                val user = (_stateFlow.value as DetailUserState.Success).user
+                user.isFavorite = !user.isFavorite
+
+                userRepository.updateUserLocal(user)
+            }
+        }
+    }
+
 }

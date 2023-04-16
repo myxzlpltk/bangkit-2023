@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,6 +47,19 @@ fun DetailUserScreen(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.dashboard_close)
                         )
+                    }
+                },
+                actions = {
+                    when (state) {
+                        is DetailUserState.Success -> {
+                            IconButton(onClick = actions.toggleFavorite) {
+                                Icon(
+                                    imageVector = if (state.user.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                                    contentDescription = stringResource(R.string.dashboard_close)
+                                )
+                            }
+                        }
+                        else -> {}
                     }
                 }
             )
@@ -177,6 +192,7 @@ private fun DetailUserScreenPreview() {
                 publicRepos = 25,
                 following = 27,
                 followers = 28,
+                isFavorite = false,
             ),
         )
     )

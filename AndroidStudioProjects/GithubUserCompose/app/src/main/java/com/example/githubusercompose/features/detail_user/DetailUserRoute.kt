@@ -35,6 +35,7 @@ fun rememberDetailUserActions(
     return remember(coordinator) {
         DetailUserActions(
             navigateBack = navigateBack,
+            toggleFavorite = coordinator::toggleFavorite,
         )
     }
 }

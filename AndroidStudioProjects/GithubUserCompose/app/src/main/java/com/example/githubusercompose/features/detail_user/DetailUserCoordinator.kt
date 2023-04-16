@@ -16,6 +16,8 @@ class DetailUserCoordinator(
     fun setUser(login: String) {
         viewModel.setUser(login)
     }
+    
+    fun toggleFavorite() = viewModel.toggleFavorite()
 }
 
 @Composable
