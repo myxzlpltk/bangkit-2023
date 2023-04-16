@@ -34,7 +34,9 @@ fun rememberDashboardActions(
             clearSearch = coordinator::clearSearch,
             closeSearch = coordinator::closeSearch,
             onValueChange = coordinator::onValueChange,
-            navigateToDetail = navigateToDetail
+            navigateToDetail = navigateToDetail,
+            openOverflowMenu = coordinator::openOverflowMenu,
+            closeOverflowMenu = coordinator::closeOverflowMenu,
         )
     }
 }

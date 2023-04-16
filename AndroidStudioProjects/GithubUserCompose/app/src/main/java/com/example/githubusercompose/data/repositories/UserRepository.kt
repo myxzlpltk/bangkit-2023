@@ -4,7 +4,12 @@ import com.example.githubusercompose.data.entities.User
 import com.example.githubusercompose.data.local.database.GithubDatabase
 import com.example.githubusercompose.data.responses.toUser
 import com.example.githubusercompose.data.services.UserService
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,8 +26,9 @@ class UserRepository @Inject constructor(
 
             /* Remote */
             try {
-                val user = userService.getByLogin(login)
-                database.userDao().insert(user.toUser())
+                val user = userService.getByLogin(login).toUser()
+                user.isFavorite = database.userDao().isFavorite(user.login)
+                database.userDao().insert(user)
             } catch (e: Exception) {
                 emit(Result.failure(e))
             }

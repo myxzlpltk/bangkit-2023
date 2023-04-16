@@ -1,8 +1,5 @@
 package com.example.githubusercompose.features.dashboard
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.input.TextFieldValue
 
 
@@ -12,14 +9,17 @@ import androidx.compose.ui.text.input.TextFieldValue
 class DashboardState(
     val query: TextFieldValue = TextFieldValue(""),
     val search: Boolean = false,
+    val overflowMenu: Boolean = false,
 )
 
 fun DashboardState.copy(
     query: TextFieldValue? = null,
     search: Boolean? = null,
+    overflowMenu: Boolean? = null,
 ) = DashboardState(
     query = query ?: this.query,
     search = search ?: this.search,
+    overflowMenu = overflowMenu ?: this.overflowMenu,
 )
 
 /**
@@ -32,19 +32,6 @@ data class DashboardActions(
     val closeSearch: () -> Unit = {},
     val onValueChange: (TextFieldValue) -> Unit = {},
     val navigateToDetail: (String) -> Unit = {},
+    val openOverflowMenu: () -> Unit = {},
+    val closeOverflowMenu: () -> Unit = {},
 )
-
-/**
- * Compose Utility to retrieve actions from nested components
- **/
-val LocalDashboardActions = staticCompositionLocalOf<DashboardActions> {
-    error("{NAME} Actions Were not provided, make sure ProvideDashboardActions is called")
-}
-
-@Composable
-fun ProvideDashboardActions(actions: DashboardActions, content: @Composable () -> Unit) {
-    CompositionLocalProvider(LocalDashboardActions provides actions) {
-        content.invoke()
-    }
-}
-

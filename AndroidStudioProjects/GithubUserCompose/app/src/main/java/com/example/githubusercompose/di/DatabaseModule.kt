@@ -22,5 +22,5 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideStoryDao(database: GithubDatabase) = database.userDao()
+    fun provideUserDao(database: GithubDatabase) = database.userDao()
 }

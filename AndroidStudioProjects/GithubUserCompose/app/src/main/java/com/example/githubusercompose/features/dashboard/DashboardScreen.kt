@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -64,16 +66,41 @@ fun DashboardScreen(
                             }
                         }
                     } else {
-                        IconButton(onClick = { /* doSomething() */ }) {
-                            Icon(
-                                imageVector = Icons.Filled.Favorite,
-                                contentDescription = stringResource(R.string.dashboard_favorite)
-                            )
-                        }
                         IconButton(onClick = actions.openSearch) {
                             Icon(
                                 imageVector = Icons.Filled.Search,
                                 contentDescription = stringResource(R.string.dashboard_search)
+                            )
+                        }
+                        IconButton(onClick = actions.openOverflowMenu) {
+                            Icon(
+                                imageVector = Icons.Filled.MoreVert,
+                                contentDescription = stringResource(R.string.expand_menu)
+                            )
+                        }
+                        DropdownMenu(
+                            expanded = state.overflowMenu,
+                            onDismissRequest = actions.closeOverflowMenu
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.favorite_users)) },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Outlined.FavoriteBorder,
+                                        contentDescription = stringResource(R.string.favorite_users)
+                                    )
+                                },
+                                onClick = { /* doSomething() */ }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.about_me)) },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Info,
+                                        contentDescription = stringResource(R.string.about_me)
+                                    )
+                                },
+                                onClick = { /* doSomething() */ }
                             )
                         }
                     }

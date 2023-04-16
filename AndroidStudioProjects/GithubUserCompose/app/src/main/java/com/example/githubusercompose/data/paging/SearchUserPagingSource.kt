@@ -32,7 +32,7 @@ class SearchUserPagingSource(
             LoadResult.Page(
                 data = response.toListUser(),
                 prevKey = null,
-                nextKey = if (response.items.isEmpty()) null else nextPageNumber + 1
+                nextKey = if (response.totalCount == 0) null else nextPageNumber + 1
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

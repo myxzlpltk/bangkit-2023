@@ -1,8 +1,5 @@
 package com.example.githubusercompose.features.detail_user
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.staticCompositionLocalOf
 import com.example.githubusercompose.data.entities.User
 
 
@@ -23,18 +20,3 @@ data class DetailUserActions(
     val navigateBack: () -> Unit = {},
     val toggleFavorite: () -> Unit = {},
 )
-
-/**
- * Compose Utility to retrieve actions from nested components
- **/
-val LocalDetailUserActions = staticCompositionLocalOf<DetailUserActions> {
-    error("{NAME} Actions Were not provided, make sure ProvideDetailUserActions is called")
-}
-
-@Composable
-fun ProvideDetailUserActions(actions: DetailUserActions, content: @Composable () -> Unit) {
-    CompositionLocalProvider(LocalDetailUserActions provides actions) {
-        content.invoke()
-    }
-}
-

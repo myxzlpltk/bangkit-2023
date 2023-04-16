@@ -1,6 +1,5 @@
 package com.example.githubusercompose.features.detail_user
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.githubusercompose.data.repositories.UserRepository
@@ -12,7 +11,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailUserViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val userRepository: UserRepository
 ) : ViewModel() {
 

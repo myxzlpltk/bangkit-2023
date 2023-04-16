@@ -10,12 +10,14 @@
     <!-- Dashboard -->
     <string name="dashboard_title">All Github Users</string>
     <string name="dashboard_search">Search Users</string>
-    <string name="dashboard_favorite">Favorited Users</string>
     <string name="dashboard_clear">Clear search field</string>
     <string name="dashboard_close">Close search field</string>
     <string name="dashboard_search_hint">Search username…</string>
     <string name="cannot_fetch_user_list">Cannot fetch user list</string>
     <string name="no_data_user_list">No user data to be found</string>
+    <string name="expand_menu">Expand menu</string>
+    <string name="favorite_users">Favorite Users</string>
+    <string name="about_me">About me</string>
 
     <!-- Detail User -->
     <string name="detail_user_title">User Information</string>

@@ -1,7 +1,6 @@
 package com.example.githubusercompose.features.dashboard
 
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -12,7 +11,6 @@ import com.example.githubusercompose.config.PAGE_SIZE
 import com.example.githubusercompose.data.entities.User
 import com.example.githubusercompose.data.paging.SearchUserPagingSource
 import com.example.githubusercompose.data.paging.UserPagingSource
-import com.example.githubusercompose.data.repositories.UserRepository
 import com.example.githubusercompose.data.services.UserService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -23,11 +21,7 @@ import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
 @HiltViewModel
-class DashboardViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    userRepository: UserRepository,
-    private val userService: UserService
-) : ViewModel() {
+class DashboardViewModel @Inject constructor(private val userService: UserService) : ViewModel() {
 
     private val _stateFlow = MutableStateFlow(DashboardState())
     val stateFlow = _stateFlow.asStateFlow()
@@ -55,6 +49,7 @@ class DashboardViewModel @Inject constructor(
         pagingSourceFactory = { pagingSource }
     ).flow.cachedIn(viewModelScope)
 
+    /* Search Actions */
     fun openSearch() {
         _stateFlow.value = _stateFlow.value.copy(
             query = TextFieldValue(""),
@@ -77,5 +72,14 @@ class DashboardViewModel @Inject constructor(
         if (_stateFlow.value.search) {
             _stateFlow.value = _stateFlow.value.copy(query = value)
         }
+    }
+
+    /* Menu Expand */
+    fun openOverflowMenu() {
+        _stateFlow.value = _stateFlow.value.copy(overflowMenu = true)
+    }
+
+    fun closeOverflowMenu() {
+        _stateFlow.value = _stateFlow.value.copy(overflowMenu = false)
     }
 }

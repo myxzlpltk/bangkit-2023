@@ -19,6 +19,8 @@ class DashboardCoordinator(
     fun clearSearch() = viewModel.clearSearch()
     fun closeSearch() = viewModel.closeSearch()
     fun onValueChange(value: TextFieldValue) = viewModel.onValueChange(value)
+    fun openOverflowMenu() = viewModel.openOverflowMenu()
+    fun closeOverflowMenu() = viewModel.closeOverflowMenu()
 }
 
 @Composable
