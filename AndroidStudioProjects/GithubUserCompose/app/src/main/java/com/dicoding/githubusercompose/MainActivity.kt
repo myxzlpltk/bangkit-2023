@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dicoding.githubusercompose.ui.dashboard.DashboardRoute
 import com.dicoding.githubusercompose.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -49,6 +50,7 @@ fun Router(
         startDestination = Screen.Dashboard.route
     ) {
         composable(Screen.Dashboard.route) {
+            DashboardRoute()
         }
         composable(Screen.Favorites.route) {
         }
