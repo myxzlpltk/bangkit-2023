@@ -1,5 +1,7 @@
 package com.dicoding.githubusercompose
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -53,6 +56,8 @@ sealed class Screen(val route: String) {
 fun Router(
     navController: NavHostController = rememberNavController(),
 ) {
+    val context = LocalContext.current
+
     NavHost(
         navController = navController,
         startDestination = Screen.Dashboard.route
@@ -80,8 +85,10 @@ fun Router(
         composable(Screen.AboutMe.route) {
             AboutMeRoute(
                 navigateBack = { navController.navigateUp() },
-                navigateToDetail = { login ->
-                    navController.navigate(Screen.DetailUser.createRoute(login))
+                navigateToGithub = { login ->
+                    val url = "https://github.com/$login"
+                    val intent = Intent(Intent.ACTION_VIEW).apply{ data = Uri.parse(url) }
+                    context.startActivity(intent)
                 }
             )
         }

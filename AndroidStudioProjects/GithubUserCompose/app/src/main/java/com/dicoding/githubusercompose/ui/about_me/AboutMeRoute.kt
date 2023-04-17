@@ -9,13 +9,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun AboutMeRoute(
     coordinator: AboutMeCoordinator = rememberAboutMeCoordinator(),
     navigateBack: () -> Unit = {},
-    navigateToDetail: (String) -> Unit = {},
+    navigateToGithub: (String) -> Unit = {},
 ) {
     // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle(AboutMeState.Loading)
 
     // UI Actions
-    val actions = rememberAboutMeActions(coordinator, navigateBack, navigateToDetail)
+    val actions = rememberAboutMeActions(coordinator, navigateBack, navigateToGithub)
 
     // UI Rendering
     AboutMeScreen(uiState, actions)
@@ -26,12 +26,12 @@ fun AboutMeRoute(
 fun rememberAboutMeActions(
     coordinator: AboutMeCoordinator,
     navigateBack: () -> Unit,
-    navigateToDetail: (String) -> Unit,
+    navigateToGithub: (String) -> Unit,
 ): AboutMeActions {
     return remember(coordinator) {
         AboutMeActions(
             navigateBack = navigateBack,
-            navigateToDetail = navigateToDetail,
+            navigateToGithub = navigateToGithub,
         )
     }
 }

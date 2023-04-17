@@ -10,9 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11dd3792-3361-4175-b5cf-9c6ab8dbe1d3" name="Changes" comment="about me">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeContract.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeContract.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeRoute.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeRoute.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeViewModel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681742534905</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="about me">
+      <created>1681743072251</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681743072251</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

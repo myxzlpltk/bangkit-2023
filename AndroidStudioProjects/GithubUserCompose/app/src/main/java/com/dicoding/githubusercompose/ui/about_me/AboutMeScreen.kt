@@ -109,7 +109,7 @@ fun AboutMeScreen(
                     textAlign = TextAlign.Center,
                 )
                 Spacer(modifier = Modifier.height(24.dp))
-                FilledTonalButton(onClick = { actions.navigateToDetail(state.user.login) }) {
+                FilledTonalButton(onClick = { actions.navigateToGithub(state.user.login) }) {
                     Text("Check My Github")
                 }
             }

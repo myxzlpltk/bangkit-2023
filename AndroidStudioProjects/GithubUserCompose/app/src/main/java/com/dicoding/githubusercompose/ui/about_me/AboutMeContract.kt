@@ -21,7 +21,7 @@ sealed class AboutMeState {
  **/
 data class AboutMeActions(
     val navigateBack: () -> Unit = {},
-    val navigateToDetail: (String) -> Unit = {},
+    val navigateToGithub: (String) -> Unit = {},
 )
 
 /**
