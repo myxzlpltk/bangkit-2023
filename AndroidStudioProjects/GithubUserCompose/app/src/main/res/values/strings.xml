@@ -1,3 +1,33 @@
 <resources>
-    <string name="app_name">GithubUserCompose</string>
+    <string name="app_name">Github User Compose</string>
+
+    <!-- Generic -->
+    <string name="retry">Retry</string>
+    <string name="navigate_back">Navigate Back</string>
+
+    <!-- User List Item -->
+    <string name="avatar_description">%s\'s avatar</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">All Github Users</string>
+    <string name="dashboard_search">Search Users</string>
+    <string name="dashboard_clear">Clear search field</string>
+    <string name="dashboard_close">Close search field</string>
+    <string name="dashboard_search_hint">Search username…</string>
+    <string name="cannot_fetch_user_list">Cannot fetch user list</string>
+    <string name="no_data_user_list">No user data to be found</string>
+    <string name="expand_menu">Expand menu</string>
+    <string name="favorite_users">Favorite Users</string>
+    <string name="about_me">About me</string>
+
+    <!-- Detail User -->
+    <string name="detail_user_title">User Information</string>
+    <string name="no_name">No Name</string>
+    <string name="no_bio">No Bio</string>
+    <string name="cannot_fetch_user_data">Cannot fetch user data</string>
+    <string name="followers_and_following">Followers and Following</string>
+    <string name="followers_count">%d Followers</string>
+    <string name="following_count">%d Following</string>
+    <string name="repositories">Repositories</string>
+    <string name="repositories_count">%d Repositories</string>
 </resources>
