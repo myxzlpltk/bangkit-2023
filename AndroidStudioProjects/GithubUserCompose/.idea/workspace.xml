@@ -9,19 +9,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11dd3792-3361-4175-b5cf-9c6ab8dbe1d3" name="Changes" comment="list user and search">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/di/ResourcesProvider.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/di/ViewModelFactoryProvider.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserContract.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserCoordinator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserRoute.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserScreen.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserViewModel.kt" afterDir="false" />
+    <list default="true" id="11dd3792-3361-4175-b5cf-9c6ab8dbe1d3" name="Changes" comment="about me">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardRoute.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardRoute.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/about_me/AboutMeViewModel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,14 +29,14 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Class" />
-        <option value="ComposeComponent" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin File" />
         <option value="ComposeContract" />
         <option value="ComposeScreen" />
         <option value="ComposeViewModel" />
         <option value="ComposeCoordinator" />
         <option value="ComposeRoute" />
-        <option value="Kotlin Interface" />
-        <option value="Kotlin File" />
+        <option value="ComposeComponent" />
       </list>
     </option>
   </component>
@@ -54,6 +45,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2OWZ5G8dH975Bw4jfk4sLrBR2Vz" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -66,7 +60,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
-    "cidr.known.project.marker": "true"
+    "cidr.known.project.marker": "true",
+    "run.code.analysis.last.selected.profile": "pProject Default"
   }
 }]]></component>
   <component name="RunManager">
@@ -159,7 +154,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681726378793</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="detail user">
+      <created>1681735691693</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681735691693</updated>
+    </task>
+    <task id="LOCAL-00005" summary="about me">
+      <created>1681742534905</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681742534905</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -177,7 +186,9 @@
     <MESSAGE value="init project" />
     <MESSAGE value="import existing project framework" />
     <MESSAGE value="list user and search" />
-    <option name="LAST_COMMIT_MESSAGE" value="list user and search" />
+    <MESSAGE value="detail user" />
+    <MESSAGE value="about me" />
+    <option name="LAST_COMMIT_MESSAGE" value="about me" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

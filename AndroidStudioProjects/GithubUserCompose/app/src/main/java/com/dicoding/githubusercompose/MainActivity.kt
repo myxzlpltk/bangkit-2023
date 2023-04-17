@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.dicoding.githubusercompose.ui.about_me.AboutMeRoute
 import com.dicoding.githubusercompose.ui.dashboard.DashboardRoute
 import com.dicoding.githubusercompose.ui.detail_user.DetailUserRoute
 import com.dicoding.githubusercompose.ui.theme.AppTheme
@@ -42,6 +43,7 @@ class MainActivity : ComponentActivity() {
 sealed class Screen(val route: String) {
     object Dashboard : Screen("dashboard")
     object Favorites : Screen("favorites")
+    object AboutMe : Screen("about-me")
     object DetailUser : Screen("users/{login}") {
         fun createRoute(login: String) = "users/$login"
     }
@@ -59,6 +61,9 @@ fun Router(
             DashboardRoute(
                 navigateToDetail = { login ->
                     navController.navigate(Screen.DetailUser.createRoute(login))
+                },
+                navigateToAboutMe = {
+                    navController.navigate(Screen.AboutMe.route)
                 }
             )
         }
@@ -70,6 +75,14 @@ fun Router(
             DetailUserRoute(
                 login = login,
                 navigateBack = { navController.navigateUp() }
+            )
+        }
+        composable(Screen.AboutMe.route) {
+            AboutMeRoute(
+                navigateBack = { navController.navigateUp() },
+                navigateToDetail = { login ->
+                    navController.navigate(Screen.DetailUser.createRoute(login))
+                }
             )
         }
         composable(Screen.Favorites.route) {

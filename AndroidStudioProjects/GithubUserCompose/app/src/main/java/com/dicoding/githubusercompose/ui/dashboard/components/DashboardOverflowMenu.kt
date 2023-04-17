@@ -20,8 +20,6 @@ import com.dicoding.githubusercompose.ui.dashboard.LocalDashboardActions
 fun DashboardOverflowMenu(
     modifier: Modifier = Modifier,
     overflowMenuVisible: Boolean = false,
-    navigateToFavorites: () -> Unit = {},
-    navigateToAbout: () -> Unit = {}
 ) {
     val actions = LocalDashboardActions.current
 
@@ -46,7 +44,10 @@ fun DashboardOverflowMenu(
                     contentDescription = stringResource(R.string.favorite_users)
                 )
             },
-            onClick = navigateToFavorites
+            onClick = {
+                actions.toggleOverflowMenu()
+                actions.navigateToFavorites()
+            }
         )
         DropdownMenuItem(
             text = { Text(stringResource(R.string.about_me)) },
@@ -56,7 +57,10 @@ fun DashboardOverflowMenu(
                     contentDescription = stringResource(R.string.about_me)
                 )
             },
-            onClick = navigateToAbout
+            onClick = {
+                actions.toggleOverflowMenu()
+                actions.navigateToAboutMe()
+            }
         )
     }
 }

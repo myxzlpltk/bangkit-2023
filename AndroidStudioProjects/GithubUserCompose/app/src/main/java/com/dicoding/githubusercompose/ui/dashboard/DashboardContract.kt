@@ -33,7 +33,7 @@ data class DashboardActions(
     // Navigation
     val navigateToDetail: (String) -> Unit = {},
     val navigateToFavorites: () -> Unit = {},
-    val navigateToAbout: () -> Unit = {},
+    val navigateToAboutMe: () -> Unit = {},
 
     // SearchView
     val toggleSearch: () -> Unit = {},

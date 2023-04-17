@@ -1,7 +1,6 @@
 package com.dicoding.githubusercompose.ui.detail_user
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,6 +36,8 @@ import com.dicoding.githubusercompose.R
 import com.dicoding.githubusercompose.data.entities.User
 import com.dicoding.githubusercompose.ui.detail_user.components.DetailUserFollow
 import com.dicoding.githubusercompose.ui.detail_user.components.DetailUserPublicRepos
+import com.dicoding.githubusercompose.ui.shared.ErrorScreen
+import com.dicoding.githubusercompose.ui.shared.LoadingScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,95 +79,77 @@ fun DetailUserScreen(
         }
     ) { innerPadding ->
         when (state) {
-            DetailUserState.Loading -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
+            DetailUserState.Loading -> LoadingScreen(modifier = Modifier.padding(innerPadding))
+            is DetailUserState.Error -> ErrorScreen(
+                modifier = Modifier.padding(innerPadding),
+                message = state.message,
+            )
 
-            is DetailUserState.Error -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                    contentAlignment = Alignment.Center
+            is DetailUserState.Success -> Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(24.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                /* User info */
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(state.message)
-                }
-            }
+                    /* Avatar image */
+                    SubcomposeAsyncImage(
+                        modifier = Modifier
+                            .size(72.dp)
+                            .clip(CircleShape),
+                        model = state.user.avatarUrl,
+                        contentDescription = stringResource(
+                            R.string.avatar_description,
+                            state.user.login
+                        ),
+                        contentScale = ContentScale.Crop,
+                        loading = {
+                            CircularProgressIndicator(modifier = Modifier.padding(18.dp))
+                        },
+                    )
 
-
-            is DetailUserState.Success -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                        .padding(24.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    /* User info */
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        /* Avatar image */
-                        SubcomposeAsyncImage(
-                            modifier = Modifier
-                                .size(72.dp)
-                                .clip(CircleShape),
-                            model = state.user.avatarUrl,
-                            contentDescription = stringResource(
-                                R.string.avatar_description,
-                                state.user.login
-                            ),
-                            contentScale = ContentScale.Crop,
-                            loading = {
-                                CircularProgressIndicator(modifier = Modifier.padding(18.dp))
-                            },
+                    /* Name and username */
+                    Column {
+                        Text(
+                            text = state.user.name ?: stringResource(R.string.no_name),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
-
-                        /* Name and username */
-                        Column {
-                            Text(
-                                text = state.user.name ?: stringResource(R.string.no_name),
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                            Text(
-                                text = "@${state.user.login}",
-                                style = MaterialTheme.typography.bodyLarge,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                        }
+                        Text(
+                            text = "@${state.user.login}",
+                            style = MaterialTheme.typography.bodyLarge,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
                     }
-
-                    /* Bio */
-                    Text(
-                        text = state.user.bio ?: stringResource(R.string.no_bio),
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-
-                    /* Followers and Following */
-                    DetailUserFollow(
-                        followers = state.user.followers,
-                        following = state.user.following
-                    )
-
-                    /* Repository */
-                    DetailUserPublicRepos(
-                        publicRepos = state.user.publicRepos
-                    )
                 }
+
+                /* Bio */
+                Text(
+                    text = state.user.bio ?: stringResource(R.string.no_bio),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+
+                /* Followers and Following */
+                DetailUserFollow(
+                    followers = state.user.followers,
+                    following = state.user.following
+                )
+
+                /* Repository */
+                DetailUserPublicRepos(
+                    publicRepos = state.user.publicRepos
+                )
             }
+
         }
     }
 }
