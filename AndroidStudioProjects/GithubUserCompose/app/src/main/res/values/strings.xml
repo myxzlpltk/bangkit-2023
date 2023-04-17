@@ -4,6 +4,9 @@
     <!-- Generic -->
     <string name="retry">Retry</string>
     <string name="navigate_back">Navigate Back</string>
+    <string name="generic_error">Something went wrong</string>
+    <string name="network_error">Could not connect to the server</string>
+    <string name="disk_error">Data is not available locally</string>
 
     <!-- User List Item -->
     <string name="avatar_description">%s\'s avatar</string>

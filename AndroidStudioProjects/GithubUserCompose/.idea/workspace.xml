@@ -9,16 +9,19 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11dd3792-3361-4175-b5cf-9c6ab8dbe1d3" name="Changes" comment="import existing project framework">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardContract.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardCoordinator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardRoute.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardScreen.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardViewModel.kt" afterDir="false" />
+    <list default="true" id="11dd3792-3361-4175-b5cf-9c6ab8dbe1d3" name="Changes" comment="list user and search">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/di/ResourcesProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/di/ViewModelFactoryProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserContract.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserCoordinator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserRoute.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserViewModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JetHeroes/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JetHeroes/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardRoute.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardRoute.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +44,8 @@
         <option value="ComposeViewModel" />
         <option value="ComposeCoordinator" />
         <option value="ComposeRoute" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -147,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681709748629</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="list user and search">
+      <created>1681726378793</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1681726378793</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -164,7 +176,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init project" />
     <MESSAGE value="import existing project framework" />
-    <option name="LAST_COMMIT_MESSAGE" value="import existing project framework" />
+    <MESSAGE value="list user and search" />
+    <option name="LAST_COMMIT_MESSAGE" value="list user and search" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

@@ -2,7 +2,6 @@ package com.dicoding.githubusercompose.ui.dashboard
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -29,7 +28,6 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val userService: UserService
 ) : ViewModel() {
 
