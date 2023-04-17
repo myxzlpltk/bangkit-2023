@@ -16,8 +16,8 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: User)
 
-    @Update
-    suspend fun update(user: User)
+    @Query("UPDATE users SET is_favorite = NOT is_favorite WHERE login = :login")
+    suspend fun toggleFavorite(login: String)
 
     @Query("SELECT EXISTS(SELECT * FROM users WHERE login = :login AND is_favorite = 1)")
     suspend fun isFavorite(login: String): Boolean

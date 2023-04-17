@@ -53,8 +53,7 @@ class DetailUserViewModel @AssistedInject constructor(
         viewModelScope.launch {
             val state = _stateFlow.value
             if (state is DetailUserState.Success) {
-                val user = state.user.apply { isFavorite = !isFavorite }
-                userRepository.update(user)
+                userRepository.toggleFavorite(state.user)
             }
         }
     }

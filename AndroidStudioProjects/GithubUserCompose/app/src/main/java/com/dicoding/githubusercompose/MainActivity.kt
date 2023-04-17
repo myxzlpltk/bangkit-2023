@@ -20,6 +20,7 @@ import androidx.navigation.navArgument
 import com.dicoding.githubusercompose.ui.about_me.AboutMeRoute
 import com.dicoding.githubusercompose.ui.dashboard.DashboardRoute
 import com.dicoding.githubusercompose.ui.detail_user.DetailUserRoute
+import com.dicoding.githubusercompose.ui.favorites.FavoritesRoute
 import com.dicoding.githubusercompose.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -69,6 +70,9 @@ fun Router(
                 },
                 navigateToAboutMe = {
                     navController.navigate(Screen.AboutMe.route)
+                },
+                navigateToFavorites = {
+                    navController.navigate(Screen.Favorites.route)
                 }
             )
         }
@@ -87,12 +91,18 @@ fun Router(
                 navigateBack = { navController.navigateUp() },
                 navigateToGithub = { login ->
                     val url = "https://github.com/$login"
-                    val intent = Intent(Intent.ACTION_VIEW).apply{ data = Uri.parse(url) }
+                    val intent = Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url) }
                     context.startActivity(intent)
                 }
             )
         }
         composable(Screen.Favorites.route) {
+            FavoritesRoute(
+                navigateBack = { navController.navigateUp() },
+                navigateToDetail = { login ->
+                    navController.navigate(Screen.DetailUser.createRoute(login))
+                },
+            )
         }
     }
 }

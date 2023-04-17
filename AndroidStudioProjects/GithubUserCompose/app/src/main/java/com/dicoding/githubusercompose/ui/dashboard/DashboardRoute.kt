@@ -11,6 +11,7 @@ fun DashboardRoute(
     coordinator: DashboardCoordinator = rememberDashboardCoordinator(),
     navigateToDetail: (String) -> Unit = {},
     navigateToAboutMe: () -> Unit = {},
+    navigateToFavorites: () -> Unit = {},
 ) {
     // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsState()
@@ -18,7 +19,12 @@ fun DashboardRoute(
     val listState = coordinator.listState
 
     // UI Actions
-    val actions = rememberDashboardActions(coordinator, navigateToDetail, navigateToAboutMe)
+    val actions = rememberDashboardActions(
+        coordinator,
+        navigateToDetail,
+        navigateToAboutMe,
+        navigateToFavorites,
+    )
 
     // UI Rendering
     DashboardScreen(uiState, actions, pager, listState)
@@ -30,11 +36,13 @@ fun rememberDashboardActions(
     coordinator: DashboardCoordinator,
     navigateToDetail: (String) -> Unit,
     navigateToAboutMe: () -> Unit = {},
+    navigateToFavorites: () -> Unit = {},
 ): DashboardActions {
     return remember(coordinator) {
         DashboardActions(
             /* Navigation */
             navigateToDetail = navigateToDetail,
+            navigateToFavorites = navigateToFavorites,
             navigateToAboutMe = navigateToAboutMe,
 
             /* Search View */

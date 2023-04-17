@@ -45,7 +45,11 @@ class UserRepository @Inject constructor(
         return database.userDao().getFavorites()
     }
 
-    suspend fun update(user: User) {
-        database.userDao().update(user)
+    suspend fun toggleFavorite(user: User) {
+        toggleFavorite(user.login)
+    }
+
+    suspend fun toggleFavorite(login: String) {
+        database.userDao().toggleFavorite(login)
     }
 }
