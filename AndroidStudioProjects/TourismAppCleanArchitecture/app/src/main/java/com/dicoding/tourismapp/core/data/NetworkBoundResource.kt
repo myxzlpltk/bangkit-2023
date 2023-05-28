@@ -1,16 +1,15 @@
 package com.dicoding.tourismapp.core.data
 
 import com.dicoding.tourismapp.core.data.source.remote.network.ApiResponse
-import com.dicoding.tourismapp.core.utils.AppExecutors
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {
+abstract class NetworkBoundResource<ResultType, RequestType> {
 
-    private val result: Flow<Resource<ResultType>> = flow {
+    private var result: Flow<Resource<ResultType>> = flow {
         emit(Resource.Loading())
         val dbSource = loadFromDB().first()
         if (shouldFetch(dbSource)) {
