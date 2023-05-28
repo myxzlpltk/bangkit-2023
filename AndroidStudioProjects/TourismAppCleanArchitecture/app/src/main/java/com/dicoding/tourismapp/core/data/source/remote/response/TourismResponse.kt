@@ -28,4 +28,3 @@ data class TourismResponse(
     val image: String
 )
 
-
