@@ -1,4 +1,4 @@
-package com.dicoding.mysimplelogin
+package com.bangkit.core
 
 import android.content.Context
 import android.content.SharedPreferences
