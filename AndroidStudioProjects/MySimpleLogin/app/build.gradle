@@ -34,6 +34,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    dynamicFeatures = [':chat']
 }
 
 dependencies {
@@ -45,4 +46,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation project(":core")
+    implementation "com.google.android.play:core:1.10.3"
 }
