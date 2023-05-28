@@ -1,4 +1,4 @@
-package com.bangkit.core
+package com.dicoding.core
 
 import org.junit.Test
 

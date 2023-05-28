@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+include ':core'
 rootProject.name='My Simple Login'
 include ':app'
-include ':core'

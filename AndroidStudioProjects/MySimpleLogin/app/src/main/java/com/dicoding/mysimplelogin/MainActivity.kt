@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dicoding.mysimplelogin.databinding.ActivityMainBinding
+import com.dicoding.core.UserRepository
+import com.dicoding.core.SessionManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sesi = com.bangkit.core.SessionManager(this)
+        val sesi = SessionManager(this)
         userRepository = UserRepository.getInstance(sesi)
 
         if (userRepository.isUserLogin()) {

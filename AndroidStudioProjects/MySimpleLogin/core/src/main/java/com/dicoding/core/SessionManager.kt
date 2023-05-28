@@ -1,4 +1,4 @@
-package com.bangkit.core
+package com.dicoding.core
 
 import android.content.Context
 import android.content.SharedPreferences

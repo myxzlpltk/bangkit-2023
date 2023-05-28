@@ -1,6 +1,4 @@
-package com.dicoding.mysimplelogin
-
-import com.bangkit.core.SessionManager
+package com.dicoding.core
 
 class UserRepository(private val sesi: SessionManager) {
 
@@ -10,16 +8,17 @@ class UserRepository(private val sesi: SessionManager) {
 
         fun getInstance(sesi: SessionManager): UserRepository =
             instance ?: synchronized(this) {
-                instance ?: UserRepository(sesi)
+                instance
+                    ?: UserRepository(sesi)
             }
     }
 
     fun loginUser(username: String) {
         sesi.createLoginSession()
-        sesi.saveToPreference(com.bangkit.core.SessionManager.KEY_USERNAME, username)
+        sesi.saveToPreference(SessionManager.KEY_USERNAME, username)
     }
 
-    fun getUser() = sesi.getFromPreference(com.bangkit.core.SessionManager.KEY_USERNAME)
+    fun getUser() = sesi.getFromPreference(SessionManager.KEY_USERNAME)
 
     fun isUserLogin() = sesi.isLogin
 

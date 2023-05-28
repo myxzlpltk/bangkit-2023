@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.mysimplelogin.databinding.ActivityHomeBinding
+import com.dicoding.core.SessionManager
+import com.dicoding.core.UserRepository
 
 class HomeActivity : AppCompatActivity() {
 
@@ -15,7 +17,7 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sesi = com.bangkit.core.SessionManager(this)
+        val sesi = SessionManager(this)
         userRepository = UserRepository.getInstance(sesi)
 
         binding.tvWelcome.text = "Welcome ${userRepository.getUser()}"
