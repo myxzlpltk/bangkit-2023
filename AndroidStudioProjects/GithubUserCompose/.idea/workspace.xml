@@ -9,20 +9,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11dd3792-3361-4175-b5cf-9c6ab8dbe1d3" name="Changes" comment="intent to web">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/favorites/FavoritesContract.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/favorites/FavoritesCoordinator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/favorites/FavoritesRoute.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/favorites/FavoritesScreen.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/favorites/FavoritesViewModel.kt" afterDir="false" />
+    <list default="true" id="11dd3792-3361-4175-b5cf-9c6ab8dbe1d3" name="Changes" comment="code cleanup">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/data/local/dao/UserDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/data/local/dao/UserDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/data/repositories/UserRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/data/repositories/UserRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardRoute.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/dashboard/DashboardRoute.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/detail_user/DetailUserViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/shared/UserListItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dicoding/githubusercompose/ui/shared/UserListItem.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +60,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
-    "run.code.analysis.last.selected.profile": "pProject Default"
+    "dart.analysis.tool.window.visible": "false",
+    "last_opened_file_path": "D:/",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
   <component name="RunManager">
