@@ -5,7 +5,7 @@ data class Dessert(
     val name: String,
     val image: String,
     val area: String,
-    val tags: List<String>,
     val ingredients: List<Ingredient>,
     val instructions: String,
+    val isFavorite: Boolean = false
 )

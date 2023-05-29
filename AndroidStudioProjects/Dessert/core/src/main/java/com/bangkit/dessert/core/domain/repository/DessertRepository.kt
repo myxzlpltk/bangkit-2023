@@ -12,9 +12,10 @@ interface DessertRepository {
     suspend fun refresh()
 
     // Single dessert
-    fun getOne(id: String): Flow<Resource<Dessert>>
+    fun getOne(id: Int): Flow<Resource<Dessert?>>
+    suspend fun refreshOne(id: Int)
 
     // Favorites
     fun getFavorites(): Flow<Resource<List<DessertBrief>>>
-    suspend fun setFavorite(dessert: Dessert, state: Boolean)
+    suspend fun setFavorite(id: Int, isFavorite: Boolean)
 }

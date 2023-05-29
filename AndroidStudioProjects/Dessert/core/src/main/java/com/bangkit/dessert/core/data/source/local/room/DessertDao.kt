@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface DessertDao {
 
     @Query("SELECT * FROM desserts WHERE id = :id")
-    fun getOne(id: Int): Flow<DessertEntity>
+    fun getOne(id: Int): Flow<DessertEntity?>
 
     @Query("SELECT * FROM desserts WHERE isFavorite = 1")
     fun getFavorites(): Flow<List<DessertEntity>>
@@ -20,4 +20,7 @@ interface DessertDao {
 
     @Query("SELECT EXISTS(SELECT * FROM desserts WHERE id = :id AND isFavorite = 1)")
     suspend fun isFavorite(id: Int): Boolean
+
+    @Query("UPDATE desserts SET isFavorite = :isFavorite WHERE id = :id")
+    suspend fun setFavorite(id: Int, isFavorite: Boolean)
 }

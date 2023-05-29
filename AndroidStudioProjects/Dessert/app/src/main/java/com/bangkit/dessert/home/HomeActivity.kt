@@ -1,5 +1,6 @@
 package com.bangkit.dessert.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.bangkit.dessert.core.data.Resource
 import com.bangkit.dessert.core.domain.model.DessertBrief
 import com.bangkit.dessert.core.presentation.DessertAdapter
 import com.bangkit.dessert.databinding.ActivityHomeBinding
+import com.bangkit.dessert.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -32,6 +34,7 @@ class HomeActivity : AppCompatActivity() {
             adapter = dessertAdapter
         }
 
+        // Setup actions
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.refresh()
         }
@@ -61,6 +64,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun navigateToDetail(dessert: DessertBrief) {
-
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.EXTRA_ID, dessert.id)
+        startActivity(intent)
     }
 }

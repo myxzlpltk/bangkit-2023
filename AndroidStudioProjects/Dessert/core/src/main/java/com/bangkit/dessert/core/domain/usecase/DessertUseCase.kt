@@ -8,7 +8,10 @@ import kotlinx.coroutines.flow.Flow
 interface DessertUseCase {
     suspend fun refresh()
     fun getAll(): Flow<Resource<List<DessertBrief>>>
-    fun getOne(id: String): Flow<Resource<Dessert>>
+
+    suspend fun refreshOne(id: Int)
+    fun getOne(id: Int): Flow<Resource<Dessert?>>
+
     fun getFavorites(): Flow<Resource<List<DessertBrief>>>
-    fun setFavorite(dessert: Dessert, state: Boolean)
+    suspend fun setFavorite(id: Int, isFavorite: Boolean)
 }

@@ -2,6 +2,7 @@ package com.bangkit.dessert.core.data.source.local
 
 import androidx.room.withTransaction
 import com.bangkit.dessert.core.data.source.local.entity.DessertBriefEntity
+import com.bangkit.dessert.core.data.source.local.entity.DessertEntity
 import com.bangkit.dessert.core.data.source.local.room.DessertBriefDao
 import com.bangkit.dessert.core.data.source.local.room.DessertDao
 import com.bangkit.dessert.core.data.source.local.room.DessertDatabase
@@ -24,4 +25,11 @@ class DessertLocalDataSource @Inject constructor(
             dessertBriefDao.insert(desserts)
         }
     }
+
+    fun getOne(id: Int): Flow<DessertEntity?> = dessertDao.getOne(id)
+
+    suspend fun upsert(dessert: DessertEntity) = dessertDao.upsert(dessert)
+
+    suspend fun isFavorite(id: Int): Boolean = dessertDao.isFavorite(id)
+    suspend fun setFavorite(id: Int, isFavorite: Boolean) = dessertDao.setFavorite(id, isFavorite)
 }

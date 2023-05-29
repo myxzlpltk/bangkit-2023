@@ -1,5 +1,6 @@
-package com.bangkit.dessert.home
+package com.bangkit.dessert.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bangkit.dessert.core.data.Resource
@@ -11,11 +12,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val dessertUseCase: DessertUseCase
+class DetailViewModel @Inject constructor(
+    private val dessertUseCase: DessertUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val dessertListFlow = dessertUseCase.getAll().stateIn(
+    private val id = checkNotNull<Int>(savedStateHandle[DetailActivity.EXTRA_ID])
+
+    val dessertFlow = dessertUseCase.getOne(id).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = Resource.Loading()
@@ -23,7 +27,13 @@ class HomeViewModel @Inject constructor(
 
     fun refresh() {
         viewModelScope.launch {
-            dessertUseCase.refresh()
+            dessertUseCase.refreshOne(id)
+        }
+    }
+
+    fun setFavorite(isFavorite: Boolean) {
+        viewModelScope.launch {
+            dessertUseCase.setFavorite(id, isFavorite)
         }
     }
 }

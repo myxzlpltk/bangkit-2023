@@ -1,7 +1,7 @@
 package com.bangkit.dessert.core.utils
 
 import com.bangkit.dessert.core.data.source.local.entity.DessertBriefEntity
-import com.bangkit.dessert.core.data.source.remote.response.ListDessertResponse
+import com.bangkit.dessert.core.data.source.remote.response.DessertBriefItemResponse
 import com.bangkit.dessert.core.domain.model.DessertBrief
 
 object DessertBriefMapper {
@@ -13,9 +13,9 @@ object DessertBriefMapper {
         image = dessert.image
     )
 
-    fun fromRemote(response: ListDessertResponse) = response.meals.map {
+    fun fromRemote(response: List<DessertBriefItemResponse>) = response.map {
         DessertBrief(
-            id = it.idMeal.toInt(),
+            id = it.idMeal,
             name = it.strMeal,
             image = it.strMealThumb
         )
