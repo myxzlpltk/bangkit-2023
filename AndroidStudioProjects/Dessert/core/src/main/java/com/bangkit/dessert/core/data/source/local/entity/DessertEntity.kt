@@ -9,7 +9,7 @@ data class DessertEntity(
     @PrimaryKey val id: Int,
     val name: String,
     val image: String,
-    val area: String,
+    val area: String = "",
     val tags: List<String>,
     val ingredients: List<Ingredient>,
     val instructions: String,

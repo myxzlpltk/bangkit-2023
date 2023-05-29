@@ -1,7 +1,6 @@
 package com.bangkit.dessert.core.presentation
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.dessert.core.databinding.ItemListDessertBinding
 import com.bangkit.dessert.core.domain.model.DessertBrief
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class DessertAdapter(
     private val onClick: (DessertBrief) -> Unit
@@ -22,7 +22,13 @@ class DessertAdapter(
         val dessert = getItem(position)
 
         with(holder.binding) {
-            Glide.with(root.context).load(dessert.image).into(dessertImage)
+            // Load image
+            Glide.with(root.context)
+                .load(dessert.image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(dessertImage)
+
+            // Load data
             dessertName.text = dessert.name
             dessertCard.setOnClickListener { onClick.invoke(dessert) }
         }

@@ -40,5 +40,11 @@ android {
 }
 
 dependencies {
-    implementation "androidx.activity:activity-ktx:1.7.1"
+    implementation project(":core")
+
+    // viewModels()
+    implementation "androidx.activity:activity-ktx:1.7.2"
+
+    // Swipe to refresh
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01"
 }

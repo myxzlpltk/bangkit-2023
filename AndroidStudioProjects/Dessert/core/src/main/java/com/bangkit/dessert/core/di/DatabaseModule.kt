@@ -2,6 +2,7 @@ package com.bangkit.dessert.core.di
 
 import android.content.Context
 import androidx.room.Room
+import com.bangkit.dessert.core.data.source.local.room.DessertBriefDao
 import com.bangkit.dessert.core.data.source.local.room.DessertDao
 import com.bangkit.dessert.core.data.source.local.room.DessertDatabase
 import dagger.Module
@@ -24,5 +25,12 @@ class DatabaseModule {
     }
 
     @Provides
-    fun provideDessertDao(database: DessertDatabase): DessertDao = database.dessertDao()
+    fun provideDessertDao(database: DessertDatabase): DessertDao {
+        return database.dessertDao()
+    }
+
+    @Provides
+    fun provideDessertBriefDao(database: DessertDatabase): DessertBriefDao {
+        return database.dessertBriefDao()
+    }
 }
