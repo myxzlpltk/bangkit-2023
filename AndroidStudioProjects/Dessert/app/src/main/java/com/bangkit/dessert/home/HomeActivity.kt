@@ -2,11 +2,13 @@ package com.bangkit.dessert.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bangkit.dessert.R
 import com.bangkit.dessert.core.data.Resource
 import com.bangkit.dessert.core.domain.model.DessertBrief
 import com.bangkit.dessert.core.presentation.DessertAdapter
@@ -46,6 +48,8 @@ class HomeActivity : AppCompatActivity() {
                     is Resource.Error -> {
                         binding.progressBar.isVisible = false
                         binding.swipeRefresh.isRefreshing = false
+                        Toast.makeText(this@HomeActivity, R.string.generic_error, Toast.LENGTH_LONG)
+                            .show()
                     }
 
                     is Resource.Loading -> {

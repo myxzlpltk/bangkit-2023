@@ -2,6 +2,7 @@ package com.bangkit.dessert.detail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -46,6 +47,8 @@ class DetailActivity : AppCompatActivity() {
                         binding.progressBar.isVisible = false
                         binding.swipeRefresh.isRefreshing = false
                         binding.swipeRefresh.visibility = View.VISIBLE
+                        Toast.makeText(this@DetailActivity, R.string.generic_error, Toast.LENGTH_LONG)
+                            .show()
                     }
 
                     is Resource.Loading -> {
