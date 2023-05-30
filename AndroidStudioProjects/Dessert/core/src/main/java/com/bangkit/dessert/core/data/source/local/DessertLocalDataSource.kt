@@ -30,6 +30,9 @@ class DessertLocalDataSource @Inject constructor(
 
     suspend fun upsert(dessert: DessertEntity) = dessertDao.upsert(dessert)
 
+    fun getFavorites() = dessertDao.getFavorites()
+
     suspend fun isFavorite(id: Int): Boolean = dessertDao.isFavorite(id)
+
     suspend fun setFavorite(id: Int, isFavorite: Boolean) = dessertDao.setFavorite(id, isFavorite)
 }

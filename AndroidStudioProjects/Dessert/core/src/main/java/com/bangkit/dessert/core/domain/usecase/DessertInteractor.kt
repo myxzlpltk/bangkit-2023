@@ -28,7 +28,7 @@ class DessertInteractor @Inject constructor(
     }
 
     override fun getFavorites(): Flow<Resource<List<DessertBrief>>> {
-        TODO("Not yet implemented")
+        return dessertRepository.getFavorites()
     }
 
     override suspend fun setFavorite(id: Int, isFavorite: Boolean) {

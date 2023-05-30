@@ -28,10 +28,10 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Setup view
-        binding.topAppBar.setNavigationOnClickListener { finish() }
-
         // Setup actions
+        binding.topAppBar.setNavigationOnClickListener {
+            finish()
+        }
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.refresh()
         }
@@ -47,7 +47,11 @@ class DetailActivity : AppCompatActivity() {
                         binding.progressBar.isVisible = false
                         binding.swipeRefresh.isRefreshing = false
                         binding.swipeRefresh.visibility = View.VISIBLE
-                        Toast.makeText(this@DetailActivity, R.string.generic_error, Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            this@DetailActivity,
+                            R.string.generic_error,
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                     }
 
@@ -78,7 +82,8 @@ class DetailActivity : AppCompatActivity() {
         // Load data
         dessertName.text = dessert.name
         dessertArea.text = getString(R.string.dessert_area_template, dessert.area)
-        dessertIngredients.text = dessert.ingredients.map { "${it.measure} ${it.name}" }.toBulletedList()
+        dessertIngredients.text =
+            dessert.ingredients.map { "${it.measure} ${it.name}" }.toBulletedList()
         dessertInstructions.text = dessert.instructions
 
         // Load state

@@ -64,7 +64,9 @@ class DessertRepositoryImpl @Inject constructor(
     }
 
     override fun getFavorites(): Flow<Resource<List<DessertBrief>>> {
-        TODO("Not yet implemented")
+        return local.getFavorites()
+            .map(DessertBriefMapper::fromLocal)
+            .map { Resource.Success(it) }
     }
 
     override suspend fun setFavorite(id: Int, isFavorite: Boolean) {

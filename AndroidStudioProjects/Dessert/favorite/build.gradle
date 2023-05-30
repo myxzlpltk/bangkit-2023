@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.dynamic-feature'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.dagger.hilt.android'
     id 'kotlin-kapt'
@@ -8,16 +8,11 @@ plugins {
 apply from: '../shared_dependencies.gradle'
 
 android {
-    namespace 'com.bangkit.dessert'
+    namespace 'com.bangkit.dessert.favorite'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.bangkit.dessert"
         minSdk 24
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,15 +32,12 @@ android {
     buildFeatures {
         viewBinding true
     }
-    dynamicFeatures = [':favorite']
 }
 
 dependencies {
     implementation project(":core")
+    implementation project(":app")
 
     // viewModels()
     implementation "androidx.activity:activity-ktx:1.7.2"
-
-    // Swipe to refresh
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01"
 }

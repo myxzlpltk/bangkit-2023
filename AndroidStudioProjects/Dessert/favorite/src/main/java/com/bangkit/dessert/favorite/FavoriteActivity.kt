@@ -1,10 +1,8 @@
-package com.bangkit.dessert.home
+package com.bangkit.dessert.favorite
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -13,21 +11,25 @@ import com.bangkit.dessert.R
 import com.bangkit.dessert.core.data.Resource
 import com.bangkit.dessert.core.domain.model.DessertBrief
 import com.bangkit.dessert.core.presentation.DessertAdapter
-import com.bangkit.dessert.databinding.ActivityHomeBinding
 import com.bangkit.dessert.detail.DetailActivity
-import dagger.hilt.android.AndroidEntryPoint
+import com.bangkit.dessert.di.FavoriteModuleDependencies
+import com.bangkit.dessert.favorite.databinding.ActivityFavoriteBinding
+import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-@AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class FavoriteActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
+    @Inject
+    lateinit var viewModel: FavoriteViewModel
+
+    private lateinit var binding: ActivityFavoriteBinding
     private val dessertAdapter = DessertAdapter(this::navigateToDetail)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        initCoreInjection()
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Setup view
@@ -37,29 +39,17 @@ class HomeActivity : AppCompatActivity() {
         }
 
         // Setup actions
-        binding.swipeRefresh.setOnRefreshListener {
-            viewModel.refresh()
-        }
-        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.favorite_action -> {
-                    val uri = Uri.parse("dessert://favorite")
-                    startActivity(Intent(Intent.ACTION_VIEW, uri))
-                    true
-                }
-
-                else -> false
-            }
+        binding.topAppBar.setNavigationOnClickListener {
+            finish()
         }
 
         // Observer
         lifecycleScope.launch {
-            viewModel.dessertListFlow.collect { resource ->
+            viewModel.favoriteDessertListFlow.collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
                         binding.progressBar.isVisible = false
-                        binding.swipeRefresh.isRefreshing = false
-                        Toast.makeText(this@HomeActivity, R.string.generic_error, Toast.LENGTH_LONG)
+                        Toast.makeText(this@FavoriteActivity, R.string.generic_error, Toast.LENGTH_LONG)
                             .show()
                     }
 
@@ -69,13 +59,25 @@ class HomeActivity : AppCompatActivity() {
 
                     is Resource.Success -> {
                         binding.progressBar.isVisible = false
-                        binding.swipeRefresh.isRefreshing = false
                     }
                 }
 
                 dessertAdapter.submitList(resource.data)
             }
         }
+    }
+
+    private fun initCoreInjection() {
+        DaggerFavoriteComponent.builder()
+            .context(this)
+            .appDependencies(
+                EntryPointAccessors.fromApplication(
+                    applicationContext,
+                    FavoriteModuleDependencies::class.java
+                )
+            )
+            .build()
+            .inject(this)
     }
 
     private fun navigateToDetail(dessert: DessertBrief) {
