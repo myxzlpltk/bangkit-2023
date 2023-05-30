@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.dessert.core.databinding.ItemListDessertBinding
 import com.bangkit.dessert.core.domain.model.DessertBrief
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bangkit.dessert.core.utils.load
 
 class DessertAdapter(
     private val onClick: (DessertBrief) -> Unit
@@ -23,10 +22,7 @@ class DessertAdapter(
 
         with(holder.binding) {
             // Load image
-            Glide.with(root.context)
-                .load(dessert.image)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(dessertImage)
+            dessertImage.load(dessert.image)
 
             // Load data
             dessertName.text = dessert.name

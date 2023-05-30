@@ -10,10 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import com.bangkit.dessert.R
 import com.bangkit.dessert.core.data.Resource
 import com.bangkit.dessert.core.domain.model.Dessert
+import com.bangkit.dessert.core.utils.load
 import com.bangkit.dessert.core.utils.toBulletedList
 import com.bangkit.dessert.databinding.ActivityDetailBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -74,10 +73,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun bind(dessert: Dessert) = with(binding) {
         // Load image
-        Glide.with(this@DetailActivity)
-            .load(dessert.image)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(dessertImage)
+        dessertImage.load(dessert.image, 500)
 
         // Load data
         dessertName.text = dessert.name
