@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DessertBriefDao {
 
-    @Query("SELECT * FROM dessert_briefs")
+    @Query("SELECT * FROM dessert_briefs ORDER BY name")
     fun getAll(): Flow<List<DessertBriefEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

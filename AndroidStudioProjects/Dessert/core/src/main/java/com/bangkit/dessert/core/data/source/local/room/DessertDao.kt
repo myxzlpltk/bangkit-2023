@@ -12,7 +12,7 @@ interface DessertDao {
     @Query("SELECT * FROM desserts WHERE id = :id")
     fun getOne(id: Int): Flow<DessertEntity?>
 
-    @Query("SELECT * FROM desserts WHERE isFavorite = 1")
+    @Query("SELECT * FROM desserts WHERE isFavorite = 1 ORDER BY name")
     fun getFavorites(): Flow<List<DessertEntity>>
 
     @Upsert
