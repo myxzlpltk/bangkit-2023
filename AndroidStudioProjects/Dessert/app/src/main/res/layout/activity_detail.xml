@@ -29,86 +29,115 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:paddingBottom="16dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/dessert_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
                     tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/dessert_area"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="?attr/textAppearanceOverline"
+                    app:layout_constraintEnd_toStartOf="@+id/favorite_toggle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dessert_image"
+                    tools:text="British Dessert" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/dessert_area"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?attr/textAppearanceOverline"
-                            tools:text="British Dessert" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/dessert_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?attr/textAppearanceHeadlineMedium"
-                            tools:text="Apple Frangipan Tart" />
-                    </LinearLayout>
-
-                    <CheckBox
-                        android:id="@+id/favorite_toggle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|end"
-                        android:button="@drawable/favorite_toggle" />
-                </LinearLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/dessert_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                    app:layout_constraintEnd_toStartOf="@+id/favorite_toggle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dessert_area"
+                    tools:text="Apple Frangipan Tart" />
 
                 <!-- Ingredients -->
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
+
+                <!-- Instructions -->
+                <CheckBox
+                    android:id="@+id/favorite_toggle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:button="@drawable/favorite_toggle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dessert_image" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/ingredients_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/ingredients"
-                    android:textAppearance="?attr/textAppearanceTitleLarge" />
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dessert_name" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/dessert_ingredients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ingredients_title"
                     tools:text="Step 1\nStep 2" />
 
-                <!-- Instructions -->
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/instructions_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/instructions"
-                    android:textAppearance="?attr/textAppearanceTitleLarge" />
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dessert_ingredients" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/dessert_instructions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/instructions_title"
                     tools:text="@string/sample_instructions" />
-            </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
